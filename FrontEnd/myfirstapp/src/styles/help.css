@@ -1,0 +1,18 @@
+.HelpPageImg {
+    position: absolute;
+    border: 1px solid black;
+    width: calc(40vw);
+    height: calc(30vh);
+    top: calc(20vh);
+    left: calc(30vw);
+    border: 1px solid black;
+}
+
+.HelpPageInfo {
+    width: calc(50vw);
+    height: calc(40vh);
+    position: absolute;
+    left: calc(1vw);
+    bottom: calc(1vh);
+    font-size: large;
+}

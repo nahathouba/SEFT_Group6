@@ -1,0 +1,92 @@
+.SignUpIntro {
+    position: absolute;
+    top: calc(10vh);
+    left: calc(2vw);
+    color:limegreen;
+}
+
+.IntroSign {
+    position: absolute;
+    top: calc(10.5vh);
+    left: calc(1vw);
+}
+
+.RegisterMainForm {
+    height: calc(60vh);
+    width: calc(100vw);
+    position: absolute;
+    top: calc(20vh);
+    padding-left: calc(1vw);
+    /* text-align: center; */
+}
+
+/* common set */
+.RegisterMainForm .Set {
+    margin-bottom: calc(5vh);
+}
+
+.RegisterMainForm .Set span {
+    color: gray;
+    font-size: small;
+}
+
+.RegisterMainForm .Set input {
+    width: calc(15vw);
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.RegisterMainForm .Set input:focus {
+    outline: none;
+    border: 1px solid darkblue;
+    background-color: lightblue;
+}
+
+/* error set */
+
+.RegisterMainForm .ErrorSet {
+    margin-bottom: calc(5vh);
+}
+
+.RegisterMainForm .ErrorSet span {
+    color:crimson;
+    font-size: small;
+}
+
+.RegisterMainForm .ErrorSet input {
+    width: calc(15vw);
+    border-radius: 5px;
+    border: 1px solid crimson;
+    background-color: pink;
+}
+
+.RegisterMainForm .ErrorSet input:focus {
+    outline: none;
+}
+
+/* pass set */
+
+.RegisterMainForm .PassSet {
+    margin-bottom: calc(5vh);
+}
+
+.RegisterMainForm .PassSet span {
+    color: limegreen;
+    font-size: small;
+}
+
+.RegisterMainForm .PassSet input {
+    width: calc(15vw);
+    border-radius: 5px;
+    border: 1px solid limegreen;
+}
+
+.RegisterMainForm .PassSet input:focus {
+    outline: none;
+}
+
+.TrogglePasswordBtn {
+    position: absolute;
+    margin-left: calc(14vw);
+    color: black;
+}
