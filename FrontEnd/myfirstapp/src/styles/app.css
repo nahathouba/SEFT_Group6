@@ -16,8 +16,11 @@
 
 .Copyright {
     position: absolute;
-    bottom: calc(5vh);
+    height: calc(3vh);
     width: calc(100vw);
     text-align: center;
-    color: gray;
+    line-height: calc(3vh);
+    bottom: 0;
+    background-color: black;
+    color: white;
 }

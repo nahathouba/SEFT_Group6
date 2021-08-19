@@ -1,0 +1,51 @@
+.AskSearch {
+    position: absolute;
+    color: limegreen;
+    top: calc(3vh);
+    left: calc(3vw);
+}
+
+.SearchBar {
+    width: calc(50vw);
+    height: calc(5vh);
+    position: absolute;
+    top: calc(7vh);
+    left: calc(3vw);
+}
+
+.SearchBar button {
+    border: none;
+    background-color: rgba(0,0,0,0);
+    color: blue;
+    width: calc(4vh);
+    height: calc(4vh);
+    position: absolute;
+    margin-left: calc(33vw);
+}
+
+.SearchBar input {
+    width: calc(35vw);
+    height: calc(4vh);
+}
+
+.SearchBar select {
+    width: calc(6vw);
+    height: calc(4vh);
+    margin-right: calc(1vw);
+}
+
+.DisplayBook {
+    width: calc(82vw);
+    height: calc(80vh);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.DisplayBook .BookDIV {
+    width: calc(50vw);
+    height: calc(30vh);
+    margin-bottom: calc(5vh);
+    border: 1px solid black;
+}

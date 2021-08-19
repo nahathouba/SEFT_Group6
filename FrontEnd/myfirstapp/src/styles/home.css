@@ -1,0 +1,30 @@
+.MenuPage {
+    height: calc(85vh);
+    width: calc(15vw);
+    position: absolute;
+    bottom: 0;
+    padding-left: calc(1vw);
+}
+
+.ContentPage {
+    height: calc(97vh);
+    width: calc(85vw);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.MenuPage button {
+    width: calc(10vw);
+    height: calc(5vh);
+    text-align: left;
+    margin-bottom: calc(1vh);
+}
+
+.BtnIcon {
+    border: 1px solid black;
+    height: calc(3vh);
+    width: calc(3vh);
+    border-radius: calc(3vh);
+    margin-right: 10px;
+}
