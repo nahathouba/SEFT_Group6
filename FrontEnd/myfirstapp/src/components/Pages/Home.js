@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor } from "react-bootstrap-icons";
-import { isUserLoggedIn, logout } from "../../handlers/userHandler";
+import { getUserNotifications, isUserLoggedIn, logout } from "../../handlers/userHandler";
 import '../../styles/home.css';
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
@@ -21,8 +21,36 @@ class Home extends Component {
             this.props.history.push("/");
             
         this.state = {
-            user: user
+            user: user,
+            infos: {
+                unread_msg: false
+            }
         };
+    }
+
+    loadInfos() {
+        // get state and infos
+        var state = this.state;
+        var infos = state.infos;
+
+        // get all infos
+        // may have more infos in the future
+        infos.unread_msg = getUserNotifications()[1];
+
+        // set state
+        state.infos = infos;
+        this.setState(state);
+    }
+
+    // setinterval for load infos
+    componentDidMount() {
+        this.backInterval = setInterval(()=>{
+            this.loadInfos();
+        }, 60000)
+    }
+
+    componentWillMount() {
+        clearInterval(this.backInterval);
     }
 
     switchPage = (pageType) => {
@@ -66,6 +94,7 @@ class Home extends Component {
                         Collections
                     </button>
                     
+                    <div className={ this.state.infos.unread_msg ? "UnreadMsg" : null}></div>
                     <button onClick={ () => this.switchPage("Notifications") }>
                         <Bell className="BtnIcon" />
                         Notifications

@@ -18,7 +18,17 @@
     width: calc(10vw);
     height: calc(5vh);
     text-align: left;
+    margin-top: 5px;
     margin-bottom: calc(1vh);
+}
+
+.MenuPage .UnreadMsg {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-left: calc(9.6vw);
+    background-color: red;
 }
 
 .BtnIcon {

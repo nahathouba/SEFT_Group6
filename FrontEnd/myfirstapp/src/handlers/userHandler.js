@@ -39,3 +39,8 @@ export function isUserLoggedIn() {
     }
     return false;
 }
+
+export function getUserNotifications(userid) {
+    // return [[notifications], contains_unread]
+    return [[], true];
+}
