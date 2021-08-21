@@ -11,6 +11,7 @@ import Notifications from "./HomePages/Notifications";
 import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
 import About from "./HomePages/About";
+import AlertWindow from "../Plugins/AlertWindow";
 
 class Home extends Component {
 
@@ -24,6 +25,13 @@ class Home extends Component {
             user: user,
             infos: {
                 unread_msg: false
+            },
+            popup: {
+                display: "none",
+                title: "",
+                content: "",
+                cancel: null, 
+                confirm: null
             }
         };
     }
@@ -56,7 +64,7 @@ class Home extends Component {
     switchPage = (pageType) => {
         var page = null;
         switch(pageType) {
-            case "Account": page = <Account />; break;
+            case "Account": page = <Account user={ this.state.user } />; break;
             case "ShoppingCart": page = <ShoppingCart />; break;
             case "Collections": page = <Collections />; break;
             case "Notifications": page = <Notifications />; break;
@@ -72,6 +80,7 @@ class Home extends Component {
     render() {
         return (
             <>
+                <AlertWindow {... this.state.popup } />
                 <h5 className="LOGO_ad">Hello, Mr.{ this.state.user.username }</h5>
                 <div className="MenuPage">
                     <button onClick={ () => this.switchPage("Home") }>
@@ -125,7 +134,7 @@ class Home extends Component {
                 </div>
 
                 <div className="ContentPage" id="content_page">
-                    <Default />
+                <Account user={ this.state.user } />
                 </div>
             </>
         );

@@ -1,0 +1,32 @@
+.AccountPageWelcome {
+    position: absolute;
+    top: calc(3vh);
+    left: calc(1vw);
+}
+
+.AccountDetails {
+    position: absolute;
+    height: calc(22vh);
+    width: calc(30vw);
+    top: calc(15vh);
+    left: calc(1vw);
+    padding: calc(2vh);
+    border: 1px solid black;
+}
+
+.AccountDetails .Avatar {
+    height: calc(10vh);
+    width: calc(10vh);
+    border-radius: calc(10vh);
+    border: 1px solid black;
+    position: absolute;
+    margin-left: calc(20vw);
+    margin-top: calc(1vh);
+}
+
+.AccountDetails .Danger {
+    background-color: pink;
+    color: crimson;
+    border-color: crimson;
+    margin-left: calc(1vw);
+}
