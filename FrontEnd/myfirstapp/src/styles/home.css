@@ -38,3 +38,8 @@
     border-radius: calc(3vh);
     margin-right: 10px;
 }
+
+.SelectedButton {
+    background-color: lightblue;
+    border-color: darkblue;
+}
