@@ -2,24 +2,24 @@
     color: deepskyblue;
     font-style: italic;
     position: absolute;
-    left: calc(1vw);
-    top: calc(1vh);
-    font-size: calc(3vh);
+    left: 1vw;
+    top: 1vh;
+    font-size: 3vh;
     text-decoration: none;
 }
 
 .LOGO_ad {
     position: absolute;
-    left: calc(1vw);
-    top: calc(5vh);
+    left: 1vw;
+    top: 5vh;
 }
 
 .Copyright {
     position: absolute;
-    height: calc(3vh);
-    width: calc(100vw);
+    height: 3vh;
+    width: 100vw;
     text-align: center;
-    line-height: calc(3vh);
+    line-height: 3vh;
     bottom: 0;
     background-color: black;
     color: white;

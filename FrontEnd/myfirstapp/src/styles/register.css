@@ -1,28 +1,28 @@
 .SignUpIntro {
     position: absolute;
-    top: calc(10vh);
-    left: calc(2vw);
+    top: 10vh;
+    left: 2vw;
     color:limegreen;
 }
 
 .IntroSign {
     position: absolute;
-    top: calc(10.5vh);
-    left: calc(1vw);
+    top: 10.5vh;
+    left: 1vw;
 }
 
 .RegisterMainForm {
-    height: calc(60vh);
-    width: calc(100vw);
+    height: 60vh;
+    width: 100vw;
     position: absolute;
-    top: calc(20vh);
-    padding-left: calc(1vw);
+    top: 20vh;
+    padding-left: 1vw;
     /* text-align: center; */
 }
 
 /* common set */
 .RegisterMainForm .Set {
-    margin-bottom: calc(5vh);
+    margin-bottom: 5vh;
 }
 
 .RegisterMainForm .Set span {
@@ -31,7 +31,7 @@
 }
 
 .RegisterMainForm .Set input {
-    width: calc(15vw);
+    width: 15vw;
     border-radius: 5px;
     border: 1px solid gray;
 }
@@ -45,7 +45,7 @@
 /* error set */
 
 .RegisterMainForm .ErrorSet {
-    margin-bottom: calc(5vh);
+    margin-bottom: 5vh;
 }
 
 .RegisterMainForm .ErrorSet span {
@@ -54,7 +54,7 @@
 }
 
 .RegisterMainForm .ErrorSet input {
-    width: calc(15vw);
+    width: 15vw;
     border-radius: 5px;
     border: 1px solid crimson;
     background-color: pink;
@@ -67,7 +67,7 @@
 /* pass set */
 
 .RegisterMainForm .PassSet {
-    margin-bottom: calc(5vh);
+    margin-bottom: 5vh;
 }
 
 .RegisterMainForm .PassSet span {
@@ -76,7 +76,7 @@
 }
 
 .RegisterMainForm .PassSet input {
-    width: calc(15vw);
+    width: 15vw;
     border-radius: 5px;
     border: 1px solid limegreen;
 }
@@ -87,6 +87,6 @@
 
 .TrogglePasswordBtn {
     position: absolute;
-    margin-left: calc(14vw);
+    margin-left: 14vw;
     color: black;
 }

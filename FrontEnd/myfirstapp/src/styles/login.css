@@ -1,43 +1,43 @@
 
 .InfoDIV {
     position: absolute;
-    width: calc(25vw);
-    height: calc(30vh);
-    top: calc(20vh);
-    left: calc(25vw);
+    width: 25vw;
+    height: 30vh;
+    top: 20vh;
+    left: 25vw;
     text-align: right;
 }
 
 .InfoDIV .ASK {
     color: darkorange;
-    margin-bottom: calc(3vh);
+    margin-bottom: 3vh;
 }
 
 .InfoDIV input {
     border: 2px solid darkorange;
     font-size: small;
-    height: calc(3vh);
-    width: calc(15vw);
+    height: 3vh;
+    width: 15vw;
 }
 
 .InfoDIV Button {
-    margin-right: calc(5vw);
-    width: calc(10vw);
-    margin-bottom: calc(2vh);
+    margin-right: 5vw;
+    width: 10vw;
+    margin-bottom: 2vh;
 }
 
 .InfoDIV .ResetPasswordLink {
     display: block;
-    margin-right: calc(5vw);
+    margin-right: 5vw;
     color: darkorange;
     text-decoration: none;
 }
 
 .LoginPageImg {
     position: absolute;
-    width: calc(15vw);
-    height: calc(45vh);
+    width: 15vw;
+    height: 45vh;
     border: 1px solid black;
-    right: calc(5vw);
-    top: calc(5vh);
+    right: 5vw;
+    top: 5vh;
 }
