@@ -12,22 +12,28 @@ import java.util.Collection;
 
 
 @Entity
+@Table(name="USER")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="USER_ID")
     private Long id;
 
     @Email(message = "Username needs to be an email")
     @NotBlank(message = "username is required")
-    @Column(unique = true)
+    @Column(unique = true, name="USER_NAME")
     private String username;
     @NotBlank(message = "Please enter your full name")
+    @Column(name="FULL_NAME")
     private String fullName;
     @NotBlank(message = "Password field is required")
+    @Column(name="PWD")
     private String password;
     @Transient
     private String confirmPassword;
+    @Column(name="CREATE_DATE")
     private Date create_At;
+    @Column(name="UPDATE_DATE")
     private Date update_At;
 
     //OneToMany with Project
