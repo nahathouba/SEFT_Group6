@@ -31,7 +31,8 @@ export function validation(type, value) {
         case "LastName":
             return validateName(value);
         case "Email": return validateEmail(value);
-        case "Password": return validatePassword(value);
+        case "Password":
+        case "RePassword": return validatePassword(value);
         default: return;
     }
 }

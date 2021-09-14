@@ -24,14 +24,12 @@ class Login extends Component {
         if(this.state.PasswordStatus === 0) {
             // eslint-disable-next-line
             return <a onClick={ this.trogglePassword }
-                      className="TrogglePasswordBtn"
-                      style={{fontSize: "medium", marginTop: "calc(1vh)"}}
+                      className="TrogglePasswordBtn LoginPasswordBtn"
                       title="Show password" ><Eye /></a>
         }
         // eslint-disable-next-line
         return <a onClick={ this.trogglePassword }
-                  className="TrogglePasswordBtn"
-                  style={{fontSize: "medium", marginTop: "calc(1vh)"}}
+                  className="TrogglePasswordBtn LoginPasswordBtn"
                   title="Hide password" ><EyeSlash /></a>
     }
 

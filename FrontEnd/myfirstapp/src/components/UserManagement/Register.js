@@ -15,13 +15,18 @@ class Register extends Component {
             "FirstName": 0,
             "LastName": 0,
             "Password": 0,
+            "RePassword": 0,
             "Email": 0,
             "FirstNameMsg": "",
             "LastNameMsg": "",
             "PasswordMsg": "",
+            "RePasswordMsg": "",
             "EmailMsg": "",
             display: "none",
-            PasswordStatus: 0
+            display_password: {
+                password: false,
+                re_password: false
+            }
         }
     }
 
@@ -35,6 +40,27 @@ class Register extends Component {
         return status;
     }
 
+    passwordStatus = (password_type) => {
+        const setStatus = () => {
+            const tmp_state = this.state;
+            tmp_state.display_password[password_type]
+                = (tmp_state.display_password[password_type]
+                    ? false : true);
+            this.setState(tmp_state);
+        }
+
+        return (
+            // eslint-disable-next-line
+            <a onClick={ setStatus }
+               className='TrogglePasswordBtn'
+               title= { this.state.display_password[password_type]
+                        ? "Hide password" : "Show password"} >
+                { this.state.display_password[password_type] ? <EyeSlash /> : <Eye /> }
+            </a>
+        )
+        
+    }
+
     getMsg(type) {
         switch(this.state[type]) {
             case 1: return <span>{this.state[type+"Msg"]}</span>;
@@ -43,30 +69,19 @@ class Register extends Component {
         }
     }
 
-    trogglePassword = () => {
-        var state = this.state;
-        state.PasswordStatus = state.PasswordStatus === 0 ? 1 : 0;
-        this.setState(state);
-    }
-
-    trogglePasswordBtn() {
-        if(this.state.PasswordStatus === 0) {
-            // eslint-disable-next-line
-            return <a onClick={ this.trogglePassword }
-                      className="TrogglePasswordBtn"
-                      title="Show password" ><Eye /></a>
-        }
-        // eslint-disable-next-line
-        return <a onClick={ this.trogglePassword }
-                  className="TrogglePasswordBtn"
-                  title="Hide password" ><EyeSlash /></a>
-    }
-
     onChangeHandler = (event) => {
         var state = this.state;
         const validate_result = validation(event.target.name, event.target.value);
         state[event.target.name] = validate_result[0];
         state[event.target.name+"Msg"] = validate_result[1] ? validate_result[1] : "";
+
+        if(event.target.name === 'RePassword' && state["RePasswordMsg"] === "") {
+            if(document.getElementById('Password').value !== event.target.value) {
+                state["RePassword"] = 1;
+                state["RePasswordMsg"] = 'Two-time password not match!';
+            }
+        }
+                
         this.setState(state);
     }
 
@@ -87,6 +102,10 @@ class Register extends Component {
             state["Password"] = 1;
             state["PasswordMsg"] = "Password is required";
         }
+        if(event.target.RePassword.value === "") {
+            state["RePassword"] = 1;
+            state["RePasswordMsg"] = "Re-input Password is required";
+        }
         if(event.target.Email.value === "") {
             state["Email"] = 1;
             state["EmailMsg"] = "Email address is required";
@@ -95,6 +114,7 @@ class Register extends Component {
         if(state.FirstName === 2 &&
            state.LastName === 2 &&
            state.Password === 2 &&
+           state.RePassword === 2 &&
            state.Email === 2) {
                 register(event.target.FirstName.value,
                          event.target.LastName.value,
@@ -122,21 +142,33 @@ class Register extends Component {
             <Pencil className="IntroSign" />
             <span className="SignUpIntro">Sign up here, please fill your information, we will create<br/>an account for you, quick and easy :)</span>
             <form className="RegisterMainForm" onSubmit={ this.onSubmitHandler }>
-                <div className={this.getStyleStatus("FirstName")}>
-                    <span>* First Name</span><br/>
-                    <input type="text" placeholder="First Name" name="FirstName" onChange={this.onChangeHandler} /><br/>
-                    { this.getMsg("FirstName") }
+                <div className="SameLine">
+                    <div className={this.getStyleStatus("FirstName")}>
+                        <span>* First Name</span><br/>
+                        <input type="text" placeholder="First Name" name="FirstName" onChange={this.onChangeHandler} /><br/>
+                        { this.getMsg("FirstName") }
+                    </div>
+                    <div className={this.getStyleStatus("LastName")}>
+                        <span>* Last Name</span><br/>
+                        <input type="text" placeholder="Last Name" name="LastName" onChange={this.onChangeHandler} /><br/>
+                        { this.getMsg("LastName") }
+                    </div>
                 </div>
-                <div className={this.getStyleStatus("LastName")}>
-                    <span>* Last Name</span><br/>
-                    <input type="text" placeholder="Last Name" name="LastName" onChange={this.onChangeHandler} /><br/>
-                    { this.getMsg("LastName") }
-                </div>
-                <div className={this.getStyleStatus("Password")}>
-                    <span>* Password</span><br/>
-                    { this.trogglePasswordBtn() }
-                    <input type={ this.state.PasswordStatus === 0 ? "password" : "text" } placeholder="Password" name="Password" onChange={this.onChangeHandler} /><br/>
-                    { this.getMsg("Password") }
+                <div className="SameLine">
+                    <div className={this.getStyleStatus("Password")}>
+                        <span>* Password</span><br/>
+                        { this.passwordStatus('password') }
+                        <input type = { this.state.display_password.password ? "input" : "password" }
+                               placeholder="Password" name="Password" id='Password' onChange={this.onChangeHandler} /><br/>
+                        { this.getMsg("Password") }
+                    </div>
+                    <div className={this.getStyleStatus("RePassword")}>
+                        <span>* Re-input Password</span><br/>
+                        { this.passwordStatus('re_password') }
+                        <input type = { this.state.display_password.re_password ? "input" : "password" }
+                               placeholder="Re-input Password" name="RePassword" onChange={this.onChangeHandler} /><br/>
+                        { this.getMsg("RePassword") }
+                    </div>
                 </div>
                 <div className={this.getStyleStatus("Email")}>
                     <span>* Email Address</span><br/>

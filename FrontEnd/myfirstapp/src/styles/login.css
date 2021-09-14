@@ -41,3 +41,8 @@
     right: 5vw;
     top: 5vh;
 }
+
+.LoginPasswordBtn {
+    font-size: medium;
+    margin-top: 1vh;
+}

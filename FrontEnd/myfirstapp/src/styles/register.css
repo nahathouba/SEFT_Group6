@@ -20,6 +20,19 @@
     /* text-align: center; */
 }
 
+.SameLine .Set {
+    display: inline-block;
+    margin-right: 5vw;
+}
+.SameLine .ErrorSet {
+    display: inline-block;
+    margin-right: 5vw;
+}
+.SameLine .PassSet {
+    display: inline-block;
+    margin-right: 5vw;
+}
+
 /* common set */
 .RegisterMainForm .Set {
     margin-bottom: 5vh;
@@ -28,6 +41,7 @@
 .RegisterMainForm .Set span {
     color: gray;
     font-size: small;
+    position: absolute;
 }
 
 .RegisterMainForm .Set input {
@@ -51,6 +65,7 @@
 .RegisterMainForm .ErrorSet span {
     color:crimson;
     font-size: small;
+    position: absolute;
 }
 
 .RegisterMainForm .ErrorSet input {
@@ -73,6 +88,7 @@
 .RegisterMainForm .PassSet span {
     color: limegreen;
     font-size: small;
+    position: absolute;
 }
 
 .RegisterMainForm .PassSet input {

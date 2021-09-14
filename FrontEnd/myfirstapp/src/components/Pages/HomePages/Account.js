@@ -27,19 +27,25 @@ class Account extends Component {
                     <form className="EditProfile">
                         <h1 className="AccountPageWelcome">Editing Profile</h1>
                         <label to="Name" >Name</label>
-                        <input type="text" className="InfoInput" name="Name" placeholder="Please input your name here" />
-                        <label to="Name" >Email<span className='Annotation'>* Cannot change</span></label>
-                        <input type="text" className="InfoInput" name="Email" disabled placeholder="Please input your email here" />
-                        <label to="Name" >About Me</label>
-                        <input type="text" className="InfoInput" name="Description" placeholder="Nothing here" />
-                        <label to="Name" >Gender</label>
+                        <input type="text" className="InfoInput"
+                            name="Name" placeholder="Please input your name here"
+                            value={ this.props.user.username } />
+                        <label to="Email" >Email<span className='Annotation'>* Cannot change</span></label>
+                        <input type="text" className="InfoInput"
+                            name="Email" disabled placeholder="Please input your email here"
+                            value={ this.props.user.email } />
+                        <label to="Description" >About Me</label>
+                        <input type="text" className="InfoInput"
+                            name="Description" placeholder="Nothing here"
+                            value={ this.props.user.about } />
+                        <label to="Gender" >Gender</label>
                         <select className="InfoInput" name="Gender">
                             <option value="Secret">Select Your Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Secret">Secret</option>
                         </select>
-                        <label to="Name" >Address</label>
+                        <label to="Address" >Address</label>
                         <input type="text" className="InfoInput" name="Address" placeholder="Please input your address here" />
                         <br/><Button type='submit'>Submit</Button>
                     </form>
