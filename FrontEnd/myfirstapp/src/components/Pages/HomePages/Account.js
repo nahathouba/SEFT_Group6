@@ -13,6 +13,12 @@ class Account extends Component {
         }
     }
 
+    submitEdit = (event) => {
+        event.preventDefault();
+
+
+    }
+
     loadPage() {
         switch(this.state.page) {
 
@@ -24,7 +30,7 @@ class Account extends Component {
                         <button onClick={ () => { this.setState({page: "Password"}) } }>Reset Password</button>
                         <button onClick={ () => { this.setState({page: "Landing"}) } }>Go Back</button>
                     </div>
-                    <form className="EditProfile">
+                    <form className="EditProfile" onSubmit={ this.submitEdit }>
                         <h1 className="AccountPageWelcome">Editing Profile</h1>
                         <label to="Name" >Name</label>
                         <input type="text" className="InfoInput"

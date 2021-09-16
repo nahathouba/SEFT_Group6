@@ -1,5 +1,8 @@
-function encode(password) {
+import '../reducers/personReducer';
+import { SHA256 } from 'crypto-js';
 
+function encode(password) {
+    return SHA256(password);
 }
 
 function validateUser(email, password) {

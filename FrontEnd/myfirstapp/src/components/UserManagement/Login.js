@@ -14,23 +14,21 @@ class Login extends Component {
                       PasswordStatus: 0};
     }
 
-    trogglePassword = () => {
-        var state = this.state;
-        state.PasswordStatus = state.PasswordStatus === 0 ? 1 : 0;
-        this.setState(state);
-    }
-
     trogglePasswordBtn() {
-        if(this.state.PasswordStatus === 0) {
-            // eslint-disable-next-line
-            return <a onClick={ this.trogglePassword }
-                      className="TrogglePasswordBtn LoginPasswordBtn"
-                      title="Show password" ><Eye /></a>
+
+        const trogglePassword = () => {
+            var state = this.state;
+            state.PasswordStatus = state.PasswordStatus === 0 ? 1 : 0;
+            this.setState(state);
         }
         // eslint-disable-next-line
-        return <a onClick={ this.trogglePassword }
+        return <a onClick={ trogglePassword }
                   className="TrogglePasswordBtn LoginPasswordBtn"
-                  title="Hide password" ><EyeSlash /></a>
+                  title={this.state.PasswordStatus === 0 ?
+                            "Show password" : "Hide password"} >
+                      {this.state.PasswordStatus === 0 ?
+                       <Eye /> : <EyeSlash />}
+               </a>
     }
 
     loginUser = (event) => {
