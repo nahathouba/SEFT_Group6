@@ -2,6 +2,7 @@ import '../reducers/personReducer';
 import { SHA1 } from 'crypto-js';
 import { createNewUser } from '../actions/securityActions';
 import { login as securityLogin } from '../actions/securityActions';
+import setJWTToken from '../securityUtils/setJWTToken';
 
 
 export function login(email, password, dispatch) {
@@ -17,6 +18,8 @@ export function login(email, password, dispatch) {
 }
 
 export function logout() {
+    setJWTToken(localStorage.getItem('JWTToken'));
+    localStorage.removeItem('JWTToken');
     document.cookie += "; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 }
 
