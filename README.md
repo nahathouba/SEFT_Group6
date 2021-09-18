@@ -7,7 +7,7 @@
 * Ci Song - s3798895
 * Ningthouba Nahakpam - s3733745
 * Yutai Tong - s3742089
-* Zico Z - s3756809
+* Zhihao Zhong - s3756809
 
 ## Records
 
