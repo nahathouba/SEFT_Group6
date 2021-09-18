@@ -36,8 +36,9 @@ public class User implements UserDetails {
     private String gender;
     private String address;
     private String status;
+    private String role;
 
-    //OneToMany with Project
+//OneToMany with Project
 
     public User() {
     }
@@ -130,6 +131,14 @@ public class User implements UserDetails {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     /*

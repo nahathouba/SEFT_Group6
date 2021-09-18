@@ -106,4 +106,19 @@ public class UserController {
     public ResponseEntity<User> deleteUser(String username){
         return new ResponseEntity<User>(userService.deleteUser(username), HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/block")
+    public ResponseEntity<User> blockUser(String username){
+        return new ResponseEntity<User>(userService.blockUser(username), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/unblock")
+    public ResponseEntity<User> unblockUser(String username){
+        return new ResponseEntity<User>(userService.unblockUser(username), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/status/change")
+    public ResponseEntity<User> changeUsrRole(String username, String role){
+        return new ResponseEntity<User>(userService.changeUserRole(role, username), HttpStatus.ACCEPTED);
+    }
 }

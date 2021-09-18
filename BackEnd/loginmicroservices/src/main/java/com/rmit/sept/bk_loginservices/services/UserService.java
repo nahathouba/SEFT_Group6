@@ -20,6 +20,8 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//    private User objUser;
+
     public User saveUser (User newUser){
 
       /*  newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
@@ -35,7 +37,8 @@ public class UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirm_password("");
-            newUser.setStatus("PUBLIC");
+            newUser.setStatus("NORMAL");
+            newUser.setRole("PUBLIC");
             return userRepository.save(newUser);
 
         }catch (Exception e){
@@ -91,6 +94,41 @@ public class UserService {
         }catch (Exception e){
             throw new UserNotFoundException("The user requesting is not found in the database.");
         }
+        return objUser;
+    }
+
+    public User blockUser(String username){
+        User objUser = new User();
+        try{
+            int updated = userRepository.updateUserStatus(username, "BLOCK");
+            objUser = userRepository.findByUsername(username);
+        }catch (Exception e){
+            throw new UserNotFoundException("The user requesting is not found in the database.");
+        }
+
+        return objUser;
+    }
+
+    public User unblockUser(String username){
+        User objUser = new User();
+        try{
+            int updated = userRepository.updateUserStatus(username, "NORMAL");
+            objUser = userRepository.findByUsername(username);
+        }catch (Exception e){
+            throw new UserNotFoundException("The user requesting is not found in the database.");
+        }
+        return objUser;
+    }
+
+    public User changeUserRole(String username, String role){
+        User objUser = new User();
+        try{
+            int updated = userRepository.updateUserRole(role, username);
+            objUser = userRepository.findByUsername(username);
+        }catch (Exception e){
+            throw new UserNotFoundException("The user requesting is not found in the database.");
+        }
+
         return objUser;
     }
 }

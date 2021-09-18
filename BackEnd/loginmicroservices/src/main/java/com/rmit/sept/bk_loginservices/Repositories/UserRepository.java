@@ -15,4 +15,12 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Modifying
     @Query("update User set password = ?1 where username = ?2")
     int updateUserPassword(String password, String username);
+
+    @Modifying
+    @Query("update User set status = ?2 where username = ?1")
+    int updateUserStatus(String username, String status);
+
+    @Modifying
+    @Query("update User set role = ?1 where username = ?2")
+    int updateUserRole(String role, String username);
 }
