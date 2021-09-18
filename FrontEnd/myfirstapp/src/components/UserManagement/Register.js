@@ -120,7 +120,9 @@ class Register extends Component {
                          event.target.LastName.value,
                          event.target.Email.value,
                          event.target.Password.value,
-                         event.target.Gender.value)
+                         event.target.RePassword.value,
+                         event.target.Gender.value,
+                         this.props.history)
                 state.display = "block";
         }
 

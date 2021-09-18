@@ -10,8 +10,10 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {display: "none",
-                      PasswordStatus: 0};
+        this.state = (window.location.search ? 
+            {display: "block", PasswordStatus: 0} :
+            {display: "none", PasswordStatus: 0}
+        )
     }
 
     trogglePasswordBtn() {
@@ -36,10 +38,7 @@ class Login extends Component {
 
         const email = event.target.Email.value;
         const password = event.target.Password.value;
-        if(!login(email, password)) {
-            event.target.Password.value = "";
-            this.setState({display: "block", PasswordStatus: this.state.PasswordStatus});
-        }
+        login(email, password, this.props.dispatch);
         this.props.history.push("/home");
     }
 

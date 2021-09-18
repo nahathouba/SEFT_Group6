@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor } from "react-bootstrap-icons";
-import { getUserNotifications, isUserLoggedIn, logout } from "../../handlers/userHandler";
+import { getUserNotifications, getLoginUser, logout } from "../../handlers/userHandler";
 import '../../styles/home.css';
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
@@ -12,17 +12,18 @@ import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
 import About from "./HomePages/About";
 import AlertWindow from "../Plugins/AlertWindow";
+import personReducer from "../../reducers/personReducer";
+import { getPerson } from "../../actions/personActions";
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
-        const user = isUserLoggedIn();
-        if(!user)
-            this.props.history.push("/");
+        // const user = isUserLoggedIn();
+        // if(!user)
+        //     this.props.history.push("/");
             
         this.state = {
-            user: user,
             infos: {
                 unread_msg: false,
                 current_page: "Home"
@@ -35,6 +36,12 @@ class Home extends Component {
                 confirm: null
             }
         };
+
+        const dispatch = (action) => {
+            this.setState(personReducer(this.state, action));
+        }
+
+        getPerson(getLoginUser())(dispatch);
     }
 
     loadInfos() {

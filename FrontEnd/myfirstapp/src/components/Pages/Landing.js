@@ -2,17 +2,10 @@ import { Button } from "react-bootstrap";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { InfoCircle, Image } from 'react-bootstrap-icons';
-import { isUserLoggedIn } from "../../handlers/userHandler";
 import '../../styles/landing.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Landing extends Component {
-
-    constructor(props) {
-        super(props);
-        if(isUserLoggedIn())
-            this.props.history.push("/home");
-    }
 
     render() {
         return (

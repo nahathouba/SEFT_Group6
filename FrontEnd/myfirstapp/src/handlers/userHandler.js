@@ -1,46 +1,43 @@
 import '../reducers/personReducer';
-import { SHA256 } from 'crypto-js';
-
-function encode(password) {
-    return SHA256(password);
-}
-
-function validateUser(email, password) {
-    password = encode(password);
-    return {
-        id: "0",
-        email: email,
-        username: "First Last"
-    };
-}
+import { SHA1 } from 'crypto-js';
+import { createNewUser } from '../actions/securityActions';
+import { login as securityLogin } from '../actions/securityActions';
 
 
-export function login(email, password) {
-    var user = validateUser(email, password);
-    if(user) {
-        document.cookie = "LoginUser="+JSON.stringify(user);
-        return true;
-    } else {
-        return false;
+export function login(email, password, dispatch) {
+    const user = {
+        username: email,
+        password: SHA1(password)
     }
+
+    securityLogin(user)(dispatch);
+    
+        // document.cookie = "LoginUser="+user.id;
+        // document.cookie = "LoginUser="+JSON.stringify(user);
 }
 
 export function logout() {
     document.cookie += "; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 }
 
-export function register(firstname, lastname, email, password, gender) {
-    login(email, password);
+export function register(firstname, lastname, email, password, repassword, gender, history) {
+    createNewUser({
+        full_name: firstname + ' ' + lastname,
+        username: email,
+        password: SHA1(password),
+        confirm_password: SHA1(repassword),
+        gender: gender
+    }, history);
 }
 
-export function isUserLoggedIn() {
+export function getLoginUser() {
+
     const cookies = document.cookie.split("; ");
     for(var i = 0; i < cookies.length; i++) {
         const e = cookies[i].split("=");
         if(e[0] === "LoginUser")
             return JSON.parse(e[1]);
     }
-    return false;
 }
 
 export function getUserNotifications(userid) {
