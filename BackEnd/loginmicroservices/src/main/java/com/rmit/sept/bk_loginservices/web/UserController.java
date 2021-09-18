@@ -38,6 +38,7 @@ public class UserController {
     private UserValidator userValidator;
 
 
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
         // Validate passwords match

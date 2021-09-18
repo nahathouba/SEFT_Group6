@@ -1,6 +1,8 @@
 package com.rmit.sept.bk_bookServices.web;
 
+import com.rmit.sept.bk_bookServices.model.BookRequest;
 import com.rmit.sept.bk_bookServices.services.MapValidationErrorService;
+import com.rmit.sept.bk_bookServices.validator.BookRequestValidator;
 import com.rmit.sept.bk_bookServices.validator.BookValidator;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +39,25 @@ public class BookController {
 
         Book objBook = bookService.saveBook(book);
         return new ResponseEntity<Book>(objBook, HttpStatus.CREATED);
+    }
+
+    @Autowired
+    private BookRequestValidator bookRequestValidator;
+
+    @PostMapping("/request")
+    public ResponseEntity<?> getBook(@Valid @RequestBody BookRequest bookRequest, BindingResult result){
+        bookRequestValidator.validate(bookRequest, result);
+
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null) return errorMap;
+
+        Book book = new Book();
+        if(bookRequest.getSort().equals("isbn")){
+            book = bookService.requestBook(Integer.parseInt(bookRequest.getValue()));
+        }else {
+            book = bookService.requestBook(bookRequest.getSort(), bookRequest.getValue());
+        }
+
+        return new ResponseEntity<Book>(book, HttpStatus.ACCEPTED);
     }
 }

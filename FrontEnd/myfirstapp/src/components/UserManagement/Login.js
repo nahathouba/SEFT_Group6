@@ -1,112 +1,70 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import classnames from "classnames";
-import { login } from "../../actions/securityActions";
+import { Button } from "react-bootstrap";
+import '../../styles/login.css';
+import { Link } from "react-router-dom";
+import { InfoCircle, Image, Eye, EyeSlash } from 'react-bootstrap-icons';
+import { login } from "../../handlers/userHandler";
+import AlertWindow from "../Plugins/AlertWindow";
 
 class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      username: "",
-      password: "",
-      errors: {}
-    };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
 
-  componentDidMount() {
-    if (this.props.security.validToken) {
-      this.props.history.push("/dashboard");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.security.validToken) {
-      this.props.history.push("/dashboard");
+    constructor(props) {
+        super(props);
+        this.state = (window.location.search ? 
+            {display: "block", PasswordStatus: 0} :
+            {display: "none", PasswordStatus: 0}
+        )
     }
 
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+    trogglePasswordBtn() {
+
+        const trogglePassword = () => {
+            var state = this.state;
+            state.PasswordStatus = state.PasswordStatus === 0 ? 1 : 0;
+            this.setState(state);
+        }
+        // eslint-disable-next-line
+        return <a onClick={ trogglePassword }
+                  className="TrogglePasswordBtn LoginPasswordBtn"
+                  title={this.state.PasswordStatus === 0 ?
+                            "Show password" : "Hide password"} >
+                      {this.state.PasswordStatus === 0 ?
+                       <Eye /> : <EyeSlash />}
+               </a>
     }
-  }
 
-  onSubmit(e) {
-    e.preventDefault();
-    const LoginRequest = {
-      username: this.state.username,
-      password: this.state.password
-    };
+    loginUser = (event) => {
+        event.preventDefault();
 
-    this.props.login(LoginRequest);
-  }
+        const email = event.target.Email.value;
+        const password = event.target.Password.value;
+        login(email, password, this.props.dispatch);
+        this.props.history.push("/home");
+    }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+    render() {
+        return (
+        <>
+            <AlertWindow display = { this.state.display }
+                         title = "Login Failed!"
+                         content="Login failed, please check your email address and password!"
+                         confrim={ () => this.setState({display: "none"}) } />
 
-  render() {
-    const { errors } = this.state;
-    return (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.username
-                    })}
-                    placeholder="Email Address"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChange}
-                  />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password
-                    })}
-                    placeholder="Password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
-                </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+            <Image className="LoginPageImg"/>
+            
+            <h5 className="LOGO_ad">Explore the books world with Bookeroo</h5>
+            <form className="InfoDIV" onSubmit={this.loginUser}>
+                <h3 className="ASK">User ID <input type="text" placeholder="Email Address" name="Email" /></h3>
+                <h3 className="ASK">Password&nbsp;
+                    { this.trogglePasswordBtn() }
+                    <input type={ this.state.PasswordStatus === 0 ? "password" : "text" } placeholder="password" name="Password" />
+                </h3>
+                <Button variant="warning" type="submit">Log In</Button><br/>
+                <Link className="ResetPasswordLink" to="forgot-password"><InfoCircle /> Forgot your password?</Link>
+            </form>
+        </>
+        );
+    }
 }
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  security: state.security,
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { login }
-)(Login);
+export default Login;
