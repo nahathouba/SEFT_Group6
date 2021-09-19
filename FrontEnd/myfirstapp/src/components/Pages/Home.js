@@ -71,7 +71,10 @@ class Home extends Component {
     switchPage = (event) => {
         var page = null;
         switch(event.target.id) {
-            case "Account": page = <Account user={ this.state.user } />; break;
+            case "Account": page = <Account user={ this.state.user }
+                history={this.props.history}
+                setUser={(user) => {this.setState({...this.state, user: user})}} />; break;
+                
             case "ShoppingCart": page = <ShoppingCart />; break;
             case "Collections": page = <Collections />; break;
             case "Notifications": page = <Notifications />; break;

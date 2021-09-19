@@ -20,28 +20,16 @@ export function login(email, password, dispatch) {
 export function logout() {
     setJWTToken(localStorage.getItem('JWTToken'));
     localStorage.removeItem('JWTToken');
-    localStorage.removeItem('LoginUser');
 }
 
-export function register(firstname, lastname, email, password, repassword, gender, history) {
+export function register(firstname, lastname, email, password, repassword, gender) {
     createNewUser({
         full_name: firstname + ' ' + lastname,
         username: email,
         password: password,
         confirm_password: repassword,
         gender: gender
-    }, history)(dispatch=>{});
-}
-
-export function getLoginUser() {
-
-    // const cookies = document.cookie.split("; ");
-    // for(var i = 0; i < cookies.length; i++) {
-    //     const e = cookies[i].split("=");
-    //     if(e[0] === "LoginUser")
-    //         return JSON.parse(e[1]);
-    // }
-    return localStorage.getItem('LoginUser');
+    });
 }
 
 export function getUserNotifications(username) {

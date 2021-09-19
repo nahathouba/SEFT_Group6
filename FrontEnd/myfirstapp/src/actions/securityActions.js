@@ -4,17 +4,8 @@ import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 
 
-export const createNewUser = (newUser) => async dispatch => {
-
-    try{
-        await axios.post("http://localhost:8080/api/users/register", newUser);
-    }
-    catch (err){
-        dispatch ({
-            type: GET_ERRORS,
-            payload: err
-        });
-    }
+export const createNewUser = async (newUser) => {
+    await axios.post("http://localhost:8080/api/users/register", newUser);
 };
 
 export const login = LoginRequest => async dispatch => {
@@ -22,8 +13,6 @@ export const login = LoginRequest => async dispatch => {
         const res = await axios.post("http://localhost:8080/api/users/login", LoginRequest);
         const token = res.data.token;
         if(token) {
-            localStorage.setItem('LoginUser', LoginRequest.username);
-
             localStorage.setItem('JWTToken', token);
             setJWTToken(token);
 
@@ -33,7 +22,6 @@ export const login = LoginRequest => async dispatch => {
                 payload: token_decode
             })
         } else {
-            alert(2);
             dispatch ({
                 type: GET_ERRORS,
                 payload: res.data

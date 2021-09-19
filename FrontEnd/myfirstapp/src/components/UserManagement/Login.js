@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import '../../styles/login.css';
 import { Link } from "react-router-dom";
 import { InfoCircle, Image, Eye, EyeSlash } from 'react-bootstrap-icons';
-import { getLoginUser, login } from "../../handlers/userHandler";
+import { login } from "../../handlers/userHandler";
 import AlertWindow from "../Plugins/AlertWindow";
 import { SET_CURRENT_USER } from '../../actions/types';
 import { getPerson } from "../../actions/personActions";
@@ -12,10 +12,10 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = (window.location.search ? 
-            {display: "block", PasswordStatus: 0} :
-            {display: "none", PasswordStatus: 0}
-        )
+        this.state = ({
+            display: "none",
+            PasswordStatus: 0
+        })
     }
 
     trogglePasswordBtn() {
@@ -42,7 +42,7 @@ class Login extends Component {
         const password = event.target.Password.value;
         login(email, password, dispatch => {
             if(dispatch.type === SET_CURRENT_USER) {
-                getPerson(getLoginUser(dispatch.payload.username)).then(res => {
+                getPerson(dispatch.payload.username).then(res => {
                     this.props.history.push({
                         pathname: 'home',
                         state: res
