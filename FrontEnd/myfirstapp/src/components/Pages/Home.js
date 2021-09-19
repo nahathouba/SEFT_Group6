@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor } from "react-bootstrap-icons";
-import { getUserNotifications, getLoginUser, logout } from "../../handlers/userHandler";
+import { getUserNotifications, logout } from "../../handlers/userHandler";
 import '../../styles/home.css';
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
@@ -12,18 +12,19 @@ import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
 import About from "./HomePages/About";
 import AlertWindow from "../Plugins/AlertWindow";
-import personReducer from "../../reducers/personReducer";
-import { getPerson } from "../../actions/personActions";
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
-        // const user = isUserLoggedIn();
-        // if(!user)
-        //     this.props.history.push("/");
+
+        if(!this.props.location.state)
+            this.props.history.push("/");
+
+        const user = this.props.location.state;
             
         this.state = {
+            user: user ? user : {},
             infos: {
                 unread_msg: false,
                 current_page: "Home"
@@ -36,12 +37,6 @@ class Home extends Component {
                 confirm: null
             }
         };
-
-        const dispatch = (action) => {
-            this.setState(personReducer(this.state, action));
-        }
-
-        getPerson(getLoginUser())(dispatch);
     }
 
     loadInfos() {
@@ -51,7 +46,8 @@ class Home extends Component {
 
         // get all infos
         // may have more infos in the future
-        infos.unread_msg = getUserNotifications()[1];
+        infos.unread_msg = getUserNotifications(
+            this.state.user.username)[1];
 
         // set state
         state.infos = infos;
@@ -110,7 +106,7 @@ class Home extends Component {
         return (
             <>
                 <AlertWindow {... this.state.popup } />
-                <h5 className="LOGO_ad">Hello, Mr.{ this.state.user.username }</h5>
+                <h5 className="LOGO_ad">Hello, Mr.{ this.state.user.full_name }</h5>
                 <div className="MenuPage">
                     <button onClick={ this.switchPage } id='Home'>
                         <HouseDoor className="BtnIcon" />

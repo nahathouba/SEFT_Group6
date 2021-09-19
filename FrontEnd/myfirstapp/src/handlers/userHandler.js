@@ -20,30 +20,31 @@ export function login(email, password, dispatch) {
 export function logout() {
     setJWTToken(localStorage.getItem('JWTToken'));
     localStorage.removeItem('JWTToken');
-    document.cookie += "; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    localStorage.removeItem('LoginUser');
 }
 
 export function register(firstname, lastname, email, password, repassword, gender, history) {
     createNewUser({
         full_name: firstname + ' ' + lastname,
         username: email,
-        password: SHA1(password),
-        confirm_password: SHA1(repassword),
+        password: password,
+        confirm_password: repassword,
         gender: gender
-    }, history);
+    }, history)(dispatch=>{});
 }
 
 export function getLoginUser() {
 
-    const cookies = document.cookie.split("; ");
-    for(var i = 0; i < cookies.length; i++) {
-        const e = cookies[i].split("=");
-        if(e[0] === "LoginUser")
-            return JSON.parse(e[1]);
-    }
+    // const cookies = document.cookie.split("; ");
+    // for(var i = 0; i < cookies.length; i++) {
+    //     const e = cookies[i].split("=");
+    //     if(e[0] === "LoginUser")
+    //         return JSON.parse(e[1]);
+    // }
+    return localStorage.getItem('LoginUser');
 }
 
-export function getUserNotifications(userid) {
+export function getUserNotifications(username) {
     // return [[notifications], contains_unread]
     return [[], true];
 }

@@ -35,11 +35,11 @@ class Account extends Component {
                         <label to="Name" >Name</label>
                         <input type="text" className="InfoInput"
                             name="Name" placeholder="Please input your name here"
-                            value={ this.props.user.username } />
+                            value={ this.props.user.full_name } />
                         <label to="Email" >Email<span className='Annotation'>* Cannot change</span></label>
                         <input type="text" className="InfoInput"
                             name="Email" disabled placeholder="Please input your email here"
-                            value={ this.props.user.email } />
+                            value={ this.props.user.username } />
                         <label to="Description" >About Me</label>
                         <input type="text" className="InfoInput"
                             name="Description" placeholder="Nothing here"
@@ -72,13 +72,12 @@ class Account extends Component {
             default:
                 return (
                     <>
-                    <h1 className="AccountPageWelcome">Welcome, { this.props.user.username }</h1>
+                    <h1 className="AccountPageWelcome">Welcome, { this.props.user.full_name }</h1>
                     <div className="AccountDetails">
                         <PersonCircle className="Avatar" />
                         <h3>My Details</h3>
-                        My ID: { this.props.user.id }<br/>
-                        My Name: { this.props.user.username }<br/>
-                        My Email: { this.props.user.email }<br/>
+                        My Name: { this.props.user.full_name }<br/>
+                        My Email: { this.props.user.username }<br/>
                         <hr/>
                         <button onClick={ () => {this.setState({page: 'Edit'})} }>Edit my profile</button>
                         <button className="Danger">Delete my account</button>

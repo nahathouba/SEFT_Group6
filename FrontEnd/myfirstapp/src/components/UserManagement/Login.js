@@ -3,8 +3,10 @@ import { Button } from "react-bootstrap";
 import '../../styles/login.css';
 import { Link } from "react-router-dom";
 import { InfoCircle, Image, Eye, EyeSlash } from 'react-bootstrap-icons';
-import { login } from "../../handlers/userHandler";
+import { getLoginUser, login } from "../../handlers/userHandler";
 import AlertWindow from "../Plugins/AlertWindow";
+import { SET_CURRENT_USER } from '../../actions/types';
+import { getPerson } from "../../actions/personActions";
 
 class Login extends Component {
 
@@ -38,8 +40,20 @@ class Login extends Component {
 
         const email = event.target.Email.value;
         const password = event.target.Password.value;
-        login(email, password, this.props.dispatch);
-        this.props.history.push("/home");
+        login(email, password, dispatch => {
+            if(dispatch.type === SET_CURRENT_USER) {
+                getPerson(getLoginUser(dispatch.payload.username)).then(res => {
+                    this.props.history.push({
+                        pathname: 'home',
+                        state: res
+                    })
+                })
+                // this.props.history.push("/home");
+            }
+            else
+                this.setState({display: 'block', PasswordStatus: this.state.PasswordStatus});
+        });
+        
     }
 
     render() {

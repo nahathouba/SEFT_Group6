@@ -31,6 +31,10 @@
     margin-left: 1vw;
 }
 
+.AccountDetails hr {
+    margin-top: 3vh;
+}
+
 .EditProfile {
     margin-left: 5vw;
     margin-top: 10vh;
