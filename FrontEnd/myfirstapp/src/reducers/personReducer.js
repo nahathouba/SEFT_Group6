@@ -1,22 +1,14 @@
-import { GET_PERSONS, GET_PERSON} from "../actions/types";
+import { GET_USER } from "../actions/types";
 
-const initialState = {
-  persons: [],
-  person: {}
-};
+const initialState = {};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_PERSONS:
-      return {
-        ...state,
-        persons: action.payload
-      };
 
-    case GET_PERSON:
+    case GET_USER:
       return {
         ...state,
-        person: action.payload
+        user: action.payload
       };
 
     default:

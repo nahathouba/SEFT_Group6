@@ -1,0 +1,46 @@
+.MenuPage {
+    height: 85vh;
+    width: 15vw;
+    position: absolute;
+    bottom: 0;
+    padding-left: 1vw;
+}
+
+.ContentPage {
+    height: 97vh;
+    width: 85vw;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.MenuPage button {
+    width: 10vw;
+    height: 5vh;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 1vh;
+}
+
+.MenuPage .UnreadMsg {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-left: 1.5vw;
+    margin-top: 1vh;
+    background-color: red;
+}
+
+.BtnIcon {
+    border: 1px solid black;
+    height: 3vh;
+    width: 3vh;
+    border-radius: 3vh;
+    margin-right: 10px;
+}
+
+.SelectedButton {
+    background-color: lightblue;
+    border-color: darkblue;
+}

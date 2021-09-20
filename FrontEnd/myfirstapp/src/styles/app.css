@@ -1,0 +1,26 @@
+.LOGO {
+    color: deepskyblue;
+    font-style: italic;
+    position: absolute;
+    left: 1vw;
+    top: 1vh;
+    font-size: 3vh;
+    text-decoration: none;
+}
+
+.LOGO_ad {
+    position: absolute;
+    left: 1vw;
+    top: 5vh;
+}
+
+.Copyright {
+    position: absolute;
+    height: 3vh;
+    width: 100vw;
+    text-align: center;
+    line-height: 3vh;
+    bottom: 0;
+    background-color: black;
+    color: white;
+}

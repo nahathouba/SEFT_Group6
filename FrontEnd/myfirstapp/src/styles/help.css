@@ -1,0 +1,18 @@
+.HelpPageImg {
+    position: absolute;
+    border: 1px solid black;
+    width: 40vw;
+    height: 30vh;
+    top: 20vh;
+    left: 30vw;
+    border: 1px solid black;
+}
+
+.HelpPageInfo {
+    width: 50vw;
+    height: 40vh;
+    position: absolute;
+    left: 1vw;
+    bottom: 1vh;
+    font-size: large;
+}
