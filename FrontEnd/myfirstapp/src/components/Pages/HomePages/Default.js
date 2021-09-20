@@ -26,7 +26,6 @@ function Default() {
             return (
                 // TODO: desgin the block
                 <div className='BookDIV'>
-                    { v.gretting }
                 </div>
             )
         })

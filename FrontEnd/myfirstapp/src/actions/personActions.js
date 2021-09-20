@@ -8,7 +8,7 @@ export const getPerson = async (username) => {
 
 export const submitUpdate = async (userinfo) => {
     try {
-        const res = await axios.post(`${CONN_BASE_URL}/users/update`, userinfo);
+        const res = await axios.post(`${CONN_BASE_URL}/users/update/profile`, userinfo);
         return res.data.status;
     } catch(err) {
         alert(err);
