@@ -60,7 +60,7 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
 
-
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -81,7 +81,8 @@ public class UserController {
 //        return new ResponseEntity<User> (objUser, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/update/profile")
+    @CrossOrigin
+    @PostMapping("/profile/update")
     public ResponseEntity<?> updateUserProfile(@Valid @RequestBody User user, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
@@ -89,6 +90,7 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
     }
 
+    @CrossOrigin
     @PostMapping("/update/password")
     public ResponseEntity<?> updateUserPassword(@Valid @RequestBody User user, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -97,28 +99,33 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
     }
 
+    @CrossOrigin
     @GetMapping ("/get/{username}")
     public ResponseEntity<?> getUserInfo(@PathVariable("username") String username){
         return new ResponseEntity<User>(userService.getUserInfo(username, ""), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<User> deleteUser(String username){
+    @CrossOrigin
+    @GetMapping("/delete/{username}")
+    public ResponseEntity<User> deleteUser(@PathVariable("username") String username){
         return new ResponseEntity<User>(userService.deleteUser(username), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/block")
-    public ResponseEntity<User> blockUser(String username){
+    @CrossOrigin
+    @GetMapping("/block/{username}")
+    public ResponseEntity<User> blockUser(@PathVariable("username") String username){
         return new ResponseEntity<User>(userService.blockUser(username), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/unblock")
-    public ResponseEntity<User> unblockUser(String username){
+    @CrossOrigin
+    @GetMapping("/unblock/{username}")
+    public ResponseEntity<User> unblockUser(@PathVariable("username") String username){
         return new ResponseEntity<User>(userService.unblockUser(username), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/status/change")
-    public ResponseEntity<User> changeUsrRole(String username, String role){
+    @CrossOrigin
+    @GetMapping("/role/change/{username}%{role}")
+    public ResponseEntity<User> changeUsrRole(@PathVariable("username") String username, @PathVariable("role") String role){
         return new ResponseEntity<User>(userService.changeUserRole(role, username), HttpStatus.ACCEPTED);
     }
 }
