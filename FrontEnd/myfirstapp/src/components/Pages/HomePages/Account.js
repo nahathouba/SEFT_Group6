@@ -2,7 +2,9 @@ import { Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { PersonCircle } from 'react-bootstrap-icons';
 import './styles/account.css';
-import { submitUpdate } from '../../../actions/personActions';
+import { submitUpdate, submitPassword as changePassword, submitDelete } from '../../../actions/personActions';
+import { logout } from '../../../handlers/userHandler';
+import { validation } from '../../../handlers/validateInput';
 
 function Account(props) {
 
@@ -12,6 +14,10 @@ function Account(props) {
     const [about, setAbout] = useState(props.user.about);
     const [gender, setGender] = useState(props.user.gender);
     const [address, setAddress] = useState(props.user.address);
+
+    const [o_p, setOP] = useState("");
+    const [n_p, setNP] = useState("");
+    const [r_p, setRP] = useState("");
 
     const submitEdit = (event) => {
         event.preventDefault();
@@ -30,6 +36,60 @@ function Account(props) {
         })
     }
 
+    const changeAlert = (action, target, alert = '') => {
+        document.querySelectorAll(`[name='${target}']`).forEach(e => {
+            const cl = e.classList;
+            if(action === 0)
+                cl.add('Alert');
+            else if(action === 1 && cl.contains('Alert'))
+                cl.remove('Alert');
+
+            if(e.nodeName === 'SPAN')
+                e.innerHTML = alert;
+
+        })
+    }
+
+    const submitPassword = (event) => {
+        event.preventDefault();
+        
+        var haserr = false;
+
+        const judge = e => {
+            if(e.classList.contains('Alert')) {
+                haserr = true;
+            } else {
+                if(e.nodeName === 'INPUT') {
+                    if(e.value === '') {
+                        haserr = true;
+                        document.querySelectorAll(`[name='${e.name}']`).forEach(e1 => {
+                            if(!e1.classList.contains('Alert'))
+                                e1.classList.add('Alert');
+                            if(e1.nodeName === 'SPAN')
+                                e1.innerHTML = 'This field cannot be empty!';
+                        })
+                    }
+                }
+            }
+        }
+        document.querySelectorAll("[name='old_password']").forEach(judge);
+        document.querySelectorAll("[name='new_password']").forEach(judge);
+        document.querySelectorAll("[name='re_new_password']").forEach(judge);
+
+        if(!haserr) {
+            setOP('');
+            setNP('');
+            setRP('');
+            changePassword(props.user.username).then(res => {
+                if(res !== 'PASS') {
+                    if(res === 'OLD')
+                        changeAlert(1, 'old_password', 'Old password not match!');
+                } else
+                    setPage('Landing')
+            });
+        }
+    }
+
     const setValueHandler = (event) => {
         const v = event.target.value;
         switch(event.target.name) {
@@ -39,6 +99,80 @@ function Account(props) {
             case 'gender': setGender(v); break;
             default: return;
         }
+    }
+
+    const passwordHandler = (event) => {
+
+        
+
+        const alerts = [
+            'Old password cannot be the same with new password!',
+            'Re-input new password is different from the new password!'
+        ]
+
+        const judgeStatus = (target, value) => {
+            const validated = validation('Password', value);
+            if(validated[0] === 1) {
+                changeAlert(0, target, validated[1]);
+            } else {
+                switch(target) {
+                    case 'old_password': 
+                        if(value === n_p)
+                            changeAlert(0, target, alerts[0]);
+                        else
+                            changeAlert(1, target);
+                        break;
+                    case 'new_password':
+                        if(o_p === value)
+                            changeAlert(0, target, alerts[0]);
+                        else if(r_p !== "" && value !== r_p)
+                            changeAlert(0, 're_new_password', alerts[1]);
+                        else {
+                            if(value === r_p)
+                                changeAlert(1, 're_new_password');
+                            changeAlert(1, target);
+                        }
+                        break;
+                    case 're_new_password':
+                        if(n_p !== value)
+                            changeAlert(0, target, alerts[1]);
+                        else
+                            changeAlert(1, target); 
+                        break;
+                    default: return;
+                }
+            }
+        }
+
+        const v = event.target.value;
+        judgeStatus(event.target.name, v);
+        switch(event.target.name) {
+            case 'old_password': setOP(v); break;
+            case 'new_password': setNP(v); break;
+            case 're_new_password': setRP(v); break;
+            default: return;
+        }
+    }
+
+    const deleteAccount = () => {
+
+        const confirm = () => {
+            submitDelete(props.user.username).then(()=>{ logout(props.history)} );
+        }
+
+        props.showAlert({
+            display: 'block',
+            title: "Confirm Delete",
+            content: "Are you sure you want to delete your account? This can never undo!",
+            cancel: () => props.showAlert({
+                display: 'none',
+                title: "",
+                content: "",
+                cancel: null, 
+                confirm: null
+            }), 
+            confirm: confirm
+        })
     }
 
     const loadPage = () => {
@@ -96,6 +230,29 @@ function Account(props) {
                         <button className="Selected">Reset Password</button>
                         <button onClick={ () => setPage( "Landing") }>Go Back</button>
                     </div>
+                    <form className="EditProfile" onSubmit={ submitPassword }>
+                        <h1 className="AccountPageWelcome">Reset Password</h1>
+
+                        <label to="old_password" name="old_password">Old Password</label>
+                        <input type="password" className="InfoInput"
+                            name="old_password" placeholder="Please input your old password here"
+                            value={o_p} onChange={ passwordHandler } />
+                        <span name='old_password' className='AlertSpan'></span>
+
+                        <label to="new_password" name="new_password">New Password</label>
+                        <input type="password" className="InfoInput"
+                            name="new_password" placeholder="Please input your new password here"
+                            value={n_p} onChange={ passwordHandler } />
+                            <span name='new_password' className='AlertSpan'></span>
+
+                        <label to="re_new_password" name="re_new_password">Re-input New Password</label>
+                        <input type="password" className="InfoInput"
+                            name="re_new_password" placeholder="Please input your new password here again"
+                            value={r_p} onChange={ passwordHandler } />
+                            <span name='re_new_password' className='AlertSpan'></span>
+
+                        <br/><Button type='submit'>Submit</Button>
+                    </form>
                     </>
                 );
 
@@ -110,7 +267,7 @@ function Account(props) {
                         My Email: { props.user.username }<br/>
                         <hr/>
                         <button onClick={ () => setPage( 'Edit') }>Edit my profile</button>
-                        <button className="Danger">Delete my account</button>
+                        <button className="Danger" onClick={ deleteAccount }>Delete my account</button>
                     </div>
                     </>
                 );

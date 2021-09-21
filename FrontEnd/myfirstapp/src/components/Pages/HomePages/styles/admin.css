@@ -1,0 +1,39 @@
+.AdminSearch {
+    margin-top: 10vh;
+}
+
+.UserEditor {
+    height: 40vh;
+    width: 45vw;
+    position: absolute;
+    margin-top: 25vh;
+    margin-left: 3vw;
+    border: 1px solid black;
+}
+
+.UserEditor .Info {
+    width: 33vw;
+    height: 40vh;
+    border-right: 1px solid black;
+    position: absolute;
+    padding-left: 1vw;
+    padding-top: 1vh;
+}
+
+.UserEditor .Info p {
+    margin-left: 1vw;
+}
+
+.UserEditor .Operations {
+    width: 12vw;
+    height: 40vh;
+    position: absolute;
+    margin-left: 33vw;
+}
+
+.UserEditor .Operations Button {
+    width: 10vw;
+    height: 5vh;
+    margin-top: 3vh;
+    margin-left: 1vw;
+}

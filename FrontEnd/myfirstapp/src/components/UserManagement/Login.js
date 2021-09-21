@@ -62,7 +62,7 @@ class Login extends Component {
             <AlertWindow display = { this.state.display }
                          title = "Login Failed!"
                          content="Login failed, please check your email address and password!"
-                         confrim={ () => this.setState({display: "none"}) } />
+                         confirm={ () => this.setState({display: "none"}) } />
 
             <Image className="LoginPageImg"/>
             

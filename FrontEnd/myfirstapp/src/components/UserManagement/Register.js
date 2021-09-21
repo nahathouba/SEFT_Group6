@@ -136,7 +136,7 @@ class Register extends Component {
                          content={"Welcome to the family of Bookeroo! "+
                          " Your account has been created successfully! "+
                          "Click the button below then we will redirect you to the home page of Bookeroo."}
-                         confrim={ () => this.props.history.push("/home") }
+                         confirm={ () => this.props.history.push("/home") }
                          color="skyblue" />
 
             <h5 className="LOGO_ad">Meet with your favourite books on Bookeroo</h5>

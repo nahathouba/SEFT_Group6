@@ -17,9 +17,10 @@ export function login(email, password, dispatch) {
         // document.cookie = "LoginUser="+JSON.stringify(user);
 }
 
-export function logout() {
+export function logout(history) {
     setJWTToken(localStorage.getItem('JWTToken'));
     localStorage.removeItem('JWTToken');
+    history.push('/');
 }
 
 export function register(firstname, lastname, email, password, repassword, gender) {

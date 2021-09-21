@@ -13,11 +13,11 @@ function Default() {
         event.preventDefault();
 
         const sort = event.target.sort.value;
-        const kwds = event.target.search.value;
+        const value = event.target.search.value;
 
         search({
             sort: sort,
-            kwds: kwds
+            value: value
         })(dispatch);
     }
 

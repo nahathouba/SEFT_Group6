@@ -75,6 +75,17 @@
     height: 5vh;
 }
 
+.EditProfile .Alert {
+    border-color: red;
+    color: red;
+}
+
+.EditProfile .AlertSpan {
+    display: block;
+    font-size: small;
+    margin-top: 5px;
+}
+
 .SwitchEdit {
     position: absolute;
     right: 0;
