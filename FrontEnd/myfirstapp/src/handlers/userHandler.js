@@ -3,7 +3,6 @@ import { SHA1 } from 'crypto-js';
 import { createNewUser } from '../actions/securityActions';
 import { login as securityLogin } from '../actions/securityActions';
 import setJWTToken from '../securityUtils/setJWTToken';
-import { getNotifications } from '../actions/notificationActions';
 
 
 export function login(email, password, dispatch) {
@@ -13,9 +12,6 @@ export function login(email, password, dispatch) {
     }
 
     securityLogin(user)(dispatch);
-    
-        // document.cookie = "LoginUser="+user.id;
-        // document.cookie = "LoginUser="+JSON.stringify(user);
 }
 
 export function logout(history) {

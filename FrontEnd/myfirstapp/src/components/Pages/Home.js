@@ -9,7 +9,7 @@ import Default from "./HomePages/Default";
 import Notifications from "./HomePages/Notifications";
 import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
-import About from "./HomePages/About";
+import Help from "./Help";
 import AlertWindow from "../Plugins/AlertWindow";
 import AdminAccount from "./HomePages/AdminPages/AdminAccount";
 import AdminSearchBook from "./HomePages/AdminPages/AdminSearchBook";
@@ -31,7 +31,7 @@ class Home extends Component {
             user: user ? user : {},
             infos: {
                 unread_msg: false,
-                notifications: null,
+                notifications: [],
                 current_page: (user.role === 'Admin' ? "ManageShop" : "Home"),
                 current_btn: (user.role === 'Admin' ? "ManageShop" : "Home"),
             },
@@ -55,14 +55,16 @@ class Home extends Component {
         getNotifications(this.state.user.username)(res => {
             if(res.type !== GET_ERRORS) {
                 infos.notifications = res.payload;
+                var unread = false;
 
                 for(var i = 0; i < infos.notifications.length; i++) {
                     if(infos.notifications[i].unread) {
-                        infos.unread_msg = true;
+                        unread = true;
                         break;
                     }
                 }
 
+                infos.unread_msg = unread;
                 this.setState({...this.state, infos: infos});
             }
         })
@@ -100,7 +102,7 @@ class Home extends Component {
                 case "Notifications": page = <Notifications notifications={ this.state.infos.notifications } />; break;
                 case "Settings": page = <Settings />; break;
                 case "CustomerServices": page = <CustomerService />; break;
-                case "About": page = <About />; break;
+                case "About": page = <Help about={true} />; break;
                 default: page = this.state.infos.current_page; break;
             }
         } else {
