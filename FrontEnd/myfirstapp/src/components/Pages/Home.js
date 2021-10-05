@@ -13,6 +13,7 @@ import About from "./HomePages/About";
 import AlertWindow from "../Plugins/AlertWindow";
 import AdminAccount from "./HomePages/AdminPages/AdminAccount";
 import AdminSearchBook from "./HomePages/AdminPages/AdminSearchBook";
+import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
 
 class Home extends Component {
 
@@ -28,7 +29,8 @@ class Home extends Component {
             user: user ? user : {},
             infos: {
                 unread_msg: false,
-                current_page: (user.role === 'Admin' ? "ManageShop" : "Home")
+                current_page: (user.role === 'Admin' ? "ManageShop" : "Home"),
+                current_btn: (user.role === 'Admin' ? "ManageShop" : "Home"),
             },
             popup: {
                 display: "none",
@@ -47,12 +49,15 @@ class Home extends Component {
 
         // get all infos
         // may have more infos in the future
-        infos.unread_msg = getUserNotifications(
-            this.state.user.username)[1];
+        getUserNotifications(this.state.user.username)
+        .then(res => {
+            infos.unread_msg = res[1];
+            
+            // set state after got msg status
+            state.infos = infos;
+            this.setState(state);
+        });
 
-        // set state
-        state.infos = infos;
-        this.setState(state);
     }
 
     // setinterval for load infos
@@ -73,6 +78,7 @@ class Home extends Component {
         var page = null;
         if(this.state.user.role !== 'Admin') {
             switch(this.state.infos.current_page) {
+                case "Home": page = <Default />; break;
                 case "Account": page =
                     <Account user={ this.state.user }
                         history={this.props.history}
@@ -86,10 +92,13 @@ class Home extends Component {
                 case "Settings": page = <Settings />; break;
                 case "CustomerServices": page = <CustomerService />; break;
                 case "About": page = <About />; break;
-                default: page = <Default />;
+                default: page = this.state.infos.current_page; break;
             }
         } else {
             switch(this.state.infos.current_page) {
+                case 'ManageShop': page = <AdminManageShop
+                    switchPage={ this.switchPage } />; break;
+
                 case 'ManageAccount': page = 
                     <AdminAccount
                         history={this.props.history}
@@ -98,15 +107,18 @@ class Home extends Component {
                 case 'ManageBook': page = <AdminSearchBook />; break;
                 case 'Notifications': page = <Default />; break;
                 case 'Settings': page = <Default />; break;
-                default: page = <Default />; break;
+                default: page = this.state.infos.current_page; break;
             }
         }
 
         return page;
     }
 
-    switchPage = (event) => {
-        this.switchButtonColor(event.target.id);
+    switchPage = (event, special = false) => {
+        if(special)
+            this.setState({...this.state, infos:{...this.state.infos, current_page: event}});
+        else
+            this.switchButtonColor(event.target.id);
     }
 
     switchButtonColor = (elem) => {
@@ -115,13 +127,14 @@ class Home extends Component {
             if(!btn.classList.contains("SelectedButton"))
                 btn.classList.add("SelectedButton");
         } else {
-            document.getElementById(this.state.infos.current_page)
+            document.getElementById(this.state.infos.current_btn)
                 .classList.remove("SelectedButton");
             
             btn.classList.add("SelectedButton");
 
             var tmp_state = this.state;
             tmp_state.infos.current_page = elem;
+            tmp_state.infos.current_btn = elem;
             this.setState(tmp_state);
         }
     }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/admin.css';
+import './styles/admin_account.css';
 import { adminGetUser, submitBlock, submitDelete } from "../../../../actions/personActions";
 import { GET_ERRORS, SUCCESS } from "../../../../actions/types";
 
@@ -30,6 +30,7 @@ function AdminAccount(props) {
     }
 
     const submitEdit = () => {
+        // TODO: submit edit
         setStatus(0);
     }
 
@@ -46,8 +47,14 @@ function AdminAccount(props) {
                 confirm: null
             }), 
             confirm: () => {
-                submitDelete(user.username);
-                window.location.reload();
+                submitDelete(user.username).then(res => {
+                    // this shouldn't happen, just for make sure
+                    if(!res)
+                        alert("Something went wrong!");
+
+                    // reload the page - the most fast way
+                    window.location.reload();
+                });
             }
         })
     }
@@ -98,13 +105,14 @@ function AdminAccount(props) {
         <div className='UserEditor' style={ show }>
             <div className='Info' id='UserInfo'>
                 <h5>User Name: </h5>
-                { infoStaus === 0 ?
-                    <p>{ user.username }</p> :
-                    <input type='text' value={ user.username } /> }
+                {/* user name should not edit - if can edit just uncommit next lines */}
+                {/* { infoStaus === 0 ? */}
+                    <p>{ user.username }</p>
+                    {/* : <input className='EditBar' type='text' value={ user.username } /> */}
                 <h5>User Role: </h5>
                 { infoStaus === 0 ?
                     <p>{ user.role }</p> :
-                    <select>
+                    <select className='EditBar'>
                         <option value='PublicUser' selected={ user.role === 'PublicUser' }>Public User</option>
                         <option value='ShopOwner' selected={ user.role === 'ShopOwner' }>Shop Owner</option>
                     </select> }
@@ -112,13 +120,13 @@ function AdminAccount(props) {
                 <h5>User About: </h5>
                 { infoStaus === 0 ?
                     <p>{ user.about }</p> :
-                    <textarea>
+                    <textarea className='EditBar EditAbout'>
                         { user.about }
                     </textarea> }
 
                 { infoStaus === 0 ? 
                     <></> : 
-                    <Button onClick={ submitEdit }>
+                    <Button className='SubmitEdit' onClick={ submitEdit }>
                         Submit Edit
                     </Button> }
             </div>

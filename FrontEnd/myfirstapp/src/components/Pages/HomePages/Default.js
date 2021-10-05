@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import './styles/default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search } from 'react-bootstrap-icons';
-import { search } from '../../../actions/functionActions';
+import { search } from '../../../actions/bookActions';
 import functionReducer from '../../../reducers/functionReducer';
 
 function Default() {

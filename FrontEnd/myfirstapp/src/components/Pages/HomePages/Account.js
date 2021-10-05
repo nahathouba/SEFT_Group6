@@ -77,12 +77,22 @@ function Account(props) {
         document.querySelectorAll("[name='re_new_password']").forEach(judge);
 
         if(!haserr) {
+            const old_password = o_p;
+            const new_password = n_p;
+            
             setOP('');
             setNP('');
             setRP('');
-            changePassword(props.user.username).then(res => {
+
+            const req = {
+                username: props.user.username,
+                old_password: old_password,
+                new_password: new_password
+            }
+
+            changePassword(req).then(res => {
                 if(res !== 'PASS') {
-                    if(res === 'OLD')
+                    if(res === 'FAIL')
                         changeAlert(1, 'old_password', 'Old password not match!');
                 } else
                     setPage('Landing')
@@ -102,8 +112,6 @@ function Account(props) {
     }
 
     const passwordHandler = (event) => {
-
-        
 
         const alerts = [
             'Old password cannot be the same with new password!',

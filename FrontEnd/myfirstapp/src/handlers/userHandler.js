@@ -3,6 +3,7 @@ import { SHA1 } from 'crypto-js';
 import { createNewUser } from '../actions/securityActions';
 import { login as securityLogin } from '../actions/securityActions';
 import setJWTToken from '../securityUtils/setJWTToken';
+import { getNotifications } from '../actions/notificationActions';
 
 
 export function login(email, password, dispatch) {
@@ -33,7 +34,12 @@ export function register(firstname, lastname, email, password, repassword, gende
     });
 }
 
-export function getUserNotifications(username) {
-    // return [[notifications], contains_unread]
+export async function getUserNotifications(username) {
+    // eslint-disable-next-line
+    const res = await getNotifications(username);
+
+    // judge...
+
     return [[], true];
+    // return [[notifications], contains_unread]
 }
