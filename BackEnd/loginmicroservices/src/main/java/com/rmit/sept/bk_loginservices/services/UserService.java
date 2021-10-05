@@ -6,10 +6,13 @@ package com.rmit.sept.bk_loginservices.services;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserNotFoundException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
+import com.rmit.sept.bk_loginservices.model.PasswordChangingRequest;
+import com.rmit.sept.bk_loginservices.model.Response;
 import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import sun.security.util.Password;
 
 @Service
 public class UserService {
@@ -74,16 +77,22 @@ public class UserService {
         return userRepository.save(objUser);
     }
 
-    public User updateUserPassword(User user){
+    public Response updateUserPassword(PasswordChangingRequest request){
+        Response response = new Response();
         User objUser = new User();
         try{
-            objUser = userRepository.findByUsername(user.getUsername());
+            objUser = userRepository.findByUsername(request.getUsername());
         }catch (Exception e){
             throw new UserNotFoundException("The user requesting is not found in the database.");
         }
-        userRepository.updateUserPassword(bCryptPasswordEncoder.encode(user.getPassword()), user.getUsername());
-        objUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return objUser;
+        if(objUser.getPassword().equals(request.getOld_password())){
+            userRepository.updateUserPassword(bCryptPasswordEncoder.encode(request.getNew_password()), request.getUsername());
+            objUser.setPassword(bCryptPasswordEncoder.encode(request.getNew_password()));
+            response.setStatus("PASS");
+        }else{
+            response.setStatus("FAIL");
+        }
+        return response;
     }
 
     public User deleteUser(String username){
@@ -128,7 +137,7 @@ public class UserService {
         }catch (Exception e){
             throw new UserNotFoundException("The user requesting is not found in the database.");
         }
-
+        objUser.setPassword("");
         return objUser;
     }
 }

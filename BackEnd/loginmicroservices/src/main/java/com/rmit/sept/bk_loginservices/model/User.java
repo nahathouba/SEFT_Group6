@@ -37,6 +37,7 @@ public class User implements UserDetails {
     private String address;
     private String status;
     private String role;
+    private String about;
 
 //OneToMany with Project
 
@@ -139,6 +140,14 @@ public class User implements UserDetails {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     /*

@@ -1,6 +1,8 @@
 package com.rmit.sept.bk_loginservices.web;
 
 
+import com.rmit.sept.bk_loginservices.model.PasswordChangingRequest;
+import com.rmit.sept.bk_loginservices.model.Response;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.bk_loginservices.payload.LoginRequest;
@@ -87,16 +89,18 @@ public class UserController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
         user = userService.updateUserProfile(user);
+        user.setPassword("");
         return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
     @PostMapping("/update/password")
-    public ResponseEntity<?> updateUserPassword(@Valid @RequestBody User user, BindingResult result){
+    public ResponseEntity<?> updateUserPassword(@Valid @RequestBody PasswordChangingRequest request, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
-        user = userService.updateUserPassword(user);
-        return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+        Response response;
+        response = userService.updateUserPassword(request);
+        return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
@@ -106,26 +110,36 @@ public class UserController {
     }
 
     @CrossOrigin
-    @GetMapping("/delete/{username}")
-    public ResponseEntity<User> deleteUser(@PathVariable("username") String username){
-        return new ResponseEntity<User>(userService.deleteUser(username), HttpStatus.ACCEPTED);
+    @DeleteMapping ("/{username}")
+    public ResponseEntity<Response> deleteUser(@PathVariable("username") String username){
+        userService.deleteUser(username);
+        Response response = new Response();
+        response.setStatus("SUCCESS");
+        return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
     @GetMapping("/block/{username}")
-    public ResponseEntity<User> blockUser(@PathVariable("username") String username){
-        return new ResponseEntity<User>(userService.blockUser(username), HttpStatus.ACCEPTED);
+    public ResponseEntity<Response> blockUser(@PathVariable("username") String username){
+        userService.blockUser(username);
+        Response response = new Response();
+        response.setStatus("SUCCESS");
+        return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
     @GetMapping("/unblock/{username}")
-    public ResponseEntity<User> unblockUser(@PathVariable("username") String username){
-        return new ResponseEntity<User>(userService.unblockUser(username), HttpStatus.ACCEPTED);
+    public ResponseEntity<Response> unblockUser(@PathVariable("username") String username){
+        userService.unblockUser(username);
+        Response response = new Response();
+        response.setStatus("SUCCESS");
+        return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
     @GetMapping("/role/change/{username}%{role}")
-    public ResponseEntity<User> changeUsrRole(@PathVariable("username") String username, @PathVariable("role") String role){
+    public ResponseEntity<User> changeUsrRole(@PathVariable("username") String username, @PathVariable("role") String role) {
         return new ResponseEntity<User>(userService.changeUserRole(role, username), HttpStatus.ACCEPTED);
     }
+
 }
