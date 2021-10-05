@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class CustomerService extends Component {
-    render() {
-        return (
-            <>
-            </>
-        );
-    }
+function CustomerService(props){
+    return (
+        <>
+        </>
+    );
 }
 
 export default CustomerService;

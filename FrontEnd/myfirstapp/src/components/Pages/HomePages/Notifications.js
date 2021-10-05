@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Notifications extends Component {
-    render() {
-        return (
-            <>
-            </>
-        );
-    }
+function Notifications(props){
+    return (
+        <>
+        </>
+    );
 }
 
 export default Notifications;

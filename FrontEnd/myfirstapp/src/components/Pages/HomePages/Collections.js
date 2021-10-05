@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Collections extends Component {
-    render() {
-        return (
-            <>
-            </>
-        );
-    }
+function Collections(props){
+    return (
+        <>
+        </>
+    );
 }
 
 export default Collections;

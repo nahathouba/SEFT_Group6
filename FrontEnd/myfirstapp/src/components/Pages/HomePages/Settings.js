@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Settings extends Component {
-    render() {
-        return (
-            <>
-            </>
-        );
-    }
+function Settings(props){
+    return (
+        <>
+        </>
+    );
 }
 
 export default Settings;
