@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor, Book, Shop } from "react-bootstrap-icons";
-import { getUserNotifications, logout } from "../../handlers/userHandler";
+import { logout } from "../../handlers/userHandler";
 import '../../styles/home.css';
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
@@ -14,6 +14,8 @@ import AlertWindow from "../Plugins/AlertWindow";
 import AdminAccount from "./HomePages/AdminPages/AdminAccount";
 import AdminSearchBook from "./HomePages/AdminPages/AdminSearchBook";
 import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
+import { getNotifications } from "../../actions/notificationActions";
+import { GET_ERRORS } from "../../actions/types";
 
 class Home extends Component {
 
@@ -29,6 +31,7 @@ class Home extends Component {
             user: user ? user : {},
             infos: {
                 unread_msg: false,
+                notifications: null,
                 current_page: (user.role === 'Admin' ? "ManageShop" : "Home"),
                 current_btn: (user.role === 'Admin' ? "ManageShop" : "Home"),
             },
@@ -49,14 +52,20 @@ class Home extends Component {
 
         // get all infos
         // may have more infos in the future
-        getUserNotifications(this.state.user.username)
-        .then(res => {
-            infos.unread_msg = res[1];
-            
-            // set state after got msg status
-            state.infos = infos;
-            this.setState(state);
-        });
+        getNotifications(this.state.user.username)(res => {
+            if(res.type !== GET_ERRORS) {
+                infos.notifications = res.payload;
+
+                for(var i = 0; i < infos.notifications.length; i++) {
+                    if(infos.notifications[i].unread) {
+                        infos.unread_msg = true;
+                        break;
+                    }
+                }
+
+                this.setState({...this.state, infos: infos});
+            }
+        })
 
     }
 
@@ -88,7 +97,7 @@ class Home extends Component {
                     
                 case "ShoppingCart": page = <ShoppingCart />; break;
                 case "Collections": page = <Collections />; break;
-                case "Notifications": page = <Notifications />; break;
+                case "Notifications": page = <Notifications notifications={ this.state.infos.notifications } />; break;
                 case "Settings": page = <Settings />; break;
                 case "CustomerServices": page = <CustomerService />; break;
                 case "About": page = <About />; break;

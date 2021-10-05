@@ -33,13 +33,3 @@ export function register(firstname, lastname, email, password, repassword, gende
         gender: gender
     });
 }
-
-export async function getUserNotifications(username) {
-    // eslint-disable-next-line
-    const res = await getNotifications(username);
-
-    // judge...
-
-    return [[], true];
-    // return [[notifications], contains_unread]
-}
