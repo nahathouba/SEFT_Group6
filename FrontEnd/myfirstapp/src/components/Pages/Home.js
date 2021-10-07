@@ -97,7 +97,7 @@ class Home extends Component {
                         showAlert={(popup) => this.setState({...this.state, popup: popup})} />;
                     break;
                     
-                case "ShoppingCart": page = <ShoppingCart />; break;
+                case "ShoppingCart": page = <ShoppingCart user={ this.state.user } />; break;
                 case "Collections": page = <Collections />; break;
                 case "Notifications": page = <Notifications notifications={ this.state.infos.notifications } />; break;
                 case "Settings": page = <Settings />; break;

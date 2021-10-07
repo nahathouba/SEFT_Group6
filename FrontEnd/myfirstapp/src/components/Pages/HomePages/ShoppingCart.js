@@ -1,42 +1,47 @@
 import { Button } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sliders, Image } from 'react-bootstrap-icons';
 import './styles/shopping_cart.css';
+import { getShoppingCart } from '../../../actions/collectionActions';
+import { GET_ERRORS } from '../../../actions/types';
+import { render } from 'react-dom';
 
 function ShoppingCart(props) {
 
     const [sort_by, setSort] = useState('Date_nto');
-    const [shopping_cart, setCart] = useState([]);
-
-    
 
     const sortByOnchange = (event) => {
         setSort(event.target.value);
     }
 
-    const generateShoppingCart = () => {
-        if(shopping_cart.length !== 0) {
-            // switch(sort_by) {
-            //     case "Date_nto": break;
-            //     case "Date_otn": break;
-            //     case "Price_lth": break;
-            //     case "Price_htl": break;
-            //     default: break;
-            // }
-            return (
-            <div className='SingleProduct'>
-                <Image className='ProductImg'/>
-                <span className='ProductDetail'>Item name: </span>
-                <span className='ProductDetail'>Price: $ </span>
-                <span className='ProductDetail'>Adding date: </span>
-                <Button className='FunctionBtn'>Purchase</Button>
-                <Button className='FunctionBtn BtnNotFrist'>Remove</Button>
-                <Button className='FunctionBtn BtnNotFrist InfoBtn'>Further Information</Button>
-            </div>)
-        } else {
-            return <h1 className='NoData'>Nothing in your shopping cart right now!</h1>
-        }
-    }
+    useEffect(()=>{
+        getShoppingCart(props.user.username)(res => {
+            var page;
+            if(res.type !== GET_ERRORS) {
+                if(res.payload.length > 0) {
+                    page = res.payload.map(e => {
+                        return (
+                            <div className='SingleProduct'>
+                                <Image className='ProductImg'/>
+                                <span className='ProductDetail'>Item name: {e.name}</span>
+                                <span className='ProductDetail'>Price: $ {e.price}</span>
+                                <span className='ProductDetail'>Adding date: {e.adding_date}</span>
+                                <Button className='FunctionBtn'>Purchase</Button>
+                                <Button className='FunctionBtn BtnNotFrist'>Remove</Button>
+                                <Button className='FunctionBtn BtnNotFrist InfoBtn'>Further Information</Button>
+                            </div>
+                        );
+                    });
+                } else {
+                    page = <h1 className='NoData'>Nothing in your shopping cart right now!</h1>
+                }
+            } else {
+                page = <h1 className='NoData'>Something not good occurs!</h1>;
+            }
+            render(page, document.getElementById("ShoppingCartBody"));
+        });
+    // eslint-disable-next-line
+    },[]);
 
     return (
         <div className='ShoppingCartMainDIV'>
@@ -50,8 +55,7 @@ function ShoppingCart(props) {
                     <option value='Price_htl'>Price (High to Low)</option>
                 </select>
             </div>
-            <div className='Body'>
-                { generateShoppingCart() }
+            <div className='Body' id='ShoppingCartBody'>
             </div>
         </div>
     );
