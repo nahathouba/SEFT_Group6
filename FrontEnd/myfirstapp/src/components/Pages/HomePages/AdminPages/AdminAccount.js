@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/admin_account.css';
 import { adminGetUser, submitBlock, submitDelete } from "../../../../actions/personActions";
 import { GET_ERRORS, SUCCESS } from "../../../../actions/types";
+import { PUBLIC_USER, SHOP_OWNER } from "../../../../handlers/userTypes";
 
 function AdminAccount(props) {
 
@@ -113,8 +114,8 @@ function AdminAccount(props) {
                 { infoStaus === 0 ?
                     <p>{ user.role }</p> :
                     <select className='EditBar'>
-                        <option value='PublicUser' selected={ user.role === 'PublicUser' }>Public User</option>
-                        <option value='ShopOwner' selected={ user.role === 'ShopOwner' }>Shop Owner</option>
+                        <option value={PUBLIC_USER} selected={ user.role === PUBLIC_USER }>Public User</option>
+                        <option value={SHOP_OWNER} selected={ user.role === SHOP_OWNER }>Shop Owner</option>
                     </select> }
 
                 <h5>User About: </h5>

@@ -12,7 +12,7 @@ function Help(props) {
             Phone: +61 3 9925 2000<br/>
             Postal address: Rmit University, GPO Box 2476, Melbourne<br/>
             VIC 2001 Australia<br/>
-            Street addressL 124 La Trobe Street, Melbourne VIC 3000<br/>
+            Street address: 124 La Trobe Street, Melbourne VIC 3000<br/>
             Hours: Monday to Friday 9am - 5pm, Australian Eastern<br/>
             Standard Time.<br/>
         </div>

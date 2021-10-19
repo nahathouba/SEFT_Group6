@@ -8,8 +8,9 @@ import '../../styles/home.css';
 
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
-import CustomerService from "./HomePages/CustomerService";
+// import CustomerService from "./HomePages/CustomerService";
 import Default from "./HomePages/Default";
+import Manage from "./HomePages/ShopOwnerPages/Manage";
 import Notifications from "./HomePages/Notifications";
 import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
@@ -17,6 +18,8 @@ import Help from "./Help";
 import AdminAccount from "./HomePages/AdminPages/AdminAccount";
 import AdminSearchBook from "./HomePages/AdminPages/AdminSearchBook";
 import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
+import ConversationPage from "../Plugins/ConversationPage";
+import { ADMIN, SHOP_OWNER } from "../../handlers/userTypes";
 
 function Home(props) {
 
@@ -27,7 +30,7 @@ function Home(props) {
 
     const ref = useRef(null);
     const [current_page, setCurrentPage] = 
-        useState((user.role === 'Admin' ? 'ManageShop' : 'Home'));
+        useState((user.role === ADMIN ? 'ManageShop' : user.role === SHOP_OWNER ? 'Manage' : 'Home'));
     const [unread, setUnread] = useState(false);
     const [interval, updateIntervalID] = useState(null);
 
@@ -39,16 +42,26 @@ function Home(props) {
         setCurrentPage(event.target.name);
     }
 
+    // this function is for component to switch their page
+    function directRenderPage(page) {
+        render(page, ref.current);
+    }
+
     function renderPage() {
         var page;
+        const common_props = {
+            user: user,
+            current_page: current_page
+        }
         switch(current_page){
             case "Home": page = <Default />; break;
+            case "Manage": page = <Manage />; break;
             case "Account": page = <Account user={user} />; break;
-            case "ShoppingCart": page = <ShoppingCart user={user} current_page={current_page} />; break;
-            case "Collections": page = <Collections user={user} current_page={current_page} />; break;
-            case "Notifications": page = <Notifications user={user} current_page={current_page} />; break;
-            case "Settings": page = <Settings />; break;
-            case "CustomerServices": page = <CustomerService />; break;
+            case "ShoppingCart": page = <ShoppingCart { ...common_props } />; break;
+            case "Collections": page = <Collections { ...common_props } />; break;
+            case "Notifications": page = <Notifications { ...common_props } />; break;
+            case "Settings": page = <Settings { ...common_props } />; break;
+            case "CustomerServices": page = <ConversationPage />; break;
             case "About": page = <Help about={true} />; break;
             case "ManageShop": page = <AdminManageShop />; break;
             case "ManageAccount": page = <AdminAccount />; break;
@@ -77,14 +90,23 @@ function Home(props) {
 
     return (
     <>
-        <h5 className="LOGO_ad">Hello, { (user.role === 'Admin' ? "Admin " : "Mr.") }{ user.full_name }</h5>
+        <h5 className="LOGO_ad">Hello, { (user.role === ADMIN ? "Admin " : "Mr.") }{ user.full_name }</h5>
         
             <div className="MenuPage">
-                {(user.role !== 'Admin' ? <>
-                <button onClick={ switchPage } name='Home' className='SelectedButton'>
+                {(user.role !== ADMIN ? 
+                
+                <>
+                {(user.role === SHOP_OWNER ? 
+                // for shop owner
+                <button onClick={ switchPage } name='Manage' className='SelectedButton'>
                     <HouseDoor className="BtnIcon" />
                     Home
                 </button>
+                 : 
+                 <button onClick={ switchPage } name='Home' className='SelectedButton'>
+                    <HouseDoor className="BtnIcon" />
+                    Home
+                </button>)}
 
                 <button onClick={ switchPage } name='Account'>
                     <PersonCircle className="BtnIcon" />
@@ -109,8 +131,10 @@ function Home(props) {
                 <button onClick={ switchPage } name='About'>
                     <InfoCircle className="BtnIcon" />
                     About
-                </button> </>:<>
+                </button> </>:
 
+                // for admin
+                <>
                 <button onClick={ switchPage } name='ManageShop' className='SelectedButton'>
                     <Shop className="BtnIcon" />
                     Manage Shop

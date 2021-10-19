@@ -5,6 +5,7 @@ import './styles/account.css';
 import { submitUpdate, submitPassword as changePassword, submitDelete } from '../../../actions/personActions';
 import { logout } from '../../../handlers/userHandler';
 import { validation } from '../../../handlers/validateInput';
+import { PUBLIC_USER } from '../../../handlers/userTypes';
 
 function Account(props) {
 
@@ -273,10 +274,17 @@ function Account(props) {
                         <h3>My Details</h3>
                         My Name: { full_name }<br/>
                         My Email: { props.user.username }<br/>
+                        {(props.user.role === PUBLIC_USER ? <></> : 
+                        <>(Shop Owner)<br/></>)}
                         <hr/>
                         <button onClick={ () => setPage( 'Edit') }>Edit my profile</button>
                         <button className="Danger" onClick={ deleteAccount }>Delete my account</button>
                     </div>
+                    {(props.user.role === PUBLIC_USER ? 
+                    <div className='apply-shop-owner'>
+                        <span>Has your own shop?<br/>Apply to be a shop owner!</span>
+                        <Button className='btn'>Apply now!</Button>
+                    </div> : <></>)}
                     </>
                 );
         }

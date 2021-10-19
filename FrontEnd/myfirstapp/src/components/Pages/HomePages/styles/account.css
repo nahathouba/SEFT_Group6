@@ -112,3 +112,26 @@
     border-left: 3px solid black;
     font-size: larger;
 }
+
+.apply-shop-owner {
+    position: absolute;
+    width: 25vw;
+    height: 20vh;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-top: 45vh;
+    margin-left: 1vw;
+    padding: 20px;
+}
+
+.apply-shop-owner span {
+    font-size: x-large;
+    font-weight: bold;
+    display: block;
+}
+
+.apply-shop-owner .btn {
+    width: 10vw;
+    height: 4vh;
+    margin-top: 3vh;
+}
