@@ -15,13 +15,15 @@ export const GET_USER = "GET_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 // book
-export const GET_SEARCH_DETAILS = 'GET_SEARCH_DETAILS';
+export const GET_BOOK_DETAILS = 'GET_BOOK_DETAILS';
 
 // shop
 export const GET_SHOP = "GET_SHOP";
 
 // notification / msgs
 export const GET_USER_NOTIFICATION = 'GET_USER_NOTIFICATION';
+export const GET_UNREAD = 'GET_UNREAD';
 
 // collections
 export const GET_SHOPPING_CART = 'GET_SHOPPING_CART';
+export const GET_COLLECTION = 'GET_COLLECTION';

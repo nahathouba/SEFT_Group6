@@ -1,11 +1,11 @@
-.ShoppingCartMainDIV {
+.CollectionMainDIV {
     width: 80vw;
     height: 80vh;
     margin-top: 10vh;
     border: 1px solid black;
 }
 
-.ShoppingCartMainDIV .Head {
+.CollectionMainDIV .Head {
     display: block;
     width: 79.9vw;
     height: 7vh;
@@ -13,7 +13,7 @@
     background-color: lightgray;
 }
 
-.ShoppingCartMainDIV .Head .SortIcon {
+.CollectionMainDIV .Head .SortIcon {
     width: 2vh;
     height: 2vh;
     position: absolute;
@@ -21,7 +21,7 @@
     margin-top: 2.5vh;
 }
 
-.ShoppingCartMainDIV .Head select{
+.CollectionMainDIV .Head select{
     width: 11vw;
     height: 4vh;
     margin-top: 1.5vh;
@@ -30,7 +30,7 @@
     padding-left: 2vw;
 }
 
-.ShoppingCartMainDIV .Body {
+.CollectionMainDIV .Body {
     display: block;
     width: 79.9vw;
     height: 73vh;
@@ -39,13 +39,13 @@
     overflow-y: auto;
 }
 
-.ShoppingCartMainDIV .Body .NoData {
+.CollectionMainDIV .Body .NoData {
     display: block;
     text-align: center;
     margin-top: 25vh;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct {
+.CollectionMainDIV .Body .SingleItem {
     width: 60vw;
     height: 25vh;
     border: 1px solid black;
@@ -53,7 +53,7 @@
     margin-left: 5vw;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct .ProductImg {
+.CollectionMainDIV .Body .SingleItem .ItemImg {
     position: absolute;
     width: 20vh;
     height: 20vh;
@@ -62,24 +62,27 @@
     margin-left: 2vw;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct .ProductDetail {
-    display: block;
+.CollectionMainDIV .Body .SingleItem .ItemDetails {
     margin-left: 15vw;
     margin-top: 2vh;
     font-size: x-large;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct .FunctionBtn  {
+.CollectionMainDIV .Body .SingleItem .ItemDetails span {
+    display: block;
+}
+
+.CollectionMainDIV .Body .SingleItem .FunctionBtn  {
     margin-left: 15vw;
     margin-top: 2vh;
     height: 4vh;
     width: 5vw;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct .BtnNotFrist  {
+.CollectionMainDIV .Body .SingleItem .BtnNotFrist  {
     margin-left: 3vw;
 }
 
-.ShoppingCartMainDIV .Body .SingleProduct .InfoBtn  {
+.CollectionMainDIV .Body .SingleItem .InfoBtn  {
     width: 10vw;
 }

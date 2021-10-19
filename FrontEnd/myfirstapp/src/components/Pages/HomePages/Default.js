@@ -1,13 +1,14 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import './styles/default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search } from 'react-bootstrap-icons';
 import { search } from '../../../actions/bookActions';
-import functionReducer from '../../../reducers/functionReducer';
+import bookReducer from '../../../reducers/bookReducer';
 
 function Default() {
 
-    const [books, dispatch] = useReducer(functionReducer, {products: []})
+    const [books, dispatch] = useReducer(bookReducer, {products: []})
+    const [display_books, setBooksPage] = useState(<></>);
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
@@ -22,14 +23,18 @@ function Default() {
     }
 
     const generateBooks = () => {
-        return books.products.map(v => {
+        const page = books.products.map(e => {
             return (
                 // TODO: desgin the block
                 <div className='BookDIV'>
+                    { e.name }
                 </div>
             )
         })
+        setBooksPage(page);
     }
+
+    useEffect(generateBooks, [books]);
 
     return (
         <>
@@ -45,7 +50,7 @@ function Default() {
             <input name="search" type="text" placeholder="Search for books you want..."/>
         </form>
         <div className="DisplayBook">
-            { generateBooks() }
+            { display_books }
         </div>
         </>
     );

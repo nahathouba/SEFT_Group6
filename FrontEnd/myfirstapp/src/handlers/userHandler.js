@@ -14,9 +14,11 @@ export function login(email, password, dispatch) {
     securityLogin(user)(dispatch);
 }
 
-export function logout(history) {
+export function logout(history, interval) {
     setJWTToken(localStorage.getItem('JWTToken'));
     localStorage.removeItem('JWTToken');
+    if(interval)
+        clearInterval(interval);
     history.push('/');
 }
 

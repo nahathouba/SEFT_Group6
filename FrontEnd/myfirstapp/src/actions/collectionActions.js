@@ -21,7 +21,7 @@ export const getCollections = username => async dispatch => {
         const res = await axios.get(`${CONN_BASE_URL}/collection/colls/get/${username}`);
         dispatch({
             type: GET_SHOPPING_CART,
-            payload: res.data
+            payload: res.data.result
         })
         // data: {books: [...], bookstores: [...]}
     } catch(err) {
