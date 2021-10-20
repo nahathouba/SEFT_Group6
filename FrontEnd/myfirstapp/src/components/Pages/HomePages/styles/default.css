@@ -35,10 +35,10 @@
 }
 
 .DisplayBook {
-    width: 82vw;
+    width: 52vw;
     height: 80vh;
     position: absolute;
-    right: 0;
+    left: 3vw;
     bottom: 0;
     overflow-y: auto;
 }

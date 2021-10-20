@@ -1,29 +1,32 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search } from 'react-bootstrap-icons';
 import { search } from '../../../actions/bookActions';
-import bookReducer from '../../../reducers/bookReducer';
+import { GET_ERRORS } from '../../../actions/types';
 
 function Default() {
 
-    const [books, dispatch] = useReducer(bookReducer, {products: []})
+    const [books, setBooks] = useState([]);
     const [display_books, setBooksPage] = useState(<></>);
 
-    const onSubmitHandler = (event) => {
+    async function onSubmitHandler(event) {
         event.preventDefault();
 
         const sort = event.target.sort.value;
         const value = event.target.search.value;
 
-        search({
+        const books = await search({
             sort: sort,
             value: value
-        })(dispatch);
+        });
+
+        if(books.type !== GET_ERRORS)
+            setBooks(books.payload);
     }
 
     const generateBooks = () => {
-        const page = books.products.map(e => {
+        const page = books.map(e => {
             return (
                 // TODO: desgin the block
                 <div className='BookDIV'>

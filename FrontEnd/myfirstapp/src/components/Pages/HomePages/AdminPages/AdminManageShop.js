@@ -1,55 +1,46 @@
-import React from "react";
-import { Image } from "react-bootstrap-icons";
+import React, { useEffect, useRef, useState } from "react";
+import { render } from "react-dom";
 import { getShopInfo } from "../../../../actions/shopActions";
-import { GET_SHOP } from "../../../../actions/types";
+import { GET_ERRORS } from "../../../../actions/types";
+import BookStore from "../SinglePages/BookStore";
 import './styles/admin_manage_shop.css';
 
-function AdminManageShop(props) {
+function AdminManageShop() {
 
-    const submitSearch = (event) => {
+    const [shop, setShop] = useState(null);
+    const shop_ref = useRef(null);
+
+    async function searchShop(event) {
         event.preventDefault();
 
-        // const shop_name = event.target.shopname.value;
-        const shop_name = 'test shop';
-
-        getShopInfo(shop_name)(dispatch => {
-            if(dispatch.type === GET_SHOP)
-                props.switchPage(shopDetailPage(dispatch.payload), true);
-            else
-                alert('Cannot get shop information!');
-        })
+        const shop = event.target.shop.value;
+        if(shop.length) {
+            const res = await getShopInfo(shop);
+            if(res.type !== GET_ERRORS) {
+                setShop(res.payload);
+            }
+        } else {
+            alert("Please input a shop name to search!")
+        }
     }
 
-    const searchPage = (
+    function createShop() {
+        if(shop) {
+            render(<BookStore shop={shop} />, shop_ref.current);
+        }
+    }
+
+    useEffect(createShop, [shop])
+
+    return (
         <>
-        <form className='SearchShop' onSubmit={ submitSearch } >
-            <input name='shopname' placeholder='Search for shop name' />
-            <button type='submit'>Search</button>
+        <form className='SearchShop AdminSearch' onSubmit={searchShop}>
+            <input type='text' name='shop' placeholder='Search for a shop here...' />
+            <button>Search</button>
         </form>
-        <div className='Pending'>
-
-        </div>
-        </>);
-
-    const shopDetailPage = (infos) => {
-        return (
-            <div className='ShopInfo'>
-                <div className='ShopHeader'>
-                    <Image className='ShopImg' />
-                    <h1>{ infos.shop_name }</h1>
-                </div>
-                <div className='ShopMainPage'>
-
-                </div>
-                {/* eslint-disable-next-line */}
-                <a href='javascript:void(0);'
-                    onClick={ () => props.switchPage(searchPage, true) }>
-                    Go Back To Search Page</a>
-            </div>
-        )
-    }
-
-    return searchPage;
+        <div ref={shop_ref}></div>
+        </>
+    )
 }
 
 export default AdminManageShop;

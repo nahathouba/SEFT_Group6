@@ -1,0 +1,52 @@
+.admin-edit-user-div {
+    width: 50vw;
+    height: 50vh;
+    border: 1px solid black;
+    margin-top: 5vh;
+    margin-left: 1vw;
+    padding: 10px 30px;
+}
+
+.admin-edit-user-div .info-div {
+    width: 30vw;
+    position: absolute;
+}
+
+.admin-edit-user-div .info-div .key {
+    display: block;
+    font-size: larger;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.admin-edit-user-div .info-div .value {
+    display: block;
+    font-size: large;
+    margin-left: 20px;
+}
+
+.admin-edit-user-div .functional-btns {
+    position: absolute;
+    margin-left: 35vw;
+    margin-top: 10px;
+}
+
+.admin-edit-user-div .functional-btns .btn {
+    width: 10vw;
+    height: 5vh;
+    margin-bottom: 2vh;
+    display: block;
+}
+
+.admin-edit-user-div .user-type-btns {
+    position: absolute;
+    margin-left: 31vw;
+    margin-top: 30vh;
+}
+
+.admin-edit-user-div .user-type-btns .btn {
+    display: block;
+    margin-top: 2vh;
+    width: 15vw;
+    height: 5vh;
+}

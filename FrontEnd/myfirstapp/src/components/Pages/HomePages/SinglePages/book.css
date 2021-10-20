@@ -1,0 +1,41 @@
+.book {
+    position: absolute;
+}
+
+.book .main-info-div {
+    margin: 2vh 1vw;
+}
+
+.book .main-info-div span {
+    display: block;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.book .main-info-div input,
+.book .main-info-div textarea
+ {
+    display: block;
+    margin-bottom: 20px;
+    width: 20vw;
+    height: 5vh;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.book .main-info-div textarea {
+    height: 10vh;
+}
+
+.book .btns {
+    position: fixed;
+    margin-left: 23vw;
+    margin-top: 5vh;
+}
+
+.book .btns .btn {
+    margin-bottom: 3vh;
+    width: 10vw;
+    height: 5vh;
+    display: block;
+}

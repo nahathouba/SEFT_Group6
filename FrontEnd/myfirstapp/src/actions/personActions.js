@@ -16,9 +16,9 @@ export const submitUpdate = async (userinfo) => {
     }
 }
 
-export const adminGetUser = async (request) => {
+export const adminGetUser = async (username) => {
     try {
-        const res = await axios.post(CONN_BASE_URL + '/users/admin_get', request);
+        const res = await axios.post(CONN_BASE_URL + `/users/admin_get/${username}`);
         return res.data;
     } catch(err) {
         return {

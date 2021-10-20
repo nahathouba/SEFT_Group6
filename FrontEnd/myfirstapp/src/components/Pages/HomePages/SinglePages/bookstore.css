@@ -1,0 +1,30 @@
+.bookstore-main {
+    display: block;
+    margin-top: 3vh;
+    margin-left: 1vw;
+    width: 70vw;
+    height: 65vh;
+    border: 1px solid black;
+    padding-left: 20px;
+}
+
+.bookstore-main .key {
+    display: block;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.bookstore-main input {
+    display: block;
+    width: 15vw;
+    height: 5vh;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.bookstore-main .shop-img {
+    max-width: 15vw;
+    max-height: 15vh;
+    margin-top: 1vh;
+}

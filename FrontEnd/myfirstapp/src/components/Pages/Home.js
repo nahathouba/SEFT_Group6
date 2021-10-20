@@ -15,8 +15,8 @@ import Notifications from "./HomePages/Notifications";
 import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
 import Help from "./Help";
-import AdminAccount from "./HomePages/AdminPages/AdminAccount";
-import AdminSearchBook from "./HomePages/AdminPages/AdminSearchBook";
+import AdminManageAccount from "./HomePages/AdminPages/AdminManageAccount";
+import AdminManageBook from "./HomePages/AdminPages/AdminManageBook";
 import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
 import ConversationPage from "../Plugins/ConversationPage";
 import { ADMIN, SHOP_OWNER } from "../../handlers/userTypes";
@@ -64,8 +64,8 @@ function Home(props) {
             case "CustomerServices": page = <ConversationPage />; break;
             case "About": page = <Help about={true} />; break;
             case "ManageShop": page = <AdminManageShop />; break;
-            case "ManageAccount": page = <AdminAccount />; break;
-            case "ManageBook": page = <AdminSearchBook />; break;
+            case "ManageAccount": page = <AdminManageAccount />; break;
+            case "ManageBook": page = <AdminManageBook />; break;
             default: page = <></>;
         }
         render(page, ref.current);
