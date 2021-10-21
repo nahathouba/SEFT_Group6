@@ -33,4 +33,12 @@ public class BookService {
     }
 
     public Book requestBook(long isbn){ return bookRepository.findByisbn(isbn); }
+
+    public String deleteBookByShopID(String ownerEmail){
+        String status = "SUCCESS";
+        List<Book> books = new ArrayList<Book>();
+        books = bookRepository.findAllByShopId(ownerEmail);
+        if(books.size() == 0) status = "FAILED";
+        return status;
+    }
 }

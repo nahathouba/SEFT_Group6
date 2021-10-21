@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_bookServices.web;
 
 import com.rmit.sept.bk_bookServices.model.BookRequest;
+import com.rmit.sept.bk_bookServices.model.Response;
 import com.rmit.sept.bk_bookServices.services.MapValidationErrorService;
 import com.rmit.sept.bk_bookServices.validator.BookRequestValidator;
 import com.rmit.sept.bk_bookServices.validator.BookValidator;
@@ -45,7 +46,7 @@ public class BookController {
     private BookRequestValidator bookRequestValidator;
 
     @CrossOrigin
-    @PostMapping("/request")
+    @PostMapping ("/request") // diff and details between post & get ???
     public ResponseEntity<?> getBooks(@Valid @RequestBody BookRequest bookRequest, BindingResult result){
         bookRequestValidator.validate(bookRequest, result);
 
@@ -53,12 +54,21 @@ public class BookController {
         if(errorMap != null) return errorMap;
 
         List<Book> books = new ArrayList<Book>();
-        if(bookRequest.getSort().equals("isbn")){
+        if(bookRequest.getSort().equals("ISBN")){
             books.add(bookService.requestBook(Integer.parseInt(bookRequest.getValue())));
         }else {
             books = bookService.requestBooks(bookRequest.getSort(), bookRequest.getValue());
         }
 
         return new ResponseEntity<List<Book>>(books, HttpStatus.ACCEPTED);
+    }
+
+    //TO_DONE delete books in such shop, routine: /api/books/{username}, method: delete
+    @CrossOrigin
+    @DeleteMapping("{username}")
+    public ResponseEntity<?> deleteBook(@PathVariable("username") String ownerEmail){
+        Response res = new Response();
+        res.setStatus(bookService.deleteBookByShopID(ownerEmail));
+        return new ResponseEntity<Response>(res, HttpStatus.ACCEPTED);
     }
 }

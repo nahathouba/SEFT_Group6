@@ -12,6 +12,8 @@ public class Book {
     @Column(name="ISBN")
     private long isbn;
 
+//    private long id;
+
 //    private Long isbn;
 
     @NotBlank(message = "title is required")

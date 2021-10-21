@@ -49,6 +49,7 @@ public class UserController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null)return errorMap;
 
+        user.setRole("PublicUser");
         User newUser = userService.saveUser(user);
 
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
@@ -136,10 +137,10 @@ public class UserController {
         return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
-    @CrossOrigin
-    @GetMapping("/role/change/{username}%{role}")
-    public ResponseEntity<User> changeUsrRole(@PathVariable("username") String username, @PathVariable("role") String role) {
-        return new ResponseEntity<User>(userService.changeUserRole(role, username), HttpStatus.ACCEPTED);
-    }
+//    @CrossOrigin
+//    @GetMapping("/role/change/{username}%{role}")
+//    public ResponseEntity<User> changeUsrRole(@PathVariable("username") String username, @PathVariable("role") String role) {
+//        return new ResponseEntity<User>(userService.changeUserRole(role, username), HttpStatus.ACCEPTED);
+//    }
 
 }
