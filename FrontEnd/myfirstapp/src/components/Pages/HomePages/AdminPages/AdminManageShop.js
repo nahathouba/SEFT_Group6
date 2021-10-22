@@ -13,9 +13,9 @@ function AdminManageShop() {
     async function searchShop(event) {
         event.preventDefault();
 
-        const shop = event.target.shop.value;
-        if(shop.length) {
-            const res = await getShopInfo(shop);
+        const searched_shop = event.target.shop.value;
+        if(searched_shop.length) {
+            const res = await getShopInfo(searched_shop);
             if(res.type !== GET_ERRORS) {
                 setShop(res.payload);
             }
@@ -24,9 +24,19 @@ function AdminManageShop() {
         }
     }
 
+    function refresh() {
+        setShop(null);
+        getShopInfo(shop.owner).then(res=>{
+            if(res.type !== GET_ERRORS)
+                setShop(res.payload);
+        })
+    }
+
     function createShop() {
         if(shop) {
-            render(<BookStore shop={shop} />, shop_ref.current);
+            render(<BookStore shop={shop} refresh={refresh} />, shop_ref.current);
+        } else {
+            render(<></>, shop_ref.current);
         }
     }
 
@@ -35,7 +45,7 @@ function AdminManageShop() {
     return (
         <>
         <form className='SearchShop AdminSearch' onSubmit={searchShop}>
-            <input type='text' name='shop' placeholder='Search for a shop here...' />
+            <input type='text' name='shop' placeholder='Search a shop with shop owner username here' />
             <button>Search</button>
         </form>
         <div ref={shop_ref}></div>

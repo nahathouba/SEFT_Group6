@@ -8,7 +8,8 @@ import './styles/admin_manage_book.css'
 
 function AdminManageBook(props) {
 
-    const [book, setBook] = useState(null);
+    const [books, setBooks] = useState(null);
+    const [search_formula, setSearchFormula] = useState({});
     const body_ref = useRef(null);
 
     async function searchBookSubmit(event) {
@@ -17,29 +18,37 @@ function AdminManageBook(props) {
         const sort = event.target.sort.value;
         const value = event.target.search.value;
 
-        const res = await search({
+        setSearchFormula({
             sort: sort,
             value: value
-        });
-
+        })
+        const res = await search(search_formula);
         if(res.type !== GET_ERRORS)
-            setBook(res.payload);
+            setBooks(res.payload);
     }
 
     function createBook(book) {
         render(
             <div className='display-books display-books-single-book'>
-                <Book book={book} back={createBookList} />
+                <Book book={book} back={createBookList} refresh={refresh} />
             </div>
         , body_ref.current);
     }
 
+    function refresh() {
+        setBooks(null);
+        search(search_formula).then(res=>{
+            if(res.type !== GET_ERRORS)
+                setBooks(res.payload);
+        })
+    }
+
     function createBookList() {
         var page = <></>;
-        if(book) {
+        if(books) {
             page = (
                 <div className='display-books'>
-                {book.map(e=>{
+                {books.map(e=>{
                     return (
                         <span className='book-list-book' onClick={()=>createBook(e)}>
                             <span className='info'>Book Title: <span>{e.title}</span></span>
@@ -55,11 +64,11 @@ function AdminManageBook(props) {
         render(page, body_ref.current);
     }
 
-    useEffect(createBookList, [book]);
+    useEffect(createBookList, [books]);
 
     useEffect(()=>{
         if(props.books)
-            setBook(props.books);
+            setBooks(props.books);
     // eslint-disable-next-line
     }, []);
 
