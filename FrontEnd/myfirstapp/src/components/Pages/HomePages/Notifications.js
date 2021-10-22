@@ -1,46 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import { Bell } from 'react-bootstrap-icons';
-import { getNotifications } from '../../../actions/notificationActions';
+import { getNotifications, readNotification } from '../../../actions/notificationActions';
 import { GET_ERRORS } from '../../../actions/types';
+import { APPLY_SHOP_OWNER, SYSTEM_WELCOME } from '../../../handlers/NotificationTypes';
+import BookStore from './SinglePages/BookStore';
 import './styles/notifications.css';
 
 function Notifications(props){
 
-    const [notifications, setNotifications] = 
-        useState(<h1 className='Nothing'>Loading...</h1>);
+    const [notifications, setNotifications] = useState([]);
+    const [notification_page, setPage] = useState(<h1 className='Nothing'>Loading...</h1>);
 
-    const generateNotifications = () => {
-        getNotifications(props.user.username)(res=>{
-            if(res.type !== GET_ERRORS) {
-                var page;
-                if(res.payload.length > 0) {
-                    page = res.payload.map((e) => {
-                        return (
-                            <div className={'SingleNotification' + (e.unread ? ' Unread' : '')}>
-                                <Bell className='AlertIcon'/>
-                                <h1 className='Title'>{ e.title }</h1>
-                                <h3 className='Sender'>From { e.sender }</h3>
-                                <h3 className='Time'>{ e.time }</h3>
-                            </div>
-                        );
-                    });
-                } else
-                    page = <h1 className='Nothing'>There's no notifications right now!</h1>;
+    function viewApplyDetails(msg) {
+        readNotification(msg.id);
+        const details = JSON.parse(msg.body);
 
-                setNotifications(page);
-            }
-        })
-        
+        setPage(
+            <BookStore shop={details} confirm={true} 
+                back={true} refresh={getUserNotifications} />
+        )
     }
 
-    useEffect(()=>{
-        generateNotifications();
-    // eslint-disable-next-line
-    }, [props.current_page]);
+    function read(id) {
+        readNotification(id).then(res=> {
+            setNotifications([]);
+            getUserNotifications();
+        })
+    }
+
+    const generateNotifications = () => {
+        var page;
+        if(notifications.length) {
+            page = notifications.map((e) => {
+                return (
+                    <div className={'SingleNotification' + (e.unread === 'UNREAD' ? ' Unread' : '')}>
+                        <Bell className='AlertIcon'/>
+                        <span className='Title'>
+                            { e.type === APPLY_SHOP_OWNER ? 
+                                "Apply for shop owner" : e.type === SYSTEM_WELCOME ?
+                                "Welcome!" : "Unknown message" }
+                        </span>
+                        <span className='Sender'>From { e.sender }</span>
+                        {( e.type === APPLY_SHOP_OWNER ? 
+                            e.unread === 'UNREAD' ?
+                            <span className='body link' onClick={()=>viewApplyDetails(e)}>
+                                View Apply Details
+                            </span> : <span className='body'>Already processed</span> :
+                            <span className='body'>{ e.body }
+                                <br/>{(e.unread === 'UNREAD' ? 
+                                <span className='link' onClick={read}>Got it!</span> : <></>)}
+                            </span>)}
+                    </div>
+                );
+            });
+        } else
+            page = <h1 className='Nothing'>There's no notifications right now!</h1>;
+
+        setPage(page);
+    }
+
+    function getUserNotifications() {
+        getNotifications(props.user.username)(res=>{
+            if(res.type !== GET_ERRORS)
+                setNotifications(res.payload);
+        })
+    }
+
+    useEffect(getUserNotifications, [props.current_page]);
+    useEffect(generateNotifications, [notifications]);
+    
 
     return (
         <div className='NotificationMainDIV'>
-            { notifications }
+            { notification_page }
         </div>
     );
 }

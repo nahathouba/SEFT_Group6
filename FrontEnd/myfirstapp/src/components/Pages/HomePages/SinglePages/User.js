@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from 'react-bootstrap';
+import { degrade } from "../../../../actions/personActions";
 import { PUBLIC_USER } from "../../../../handlers/userTypes";
 import './user.css';
 
@@ -23,7 +24,7 @@ function User(props) {
             <div className='user-type-btns'>
                 {(props.user.role === PUBLIC_USER ?
                 <Button className='btn' variant='dark'>Upgrade to Shop Owner</Button>:
-                <Button className='btn' variant='dark'>Change back to Public User</Button>)}
+                <Button className='btn' variant='dark' onClick={()=>degrade(props.user.username)}>Degrade to Public User</Button>)}
                 <Button className='btn' variant='dark'>Upgrade to Admin</Button>
             </div>
         </div>

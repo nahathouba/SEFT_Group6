@@ -135,3 +135,11 @@
     height: 4vh;
     margin-top: 3vh;
 }
+
+.apply-shop-owner-bookstore .bookstore-main {
+    position: absolute;
+    margin: unset;
+    margin-top: 45vh;
+    margin-left: 1vw;
+    border-radius: 15px;
+}

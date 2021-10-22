@@ -38,8 +38,11 @@ function Book(props) {
         <div className='book'>
             <div className='btns'>
                 <Button className='btn' onClick={props.back}>Go back</Button>
-                <Button className='btn' variant='success'>Update Information</Button>
-                <Button className='btn' variant='danger'>Delete this book</Button>
+                {(props.add ?
+                <Button className='btn' variant='success'>Add this book</Button>:
+                <Button className='btn' variant='success'>Update Information</Button>)}
+                {(props.add ? <></> :
+                <Button className='btn' variant='danger'>Delete this book</Button>)}
             </div>
             <div className='main-info-div'>
                 <span>Title</span>

@@ -1,0 +1,6 @@
+.book-details-main {
+    width: 60vw;
+    height: 60vh;
+    border: 1px solid black;
+    display: block;
+}

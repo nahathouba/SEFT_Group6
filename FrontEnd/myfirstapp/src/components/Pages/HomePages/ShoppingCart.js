@@ -21,9 +21,9 @@ function ShoppingCart(props) {
         function compare(elem1, elem2) {
             switch(sort_by) {
                 case 'Date_nto':
-                    return (elem1.adding_date > elem2.adding_date);
+                    return (new Date(elem1.adding_date) > new Date(elem2.adding_date));
                 case 'Date_otn':
-                    return (elem1.adding_date < elem2.adding_date);
+                    return (new Date(elem1.adding_date) < new Date(elem2.adding_date));
                 case 'Price_lth':
                     return (elem1.price < elem2.price);
                 case 'Price_htl':

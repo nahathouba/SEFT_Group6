@@ -1,24 +1,24 @@
 import axios from "axios";
+import { PUBLIC_USER } from "../handlers/userTypes";
 import { CONN_BASE_URL, GET_ERRORS, SUCCESS } from "./types";
 
 export const getPerson = async (username) => {
-    const res = await axios.get(`${CONN_BASE_URL}/users/get/${username}`);
+    const res = await axios.get(`${CONN_BASE_URL}/userinfo/get/${username}`);
     return res.data;
 }
 
 export const submitUpdate = async (userinfo) => {
     try {
-        const res = await axios.post(`${CONN_BASE_URL}/users/profile/update`, userinfo);
-        return res.data.status;
+        const res = await axios.post(`${CONN_BASE_URL}/userinfo/profile/update`, userinfo);
+        return res.data;
     } catch(err) {
-        alert(err);
         return false;
     }
 }
 
 export const adminGetUser = async (username) => {
     try {
-        const res = await axios.post(CONN_BASE_URL + `/users/admin_get/${username}`);
+        const res = await axios.post(CONN_BASE_URL + `/userinfo/admin_get/${username}`);
         return res.data;
     } catch(err) {
         return {
@@ -38,6 +38,7 @@ export const submitPassword = async (request) => {
 
 export const submitDelete = async (username) => {
     try {
+        await axios.delete(CONN_BASE_URL + `/userinfo/${username}`);
         await axios.delete(CONN_BASE_URL + `/users/${username}`);
         return true;
     } catch(err){
@@ -47,8 +48,20 @@ export const submitDelete = async (username) => {
 
 export const submitBlock = async (username) => {
     try {
-        const res = await axios.get(CONN_BASE_URL + `/users/block/${username}`, );
+        const res = await axios.get(CONN_BASE_URL + `/userinfo/block/${username}`, );
         return (res.data.status === 'SUCCESS' ? SUCCESS : GET_ERRORS);
+    } catch(err) {
+        return GET_ERRORS
+    }
+}
+
+export const degrade = async (username) => {
+    try {
+        // delete shops, books and degrade user to public user
+        await axios.delete(`${CONN_BASE_URL}/shops/${username}`);
+        await axios.delete(`${CONN_BASE_URL}/books/${username}`);
+        await submitUpdate({username: username, role: PUBLIC_USER});
+        return true;
     } catch(err) {
         return GET_ERRORS
     }

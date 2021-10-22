@@ -1,8 +1,6 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Search, FileRichtext } from 'react-bootstrap-icons';
 import { render } from "react-dom";
-import { searchShop } from "../../../../actions/bookActions";
-import { GET_ERRORS } from "../../../../actions/types";
 
 function ManageShop(props) {
 
@@ -32,20 +30,24 @@ function ManageShop(props) {
     async function searchSubmit(event) {
         event.preventDefault();
 
-        const books = await searchShop(null);
-        if(books.type !== GET_ERRORS)
-            createBooks(books.payload);
+        const sort = event.target.sort.value;
+        const value = event.target.search.value;
+
+        const searched_books = props.books.filter(e=>e[sort] === value);
+        createBooks(searched_books)
     }
+
+    useEffect(()=>createBooks(props.books), [props.books]);
 
     return (
         <div>
             <h3 className="AskSearch">Search a book sale on your shop...</h3>
             <form className="SearchBar" onSubmit={searchSubmit}>
                 <select className="form-select" name="sort">
-                    <option selected value="BookName">Book Name</option>
+                    <option selected value="title">Title</option>
                     <option value="ISBN">ISBN</option>
-                    <option value="Author">Author</option>
-                    <option value="Category">Category</option>
+                    <option value="author">Author</option>
+                    <option value="category">Category</option>
                 </select>
                 <button type="submit"><Search /></button>
                 <input name="search" type="text" placeholder="Search for books you want..."/>

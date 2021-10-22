@@ -38,17 +38,28 @@
 .NotificationMainDIV .SingleNotification .Title {
     position: absolute;
     margin-left: 9vw;
-    margin-top: 2.5vh;
+    margin-top: 1vh;
+    font-size: xx-large;
 }
 
 .NotificationMainDIV .SingleNotification .Sender {
     position: absolute;
-    margin-left: 9vw;
-    margin-top: 7vh;
+    margin-left: 9.2vw;
+    margin-top: 5.5vh;
+    font-size: large;
 }
 
-.NotificationMainDIV .SingleNotification .Time {
-    float: right;
-    margin-right: 1vw;
-    margin-top: 10vh;
+.NotificationMainDIV .SingleNotification .body {
+    position: absolute;
+    margin-left: 9.2vw;
+    margin-top: 8vh;
+}
+
+.NotificationMainDIV .SingleNotification .link {
+    color: deepskyblue;
+    text-decoration: underline;
+}
+
+.NotificationMainDIV .SingleNotification .link:hover {
+    cursor: pointer;
 }

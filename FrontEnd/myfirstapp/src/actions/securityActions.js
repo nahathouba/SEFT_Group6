@@ -5,7 +5,17 @@ import jwt_decode from "jwt-decode";
 
 
 export const createNewUser = async (newUser) => {
-    await axios.post("http://localhost:8080/api/users/register", newUser);
+    await axios.post("http://localhost:8080/api/users/register", {
+        username: newUser.username,
+        password: newUser.password,
+        confirm_password: newUser.confirm_password
+    });
+
+    await axios.post("http://localhost:8080/api/userinfo", {
+        username: newUser.username,
+        full_name: newUser.full_name,
+        gender: newUser.gender
+    });
 };
 
 export const login = LoginRequest => async dispatch => {

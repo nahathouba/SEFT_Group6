@@ -6,10 +6,12 @@ import { submitUpdate, submitPassword as changePassword, submitDelete } from '..
 import { logout } from '../../../handlers/userHandler';
 import { validation } from '../../../handlers/validateInput';
 import { PUBLIC_USER } from '../../../handlers/userTypes';
+import BookStore from './SinglePages/BookStore';
 
 function Account(props) {
 
     const [page, setPage] = useState('Landing');
+    const [apply, setApply] = useState(false);
 
     const [full_name, setName] = useState(props.user.full_name);
     const [about, setAbout] = useState(props.user.about);
@@ -163,25 +165,10 @@ function Account(props) {
         }
     }
 
-    const deleteAccount = () => {
-
-        const confirm = () => {
-            submitDelete(props.user.username).then(()=>{ logout(props.history)} );
-        }
-
-        props.showAlert({
-            display: 'block',
-            title: "Confirm Delete",
-            content: "Are you sure you want to delete your account? This can never undo!",
-            cancel: () => props.showAlert({
-                display: 'none',
-                title: "",
-                content: "",
-                cancel: null, 
-                confirm: null
-            }), 
-            confirm: confirm
-        })
+    // TODO:
+    async function deleteAccount() {
+        await submitDelete(props.user.username);
+        logout(props.history, props.interval);
     }
 
     const loadPage = () => {
@@ -281,9 +268,13 @@ function Account(props) {
                         <button className="Danger" onClick={ deleteAccount }>Delete my account</button>
                     </div>
                     {(props.user.role === PUBLIC_USER ? 
+                    apply ? 
+                    <div className='apply-shop-owner-bookstore'>
+                    <BookStore shop={{owner: props.user.username}}
+                        new_shop={true} back={()=>setApply(false)} /></div> :
                     <div className='apply-shop-owner'>
                         <span>Has your own shop?<br/>Apply to be a shop owner!</span>
-                        <Button className='btn'>Apply now!</Button>
+                        <Button className='btn' onClick={()=>setApply(true)}>Apply now!</Button>
                     </div> : <></>)}
                     </>
                 );

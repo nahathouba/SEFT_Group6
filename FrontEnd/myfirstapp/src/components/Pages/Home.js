@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor, Book, Shop } from "react-bootstrap-icons";
+import { PersonCircle, Cart3, Star, Bell, Gear, InfoCircle, BoxArrowLeft, HouseDoor, Book, Shop } from "react-bootstrap-icons";
 import { logout } from "../../handlers/userHandler";
 import { getUnread } from "../../actions/notificationActions";
 import { GET_ERRORS } from "../../actions/types";
@@ -8,7 +8,6 @@ import '../../styles/home.css';
 
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
-// import CustomerService from "./HomePages/CustomerService";
 import Default from "./HomePages/Default";
 import Manage from "./HomePages/ShopOwnerPages/Manage";
 import Notifications from "./HomePages/Notifications";
@@ -18,7 +17,6 @@ import Help from "./Help";
 import AdminManageAccount from "./HomePages/AdminPages/AdminManageAccount";
 import AdminManageBook from "./HomePages/AdminPages/AdminManageBook";
 import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
-import ConversationPage from "../Plugins/ConversationPage";
 import { ADMIN, SHOP_OWNER } from "../../handlers/userTypes";
 
 function Home(props) {
@@ -42,11 +40,6 @@ function Home(props) {
         setCurrentPage(event.target.name);
     }
 
-    // this function is for component to switch their page
-    function directRenderPage(page) {
-        render(page, ref.current);
-    }
-
     function renderPage() {
         var page;
         const common_props = {
@@ -55,13 +48,12 @@ function Home(props) {
         }
         switch(current_page){
             case "Home": page = <Default />; break;
-            case "Manage": page = <Manage />; break;
-            case "Account": page = <Account user={user} />; break;
+            case "Manage": page = <Manage { ...common_props } />; break;
+            case "Account": page = <Account history={props.history} user={user} interval={interval} />; break;
             case "ShoppingCart": page = <ShoppingCart { ...common_props } />; break;
             case "Collections": page = <Collections { ...common_props } />; break;
             case "Notifications": page = <Notifications { ...common_props } />; break;
             case "Settings": page = <Settings { ...common_props } />; break;
-            case "CustomerServices": page = <ConversationPage />; break;
             case "About": page = <Help about={true} />; break;
             case "ManageShop": page = <AdminManageShop />; break;
             case "ManageAccount": page = <AdminManageAccount />; break;
@@ -121,11 +113,6 @@ function Home(props) {
                 <button onClick={ switchPage } name='Collections'>
                     <Star className="BtnIcon" />
                     Collections
-                </button>
-                
-                <button onClick={ switchPage } name='CustomerServices'>
-                    <ChatDots className="BtnIcon" />
-                    Customer Services
                 </button>
                 
                 <button onClick={ switchPage } name='About'>

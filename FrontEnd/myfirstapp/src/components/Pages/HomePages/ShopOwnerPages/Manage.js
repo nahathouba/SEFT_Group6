@@ -6,10 +6,14 @@ import EditPromotion from "./EditPromotion";
 import { render } from "react-dom";
 import './manage.css';
 import BookStore from "../SinglePages/BookStore";
+import { getShopInfo, searchShop } from "../../../../actions/shopActions";
+import { GET_ERRORS } from "../../../../actions/types";
 
-function Manage() {
+function Manage(props) {
 
     const [current, setCurrent] = useState('ManageShop');
+    const [books, setBooks] = useState([]);
+    const [shop_info, setShopInfo] = useState({});
     const main_ref = useRef(null);
     const sp_btns_ref = useRef(null);
 
@@ -22,13 +26,13 @@ function Manage() {
         var page;
         switch(current) {
             case 'ManageShop':
-                page = <ManageShop />; break;
+                page = <ManageShop books={books} />; break;
             case 'PublicSearch':
                 page = <Default />; break;
             case 'EditShopInfo':
-                page = <BookStore shop={{}} />; break;
+                page = <BookStore refresh={refresh} shop={shop_info} />; break;
             case 'EditBookInfo':
-                page = <EditBooks />; break;
+                page = <EditBooks refresh={refresh} books={books} />; break;
             case 'EditPromotion':
                 page = <EditPromotion />; break;
             case 'EditShop':
@@ -52,7 +56,27 @@ function Manage() {
         render(page, main_ref.current);
     }
 
-    useEffect(switchPage, [current])
+    function init() {
+        getShopInfo(props.user.username).then(res=>{
+            if(res.type !== GET_ERRORS)
+                setShopInfo(res.payload);
+        })
+        searchShop(props.user.username).then(res=>{
+            if(res.type !== GET_ERRORS)
+                setBooks(res.payload);
+        });
+    }
+
+    function refresh() {
+        render(<></>, main_ref.current);
+        switchPage();
+    }
+
+    useEffect(init, [props.current_page]);
+
+    useEffect(switchPage, [current]);
+    useEffect(switchPage, [books]);
+    useEffect(switchPage, [shop_info]);
 
     return (
         <>

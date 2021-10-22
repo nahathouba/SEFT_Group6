@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './styles/default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Search } from 'react-bootstrap-icons';
+import { Search, Image } from 'react-bootstrap-icons';
 import { search } from '../../../actions/bookActions';
 import { GET_ERRORS } from '../../../actions/types';
+import { Button } from 'react-bootstrap';
 
 function Default() {
 
@@ -28,9 +29,18 @@ function Default() {
     const generateBooks = () => {
         const page = books.map(e => {
             return (
-                // TODO: desgin the block
                 <div className='BookDIV'>
-                    { e.name }
+                    <Image className='book-img' />
+                    <div className='book-details'>
+                        <span>Title: { e.title }</span>
+                        <span>Author: { e.author }</span>
+                        <span>ISBN: { e.ISBN }</span>
+                        <span>Price: $ { e.price }</span>
+                        <span>Description: { e.description }</span>
+                        <Button className='btn'>Add to cart</Button>
+                        <Button className='btn'>Add to collection</Button>
+                        <Button className='btn'>View details</Button>
+                    </div>
                 </div>
             )
         })
@@ -44,10 +54,10 @@ function Default() {
         <h3 className="AskSearch">Search a book you want...</h3>
         <form className="SearchBar" onSubmit={ onSubmitHandler }>
             <select className="form-select" name="sort">
-                <option selected value="BookName">Book Name</option>
+                <option selected value="title">Title</option>
                 <option value="ISBN">ISBN</option>
-                <option value="Author">Author</option>
-                <option value="Category">Category</option>
+                <option value="author">Author</option>
+                <option value="category">Category</option>
             </select>
             <button type="submit"><Search /></button>
             <input name="search" type="text" placeholder="Search for books you want..."/>

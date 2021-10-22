@@ -1,10 +1,11 @@
 export const CONN_BASE_URL = 'http://localhost:8080/api';
 // real routes, but using later after everyting done
 export const USER_CONN_BASE_URL = 'http://localhost:8080/api/users';
-export const BOOK_CONN_BASE_URL = 'http://localhost:8081/api/books';
-export const SHOP_CONN_BASE_URL = 'http://localhost:8082/api/shop';
-export const MSGS_CONN_BASE_URL = 'http://localhost:8083/api/notifications';
-export const COLL_CONN_BASE_URL = 'http://localhost:8084/api/collection';
+export const INFO_CONN_BASE_URL = 'http://localhost:8081/api/users';
+export const BOOK_CONN_BASE_URL = 'http://localhost:8082/api/books';
+export const SHOP_CONN_BASE_URL = 'http://localhost:8083/api/shop';
+export const MSGS_CONN_BASE_URL = 'http://localhost:8084/api/notifications';
+export const COLL_CONN_BASE_URL = 'http://localhost:8085/api/collection';
 
 // common
 export const GET_ERRORS = "GET_ERRORS";
@@ -19,9 +20,11 @@ export const GET_BOOK_DETAILS = 'GET_BOOK_DETAILS';
 
 // shop
 export const GET_SHOP = "GET_SHOP";
+export const UPDATE_SHOP = "UPDATE_SHOP";
 
 // notification / msgs
 export const GET_USER_NOTIFICATION = 'GET_USER_NOTIFICATION';
+export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
 export const GET_UNREAD = 'GET_UNREAD';
 
 // collections

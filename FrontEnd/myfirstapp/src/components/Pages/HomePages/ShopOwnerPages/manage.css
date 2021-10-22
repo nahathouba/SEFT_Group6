@@ -86,7 +86,45 @@
 }
 
 .manage-show-page .bookstore-main {
-    width: inherit;
-    height: inherit;
+    /* width: inherit;
+    height: inherit; */
     margin: unset;
+    margin-top: 20vh;
+    margin-left: 15vw;
+    position: absolute;
+}
+
+.add-book-btn {
+    width: 20vw;
+    height: 5vh;
+    margin-top: 15vh;
+    margin-left: 3vw;
+    margin-bottom: 4vh;
+}
+
+.edit-books-display {
+    margin-left: 3vw;
+    width: 35vw;
+    height: 60vh;
+    border: 1px solid black;
+    display: block;
+    overflow-y: auto;
+}
+
+.edit-books-display .book {
+    width: calc(35vw - 2px);
+    height: calc(60vh - 2px);
+    border: none;
+    margin: unset;
+    overflow-y: auto;
+}
+
+.edit-books-display .display-book {
+    width: 30vw;
+    height: 10vh;
+    margin-left: 1vw;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    display: block;
+    border: 1px solid black;
 }
