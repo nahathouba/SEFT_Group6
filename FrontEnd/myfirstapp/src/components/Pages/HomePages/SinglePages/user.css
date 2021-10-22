@@ -25,6 +25,12 @@
     margin-left: 20px;
 }
 
+.admin-edit-user-div .info-div .value-input {
+    width: 15vw;
+    height: 5vh;
+    padding-left: 20px;
+}
+
 .admin-edit-user-div .functional-btns {
     position: absolute;
     margin-left: 35vw;

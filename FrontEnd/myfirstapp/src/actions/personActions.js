@@ -46,15 +46,6 @@ export const submitDelete = async (username) => {
     }
 }
 
-export const submitBlock = async (username) => {
-    try {
-        const res = await axios.get(CONN_BASE_URL + `/userinfo/block/${username}`, );
-        return (res.data.status === 'SUCCESS' ? SUCCESS : GET_ERRORS);
-    } catch(err) {
-        return GET_ERRORS
-    }
-}
-
 export const degrade = async (username) => {
     try {
         // delete shops, books and degrade user to public user

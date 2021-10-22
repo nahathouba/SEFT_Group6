@@ -28,7 +28,7 @@ function AdminManageAccount() {
     function createUserBlock() {
         if(user) {
             render(
-                <User user={user} />
+                <User user={user} setUser={setUser} />
             , editor_ref.current);
         }
     }
