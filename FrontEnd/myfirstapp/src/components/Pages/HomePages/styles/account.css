@@ -31,6 +31,26 @@
     margin-left: 1vw;
 }
 
+.AccountDetails .confirm-delete-account {
+    margin-left: 1vw;
+}
+
+.AccountDetails .confirm-delete-account .yes,
+.AccountDetails .confirm-delete-account .no {
+    margin-left: 10px;
+    color: red;
+}
+
+.AccountDetails .confirm-delete-account .yes:hover,
+.AccountDetails .confirm-delete-account .no:hover {
+    cursor: pointer;
+}
+
+.AccountDetails .confirm-delete-account .no {
+    color: deepskyblue;
+}
+
+
 .AccountDetails hr {
     margin-top: 3vh;
 }

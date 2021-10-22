@@ -121,10 +121,15 @@
 
 .edit-books-display .display-book {
     width: 30vw;
-    height: 10vh;
+    height: 15vh;
     margin-left: 1vw;
     margin-top: 1vh;
     margin-bottom: 2vh;
     display: block;
     border: 1px solid black;
+    padding: 10px;
+}
+
+.edit-books-display .display-book:hover {
+    cursor: pointer;
 }

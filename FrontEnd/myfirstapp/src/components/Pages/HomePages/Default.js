@@ -5,6 +5,7 @@ import { Search, Image } from 'react-bootstrap-icons';
 import { search } from '../../../actions/bookActions';
 import { GET_ERRORS } from '../../../actions/types';
 import { Button } from 'react-bootstrap';
+import { addToCart, addToColl } from '../../../actions/collectionActions';
 
 function Default() {
 
@@ -26,6 +27,21 @@ function Default() {
             setBooks(books.payload);
     }
 
+    async function addObj(type, details) {
+        if(type === 'coll') {
+            addToColl({
+                category: "Book",
+                name: details.name
+            }).then(res=>{if(res){alert("Added to collection!")}})
+        } else if(type === 'cart') {
+            addToCart({
+                name: details.name,
+                price: details.price,
+                adding_date: new Date().getTime().toString()
+            }).then(res=>{if(res){alert("Added to cart!")}})
+        }
+    }
+
     const generateBooks = () => {
         const page = books.map(e => {
             return (
@@ -37,8 +53,8 @@ function Default() {
                         <span>ISBN: { e.ISBN }</span>
                         <span>Price: $ { e.price }</span>
                         <span>Description: { e.description }</span>
-                        <Button className='btn'>Add to cart</Button>
-                        <Button className='btn'>Add to collection</Button>
+                        <Button className='btn' onClick={()=>addObj('cart', e)}>Add to cart</Button>
+                        <Button className='btn' onClick={()=>addObj('coll', e)}>Add to collection</Button>
                         <Button className='btn'>View details</Button>
                     </div>
                 </div>

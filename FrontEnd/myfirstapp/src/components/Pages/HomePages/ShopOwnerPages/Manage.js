@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Default from '../Default';
 import ManageShop from "./ManageShop";
 import EditBooks from "./EditBooks";
-import EditPromotion from "./EditPromotion";
 import { render } from "react-dom";
 import './manage.css';
 import BookStore from "../SinglePages/BookStore";
@@ -33,8 +32,6 @@ function Manage(props) {
                 page = <BookStore refresh={refresh} shop={shop_info} />; break;
             case 'EditBookInfo':
                 page = <EditBooks refresh={refresh} books={books} />; break;
-            case 'EditPromotion':
-                page = <EditPromotion />; break;
             case 'EditShop':
                 setCurrent('EditShopInfo'); return;
 
@@ -68,8 +65,10 @@ function Manage(props) {
     }
 
     function refresh() {
+        setShopInfo({});
+        setBooks([]);
         render(<></>, main_ref.current);
-        switchPage();
+        init();
     }
 
     useEffect(init, [props.current_page]);
@@ -89,7 +88,6 @@ function Manage(props) {
                 <span name='EditShopInfo' className='special' onClick={selectPage}>Edit shop information</span>
                 <span name='EditBookInfo' className='special' onClick={selectPage}>Edit books information</span>
             </div>
-            <span name='EditPromotion' onClick={selectPage}>Manage promoition</span>
         </div>
         </>
     );

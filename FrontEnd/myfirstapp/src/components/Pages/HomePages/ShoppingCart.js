@@ -2,7 +2,7 @@ import { Button } from 'react-bootstrap';
 import React, { useEffect, useRef, useState } from 'react';
 import { Sliders, Image } from 'react-bootstrap-icons';
 import './styles/collection.css';
-import { getShoppingCart } from '../../../actions/collectionActions';
+import { getShoppingCart, removeCart } from '../../../actions/collectionActions';
 import { render } from 'react-dom';
 import { GET_ERRORS } from '../../../actions/types';
 
@@ -21,9 +21,9 @@ function ShoppingCart(props) {
         function compare(elem1, elem2) {
             switch(sort_by) {
                 case 'Date_nto':
-                    return (new Date(elem1.adding_date) > new Date(elem2.adding_date));
+                    return (parseInt(elem1.adding_date) > parseInt(elem2.adding_date));
                 case 'Date_otn':
-                    return (new Date(elem1.adding_date) < new Date(elem2.adding_date));
+                    return (parseInt(elem1.adding_date) < parseInt(elem2.adding_date));
                 case 'Price_lth':
                     return (elem1.price < elem2.price);
                 case 'Price_htl':
@@ -59,10 +59,18 @@ function ShoppingCart(props) {
                         <div className='ItemDetails'>
                             <span>Item name: {e.name}</span>
                             <span>Price: $ {e.price}</span>
-                            <span>Adding date: {e.adding_date}</span>
+                            <span>Adding date: {new Date(e.adding_date).toUTCString()}</span>
                         </div>
                         <Button className='FunctionBtn'>Purchase</Button>
-                        <Button className='FunctionBtn BtnNotFrist'>Remove</Button>
+                        <Button className='FunctionBtn BtnNotFrist'
+                            onClick={()=>removeCart(e.id).then(
+                                res=>{
+                                    if(res){
+                                    setCart([]);
+                                    loadShoppingCart();
+                                    alert("Removed successfully!");}
+                                })}
+                        >Remove</Button>
                         <Button className='FunctionBtn BtnNotFrist InfoBtn'>Further Information</Button>
                     </div>
                 );
@@ -73,14 +81,15 @@ function ShoppingCart(props) {
         render(page, body_ref.current);
     }
 
-    useEffect(()=>{
+    function loadShoppingCart() {
         getShoppingCart(props.user.username)(res=>{
             if(res.type !== GET_ERRORS) {
                 setCart(res.payload);
             }
         });
-    // eslint-disable-next-line
-    },[props.current_page]);
+    }
+
+    useEffect(loadShoppingCart,[props.current_page]);
 
     useEffect(sortCart, [sort_by]);
     useEffect(sortCart, [cart]);
@@ -104,26 +113,3 @@ function ShoppingCart(props) {
 }
 
 export default ShoppingCart;
-// var page;
-            // if(res.type !== GET_ERRORS) {
-            //     if(res.payload.length > 0) {
-            //         page = res.payload.map(e => {
-            //             return (
-            //                 <div className='SingleItem'>
-            //                     <Image className='ItemImg'/>
-            //                     <span className='ItemDetail'>Item name: {e.name}</span>
-            //                     <span className='ItemDetail'>Price: $ {e.price}</span>
-            //                     <span className='ItemDetail'>Adding date: {e.adding_date}</span>
-            //                     <Button className='FunctionBtn'>Purchase</Button>
-            //                     <Button className='FunctionBtn BtnNotFrist'>Remove</Button>
-            //                     <Button className='FunctionBtn BtnNotFrist InfoBtn'>Further Information</Button>
-            //                 </div>
-            //             );
-            //         });
-            //     } else {
-            //         page = <h1 className='NoData'>Nothing in your shopping cart right now!</h1>
-            //     }
-            // } else {
-            //     page = <h1 className='NoData'>Something not good occurs!</h1>;
-            // }
-            // render(page, body_ref.current);

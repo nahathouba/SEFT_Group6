@@ -24,7 +24,7 @@ function Home(props) {
     if(!props.location.state)
         props.history.push("/");
 
-    const user = props.location.state;
+    const [user, setUser] = useState(props.location.state);
 
     const ref = useRef(null);
     const [current_page, setCurrentPage] = 
@@ -49,7 +49,8 @@ function Home(props) {
         switch(current_page){
             case "Home": page = <Default />; break;
             case "Manage": page = <Manage { ...common_props } />; break;
-            case "Account": page = <Account history={props.history} user={user} interval={interval} />; break;
+            case "Account": page = <Account history={props.history} 
+                user={user} interval={interval} setUser={setUser} />; break;
             case "ShoppingCart": page = <ShoppingCart { ...common_props } />; break;
             case "Collections": page = <Collections { ...common_props } />; break;
             case "Notifications": page = <Notifications { ...common_props } />; break;

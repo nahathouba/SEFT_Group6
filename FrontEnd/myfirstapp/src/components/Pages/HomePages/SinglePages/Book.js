@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from 'react-bootstrap';
+import { addBook, deleteBook, updateBook } from "../../../../actions/bookActions";
 import './book.css';
 
 function Book(props) {
@@ -34,15 +35,41 @@ function Book(props) {
         }
     }
 
+    function toJSON() {
+        return {
+            id: props.book.id,
+            title: title,
+            ISBN: ISBN,
+            author: author,
+            category: category,
+            price: price,
+            description: description,
+            image: image
+        }
+    }
+
+    async function exec(action) {
+        switch(action) {
+            case 'add':
+                await addBook(toJSON()); break;
+            case 'update':
+                await updateBook(toJSON()); break;
+            case 'delete':
+                await deleteBook(props.book.id); break;
+            default: return;
+        }
+        props.refresh();
+    }
+
     return (
         <div className='book'>
             <div className='btns'>
                 <Button className='btn' onClick={props.back}>Go back</Button>
                 {(props.add ?
-                <Button className='btn' variant='success'>Add this book</Button>:
-                <Button className='btn' variant='success'>Update Information</Button>)}
+                <Button className='btn' variant='success' onClick={()=>exec('add')}>Add this book</Button>:
+                <Button className='btn' variant='success' onClick={()=>exec('update')}>Update Information</Button>)}
                 {(props.add ? <></> :
-                <Button className='btn' variant='danger'>Delete this book</Button>)}
+                <Button className='btn' variant='danger' onClick={()=>exec('delete')}>Delete this book</Button>)}
             </div>
             <div className='main-info-div'>
                 <span>Title</span>

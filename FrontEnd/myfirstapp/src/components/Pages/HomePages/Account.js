@@ -12,6 +12,7 @@ function Account(props) {
 
     const [page, setPage] = useState('Landing');
     const [apply, setApply] = useState(false);
+    const [confirm_remove, setConfirmRemove] = useState(false);
 
     const [full_name, setName] = useState(props.user.full_name);
     const [about, setAbout] = useState(props.user.about);
@@ -33,9 +34,11 @@ function Account(props) {
             address: address
         }
 
-        submitUpdate(infos).then((status) => {
-            if(status)
-                props.setUser(infos);
+        submitUpdate(infos).then(res => {
+            if(res) {
+                props.setUser(res);
+                setPage('Landing')
+            }
         })
     }
 
@@ -165,7 +168,6 @@ function Account(props) {
         }
     }
 
-    // TODO:
     async function deleteAccount() {
         await submitDelete(props.user.username);
         logout(props.history, props.interval);
@@ -265,7 +267,12 @@ function Account(props) {
                         <>(Shop Owner)<br/></>)}
                         <hr/>
                         <button onClick={ () => setPage( 'Edit') }>Edit my profile</button>
-                        <button className="Danger" onClick={ deleteAccount }>Delete my account</button>
+                        {(confirm_remove ? 
+                        <span className='confirm-delete-account'>Are you sure?
+                            <span onClick={()=>setConfirmRemove(false)} className='no'>NO</span>
+                            <span onClick={ deleteAccount } className='yes'>YES</span>
+                        </span>:
+                        <button className="Danger" onClick={()=>setConfirmRemove(true)}>Delete my account</button>)}
                     </div>
                     {(props.user.role === PUBLIC_USER ? 
                     apply ? 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getCollections } from '../../../actions/collectionActions';
+import { getCollections, removeCollection } from '../../../actions/collectionActions';
 import { GET_ERRORS } from '../../../actions/types';
 import { Sliders, Image } from 'react-bootstrap-icons';
 import { render } from 'react-dom';
@@ -38,7 +38,15 @@ function Collections(props){
                             </span>
                         </div>
                         <Button className='FunctionBtn InfoBtn'>Further Information</Button>
-                        <Button className='FunctionBtn BtnNotFrist'>Remove</Button>
+                        <Button className='FunctionBtn BtnNotFrist'
+                            onClick={()=>removeCollection(e.id).then(
+                                res=>{
+                                    if(res){
+                                    setCollection([]);
+                                    loadCollections();
+                                    alert("Removed successfully!");}
+                                })}
+                        >Remove</Button>
                     </div>
                 );
             })
@@ -48,14 +56,14 @@ function Collections(props){
         render(page, body_ref.current);
     }
 
-    useEffect(() => {
+    function loadCollections() {
         getCollections(props.user.username)(res => {
             if(res.type !== GET_ERRORS)
                 setCollection(res.payload)
         });
-    // eslint-disable-next-line
-    }, []);
+    }
 
+    useEffect(loadCollections, []);
     useEffect(createCollection, [selectedCollection]);
 
     useEffect(sortSelected, [collection]);

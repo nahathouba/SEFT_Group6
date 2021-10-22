@@ -33,7 +33,10 @@ function EditBooks(props) {
             const page = books.map(e=>{
                 return (
                     <div className='display-book' onClick={()=>setBook(e)}>
-                        { e.title }
+                        Title: { e.title }<br/>
+                        ISBN: { e.ISBN }<br/>
+                        Author: { e.author }<br/>
+                        Category: { e.category }<br/>
                     </div>
                 )
             });
@@ -45,7 +48,7 @@ function EditBooks(props) {
         var page = <></>;
         if(book) {
             page = <Book book={book} 
-                add = {!searched}
+                add = {!searched} refresh={props.refresh}
                 back={()=>(searched ? createBooksPage() : setBook(null))} />;
         }
         render(page, display_ref.current);
