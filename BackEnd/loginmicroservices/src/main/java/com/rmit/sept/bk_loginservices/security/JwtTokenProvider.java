@@ -20,12 +20,12 @@ public class JwtTokenProvider {
 
         Date expiryDate = new Date(now.getTime()+ SecurityConstant.EXPIRATION_TIME);
 
-        String userId = Long.toString(user.getId());
+        String userId = user.getId().toString();
 
         Map<String,Object> claims = new HashMap<>();
-        claims.put("id", (Long.toString(user.getId())));
+        claims.put("id", (user.getId().toString()));
         claims.put("username", user.getUsername());
-        claims.put("fullName", user.getFull_name());
+        // claims.put("fullName", user.getFullName());
 
         return Jwts.builder()
                 .setSubject(userId)

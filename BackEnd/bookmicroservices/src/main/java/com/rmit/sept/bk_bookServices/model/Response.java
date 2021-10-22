@@ -1,4 +1,4 @@
-package com.rmit.sept.bk_bookServices.model;
+package com.rmit.sept.bk_bookservices.model;
 
 public class Response {
     private String status;

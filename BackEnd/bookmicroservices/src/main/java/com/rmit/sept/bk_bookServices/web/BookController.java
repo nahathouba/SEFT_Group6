@@ -1,74 +1,63 @@
-package com.rmit.sept.bk_bookServices.web;
+package com.rmit.sept.bk_bookservices.web;
 
-import com.rmit.sept.bk_bookServices.model.BookRequest;
-import com.rmit.sept.bk_bookServices.model.Response;
-import com.rmit.sept.bk_bookServices.services.MapValidationErrorService;
-import com.rmit.sept.bk_bookServices.validator.BookRequestValidator;
-import com.rmit.sept.bk_bookServices.validator.BookValidator;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import com.rmit.sept.bk_bookServices.services.BookService;
-import com.rmit.sept.bk_bookServices.model.Book;
+import com.rmit.sept.bk_bookservices.model.Book;
+import com.rmit.sept.bk_bookservices.model.BookRequest;
+import com.rmit.sept.bk_bookservices.model.Response;
+import com.rmit.sept.bk_bookservices.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("/api/books")
 public class BookController {
-    @Autowired
-    private MapValidationErrorService mapValidationErrorService;
-
     @Autowired
     private BookService bookService;
 
-    @Autowired
-    private BookValidator bookValidator;
-
     @CrossOrigin
-    @PostMapping("/upload")
-    public ResponseEntity<?> createNewBook(@Valid @RequestBody Book book, BindingResult result){
-        bookValidator.validate(book, result);
-
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
-
-        Book objBook = bookService.saveBook(book);
-        return new ResponseEntity<Book>(objBook, HttpStatus.CREATED);
+    @PostMapping("/add")
+    public ResponseEntity<Book> saveBook(@RequestBody Book book){
+        return new ResponseEntity<Book>(bookService.addBook(book), HttpStatus.ACCEPTED);
     }
 
-    @Autowired
-    private BookRequestValidator bookRequestValidator;
-
     @CrossOrigin
-    @PostMapping ("/request") // diff and details between post & get ???
-    public ResponseEntity<?> getBooks(@Valid @RequestBody BookRequest bookRequest, BindingResult result){
-        bookRequestValidator.validate(bookRequest, result);
-
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
-
+    @PostMapping("/request")
+    public ResponseEntity<List<Book>> requestBooks(@RequestBody BookRequest bookRequest){
         List<Book> books = new ArrayList<Book>();
-        if(bookRequest.getSort().equals("ISBN")){
-            books.add(bookService.requestBook(Integer.parseInt(bookRequest.getValue())));
-        }else {
-            books = bookService.requestBooks(bookRequest.getSort(), bookRequest.getValue());
+        if(bookRequest.getSort().equals("isbn")){
+            books.add(bookService.getBookByIsbn(bookRequest.getValue()));
+        }else if(bookRequest.getSort().equals("title")){
+            books = bookService.getBooksByTitle(bookRequest.getValue());
+        }else if(bookRequest.getSort().equals("category")){
+            books = bookService.getBooksByCategory(bookRequest.getValue());
+        }else if(bookRequest.getSort().equals("author")){
+            books = bookService.getBooksByAuthor(bookRequest.getValue());
         }
 
         return new ResponseEntity<List<Book>>(books, HttpStatus.ACCEPTED);
     }
 
-    //TO_DONE delete books in such shop, routine: /api/books/{username}, method: delete
     @CrossOrigin
-    @DeleteMapping("{username}")
-    public ResponseEntity<?> deleteBook(@PathVariable("username") String ownerEmail){
+    @PostMapping("/update")
+    public ResponseEntity<Book> updateBook(@RequestBody Book book){
+        return new ResponseEntity<Book>(bookService.updateBookInfo(book), HttpStatus.ACCEPTED);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("{isbn}")
+    public ResponseEntity<Response> deleteBook(@PathVariable("isbn") String bookId){
         Response res = new Response();
-        res.setStatus(bookService.deleteBookByShopID(ownerEmail));
+        if(bookService.getBookByIsbn(bookId) != null){
+            res.setStatus("SUCCESS");
+            bookService.deleteBook(bookId);
+        }else{
+            res.setStatus("FAILED");
+        }
+
         return new ResponseEntity<Response>(res, HttpStatus.ACCEPTED);
     }
 }

@@ -1,16 +1,14 @@
-package com.rmit.sept.bk_bookServices.Repositories;
+package com.rmit.sept.bk_bookservices.Repositories;
 
-import com.rmit.sept.bk_bookServices.model.Book;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import com.rmit.sept.bk_bookservices.model.Book;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-@Repository
-public interface BookRepository extends CrudRepository<Book, Long>{
-    List<Book> findByTitle(String title);
-    Book findByisbn(long isbn);
-    List<Book> findAllByAuthor(String authorName);
-    List<Book> findAllByCategory(String category);
-    List<Book> findAllByShopId(String parentShopID);
+
+public interface BookRepository extends MongoRepository<Book, String> {
+    Book getBookByIsbn(String isbn);
+    List<Book> getAllByAuthor(String author);
+    List<Book> getAllByCategory(String category);
+    List<Book> getAllByTitle(String title);
 }

@@ -1,8 +1,15 @@
-package com.rmit.sept.bk_bookServices.model;
+package com.rmit.sept.bk_bookservices.model;
 
 public class BookRequest {
     private String sort;
     private String value;
+
+    public BookRequest() {}
+
+    public BookRequest(String sort, String value) {
+        this.sort = sort;
+        this.value = value;
+    }
 
     public String getSort() {
         return sort;

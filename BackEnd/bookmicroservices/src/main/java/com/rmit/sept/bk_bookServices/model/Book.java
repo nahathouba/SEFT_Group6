@@ -1,58 +1,38 @@
-package com.rmit.sept.bk_bookServices.model;
+package com.rmit.sept.bk_bookservices.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-//@Table(name="BOOK")
-@Entity
+@Document(collection = "Books")
 public class Book {
     @Id
-    @NotNull(message = "ISBN is required")
-    @Column(name="ISBN")
-    private long isbn;
+    private String isbn;
 
-//    private long id;
-
-//    private Long isbn;
-
-    @NotBlank(message = "title is required")
-    @Column(name="TITLE")
     private String title;
-
-    @NotBlank(message = "author is required")
-    @Column(name="AUTHOR")
     private String author;
-
-    @NotBlank(message = "category is required")
-    @Column(name="CATEGORY")
     private String category;
+    private int price;
+    private String description;
+    private String imageUrl;
 
-    @Column(name="STATUS")
-    private String status;
+    public Book() {}
 
-    @Column(name="PARENT_SHOP_ID")
-    private String parentShopID;
-
-    public Book(){
-    }
-
-    public long getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(long isbn) {
-        this.isbn = isbn;
-    }
-
-    public Book(@NotBlank(message = "ISBN is required") long isbn,
-                @NotBlank(message = "title is required") String title,
-                @NotBlank(message = "author is required") String author,
-                @NotBlank(message = "category is required") String category) {
+    public Book(String isbn, String title, String author, String category, int price, String description, String imageUrl) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.category = category;
+        this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitle() {
@@ -79,19 +59,40 @@ public class Book {
         this.category = category;
     }
 
-    public String getStatus() {
-        return status;
+    public int getPrice() {
+        return price;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public String getParentShopID() {
-        return parentShopID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setParentShopID(String parentShopID) {
-        this.parentShopID = parentShopID;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

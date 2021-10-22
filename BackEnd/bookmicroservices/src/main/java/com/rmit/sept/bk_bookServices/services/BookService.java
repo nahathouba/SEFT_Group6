@@ -1,11 +1,10 @@
-package com.rmit.sept.bk_bookServices.services;
+package com.rmit.sept.bk_bookservices.services;
 
-import com.rmit.sept.bk_bookServices.Repositories.BookRepository;
-import com.rmit.sept.bk_bookServices.model.Book;
+import com.rmit.sept.bk_bookservices.Repositories.BookRepository;
+import com.rmit.sept.bk_bookservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,32 +12,49 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public Book saveBook(Book newBook){
-        return bookRepository.save(newBook);
+    public Book addBook(Book book){
+        return bookRepository.save(book);
     }
 
-    public List<Book> requestBooks(String key, String value){
-        List<Book> books = new ArrayList<Book>();
+    public Book getBookByIsbn(String isbn){
+        return bookRepository.getBookByIsbn(isbn);
+    }
 
-        if(key.equals("author")) {
-            books = bookRepository.findAllByAuthor(value);
-        }else if(key.equals("title")) {
-            books = bookRepository.findByTitle(value);
-        }else if(key.equals("category")) {
-            books = bookRepository.findAllByCategory(value);
-        }else {
-            books = bookRepository.findByTitle(value);
+    public List<Book> getBooksByTitle(String title){
+        return bookRepository.getAllByTitle(title);
+    }
+
+    public List<Book> getBooksByAuthor(String author){
+        return bookRepository.getAllByAuthor(author);
+    }
+
+    public List<Book> getBooksByCategory(String category){
+        return bookRepository.getAllByCategory(category);
+    }
+
+    public Book updateBookInfo(Book book){
+        Book objBook = bookRepository.getBookByIsbn(book.getIsbn());
+        if(objBook != null){
+            objBook.setAuthor(book.getAuthor());
+            objBook.setCategory(book.getCategory());
+            objBook.setTitle(book.getTitle());
+            objBook.setDescription(book.getDescription());
+            objBook.setPrice(book.getPrice());
+            objBook.setImageUrl(book.getImageUrl());
+            return bookRepository.save(objBook);
+        }else{
+            return new Book();
         }
-        return books;
+
     }
 
-    public Book requestBook(long isbn){ return bookRepository.findByisbn(isbn); }
-
-    public String deleteBookByShopID(String ownerEmail){
-        String status = "SUCCESS";
-        List<Book> books = new ArrayList<Book>();
-        books = bookRepository.findAllByShopId(ownerEmail);
-        if(books.size() == 0) status = "FAILED";
-        return status;
+    public boolean deleteBook(String isbn){
+        boolean success = false;
+        Book book = bookRepository.getBookByIsbn(isbn);
+        if(book != null){
+            success = true;
+            bookRepository.delete(book);
+        }
+        return success;
     }
 }
