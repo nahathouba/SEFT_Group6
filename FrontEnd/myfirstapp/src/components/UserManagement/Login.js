@@ -14,6 +14,7 @@ class Login extends Component {
         super(props);
         this.state = ({
             display: "none",
+            blocked_alert: false,
             PasswordStatus: 0
         })
     }
@@ -43,15 +44,19 @@ class Login extends Component {
         login(email, password, dispatch => {
             if(dispatch.type === SET_CURRENT_USER) {
                 getPerson(dispatch.payload.username).then(res => {
-                    this.props.history.push({
-                        pathname: 'home',
-                        state: res
-                    })
+                    if(!res.blocked) {
+                        this.props.history.push({
+                            pathname: 'home',
+                            state: res
+                        })
+                    } else {
+                        this.setState({...this.state, display: 'block', blocked_alert: true});
+                    }
                 })
                 // this.props.history.push("/home");
             }
             else
-                this.setState({display: 'block', PasswordStatus: this.state.PasswordStatus});
+                this.setState({...this.state, display: 'block'});
         });
         
     }
@@ -61,7 +66,9 @@ class Login extends Component {
         <>
             <AlertWindow display = { this.state.display }
                          title = "Login Failed!"
-                         content="Login failed, please check your email address and password!"
+                         content={(this.state.blocked_alert ? 
+                            "Login failed, your account had been blocked!" :
+                            "Login failed, please check your email address and password!")}
                          confirm={ () => this.setState({display: "none"}) } />
 
             <Image className="LoginPageImg"/>
