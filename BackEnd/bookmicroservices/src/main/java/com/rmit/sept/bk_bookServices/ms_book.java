@@ -1,4 +1,4 @@
-package com.rmit.sept.bk_bookServices;
+package com.rmit.sept.bk_bookservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
