@@ -33,21 +33,21 @@ function Notifications(props){
         if(notifications.length) {
             page = notifications.map((e) => {
                 return (
-                    <div className={'SingleNotification' + (e.unread === 'UNREAD' ? ' Unread' : '')}>
+                    <div className={'SingleNotification' + (e.status ? ' Unread' : '')}>
                         <Bell className='AlertIcon'/>
                         <span className='Title'>
                             { e.type === APPLY_SHOP_OWNER ? 
                                 "Apply for shop owner" : e.type === SYSTEM_WELCOME ?
                                 "Welcome!" : "Unknown message" }
                         </span>
-                        <span className='Sender'>From { e.sender }</span>
+                        <span className='Sender'>From { e.requesterUsername }</span>
                         {( e.type === APPLY_SHOP_OWNER ? 
-                            e.unread === 'UNREAD' ?
+                            e.status ?
                             <span className='body link' onClick={()=>viewApplyDetails(e)}>
                                 View Apply Details
                             </span> : <span className='body'>Already processed</span> :
                             <span className='body'>{ e.body }
-                                <br/>{(e.unread === 'UNREAD' ? 
+                                <br/>{(e.status ? 
                                 <span className='link' onClick={read}>Got it!</span> : <></>)}
                             </span>)}
                     </div>

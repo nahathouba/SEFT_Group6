@@ -33,8 +33,8 @@ function BookStore(props) {
                         owner: props.shop.owner,
                         image: image
                     }),
-                    sender: props.shop.owner,
-                    receiver: ADMIN_EMAIL
+                    requesterUsername: props.shop.owner,
+                    recipientUsername: ADMIN_EMAIL
                 }).then(res=>{
                     if(res.type !== GET_ERRORS) {
                         alert("Apply success!");
