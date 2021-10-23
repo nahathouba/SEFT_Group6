@@ -1,23 +1,27 @@
 package com.rmit.sept.bk_bookservices.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Books")
 public class Book {
     @Id
-    private String isbn;
+    private ObjectId id;
 
+    private String isbn;
     private String title;
     private String author;
     private String category;
     private int price;
     private String description;
     private String imageUrl;
+    private String ownerShopId;
 
     public Book() {}
 
-    public Book(String isbn, String title, String author, String category, int price, String description, String imageUrl) {
+    public Book(String isbn, String title, String author, String category, int price, String description, String imageUrl,
+                String ownerShopId) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -25,6 +29,7 @@ public class Book {
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.ownerShopId = ownerShopId;
     }
 
     public String getIsbn() {
@@ -83,6 +88,22 @@ public class Book {
         this.imageUrl = imageUrl;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getOwnerShopId() {
+        return ownerShopId;
+    }
+
+    public void setOwnerShopId(String ownerShopId) {
+        this.ownerShopId = ownerShopId;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -93,6 +114,7 @@ public class Book {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", ownerShopId='" + ownerShopId + '\'' +
                 '}';
     }
 }

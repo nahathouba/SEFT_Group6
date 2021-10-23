@@ -29,7 +29,7 @@ public class BookController {
     public ResponseEntity<List<Book>> requestBooks(@RequestBody BookRequest bookRequest){
         List<Book> books = new ArrayList<Book>();
         if(bookRequest.getSort().equals("isbn")){
-            books.add(bookService.getBookByIsbn(bookRequest.getValue()));
+            books = bookService.getBookByIsbn(bookRequest.getValue());
         }else if(bookRequest.getSort().equals("title")){
             books = bookService.getBooksByTitle(bookRequest.getValue());
         }else if(bookRequest.getSort().equals("category")){
@@ -48,12 +48,12 @@ public class BookController {
     }
 
     @CrossOrigin
-    @DeleteMapping("{isbn}")
-    public ResponseEntity<Response> deleteBook(@PathVariable("isbn") String bookId){
+    @DeleteMapping("")
+    public ResponseEntity<Response> deleteBook(@RequestBody Book book){
         Response res = new Response();
-        if(bookService.getBookByIsbn(bookId) != null){
+        if(bookService.getBookByIsbn(book.getIsbn()) != null){
             res.setStatus("SUCCESS");
-            bookService.deleteBook(bookId);
+            bookService.deleteBook(book.getId());
         }else{
             res.setStatus("FAILED");
         }

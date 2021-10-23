@@ -2,6 +2,7 @@ package com.rmit.sept.bk_bookservices.services;
 
 import com.rmit.sept.bk_bookservices.Repositories.BookRepository;
 import com.rmit.sept.bk_bookservices.model.Book;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book getBookByIsbn(String isbn){
+    public List<Book> getBookByIsbn(String isbn){
         return bookRepository.getBookByIsbn(isbn);
     }
 
@@ -33,7 +34,7 @@ public class BookService {
     }
 
     public Book updateBookInfo(Book book){
-        Book objBook = bookRepository.getBookByIsbn(book.getIsbn());
+        Book objBook = bookRepository.getById(book.getId());
         if(objBook != null){
             objBook.setAuthor(book.getAuthor());
             objBook.setCategory(book.getCategory());
@@ -48,9 +49,9 @@ public class BookService {
 
     }
 
-    public boolean deleteBook(String isbn){
+    public boolean deleteBook(ObjectId id){
         boolean success = false;
-        Book book = bookRepository.getBookByIsbn(isbn);
+        Book book = bookRepository.getById(id);
         if(book != null){
             success = true;
             bookRepository.delete(book);

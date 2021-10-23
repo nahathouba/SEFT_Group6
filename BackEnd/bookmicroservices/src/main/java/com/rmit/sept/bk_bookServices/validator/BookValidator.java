@@ -1,6 +1,6 @@
-package com.rmit.sept.bk_bookServices.validator;
+package com.rmit.sept.bk_bookservices.validator;
 
-import com.rmit.sept.bk_bookServices.model.Book;
+import com.rmit.sept.bk_bookservices.model.Book;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

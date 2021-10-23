@@ -1,4 +1,4 @@
-package com.rmit.sept.bk_bookServices.services;
+package com.rmit.sept.bk_bookservices.services;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
