@@ -1,52 +1,46 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import org.bson.types.ObjectId;
+// import javax.persistence.*;
+import org.springframework.data.annotation.Id;
 import java.util.Date;
 import java.util.Collection;
 
 
-@Entity
+@Document(collection = "Users")
 public class User implements UserDetails {
+
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private ObjectId id;
 
-    @Email(message = "Username needs to be an email")
-    @NotBlank(message = "username is required")
-    @Column(unique = true)
+//    @Email(message = "Username needs to be an email")
+//    @NotBlank(message = "username is required")
+    // @Column(unique = true)
     private String username;
-    @NotBlank(message = "Please enter your full name")
-    private String full_name;
-    @NotBlank(message = "Password field is required")
+//    @NotBlank(message = "Please enter your full name")
+    // private String fullName;
+//    @NotBlank(message = "Password field is required")
     private String password;
-    @Transient
-    private String confirm_password;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    // @Transient
+    private String confirmPassword;
     private Date create_At;
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date update_At;
-
-    private String gender;
-    private String address;
-    private String status;
 
     //OneToMany with Project
 
     public User() {
     }
 
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -58,13 +52,13 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getFull_name() {
-        return full_name;
-    }
+    // public String getFullName() {
+    //     return fullName;
+    // }
 
-    public void setFull_name(String fullName) {
-        this.full_name = fullName;
-    }
+    // public void setFullName(String fullName) {
+    //     this.fullName = fullName;
+    // }
 
     public String getPassword() {
         return password;
@@ -74,12 +68,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getConfirm_password() {
-        return confirm_password;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Date getCreate_At() {
@@ -98,38 +92,14 @@ public class User implements UserDetails {
         this.update_At = update_At;
     }
 
-    @PrePersist
+    // @PrePersist
     protected void onCreate(){
         this.create_At = new Date();
     }
 
-    @PreUpdate
+    // @PreUpdate
     protected void onUpdate(){
         this.update_At = new Date();
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     /*
