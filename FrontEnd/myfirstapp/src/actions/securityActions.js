@@ -8,7 +8,7 @@ export const createNewUser = async (newUser) => {
     await axios.post(USER_CONN_BASE_URL + "/register", {
         username: newUser.username,
         password: newUser.password,
-        confirm_password: newUser.confirm_password
+        confirmPassword: newUser.confirmPassword
     });
 
     await axios.post(INFO_CONN_BASE_URL + "/profile/create", {
