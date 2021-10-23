@@ -31,8 +31,8 @@ export const getNotifications = (username) => async dispatch => {
     }
 }
 
-export const readNotification = async (msgid) => {
-    await axios.post(MSGS_CONN_BASE_URL +'/read', {id: msgid});
+export const readNotification = async (msg) => {
+    await axios.post(MSGS_CONN_BASE_URL +'/read', msg);
     return true;
 }
 

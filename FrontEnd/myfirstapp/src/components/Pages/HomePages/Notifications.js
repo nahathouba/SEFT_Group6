@@ -12,7 +12,7 @@ function Notifications(props){
     const [notification_page, setPage] = useState(<h1 className='Nothing'>Loading...</h1>);
 
     function viewApplyDetails(msg) {
-        readNotification(msg.id);
+        readNotification(msg);
         const details = JSON.parse(msg.body);
 
         setPage(
