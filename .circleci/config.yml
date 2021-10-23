@@ -6,12 +6,12 @@ executors:
     environment:
       IMAGE_NAME: nahathouba/group6
     docker: 
-      — image: circleci/node:latest
+      - image: circleci/node:latest
     auth:
       username: $DOCKERHUB_USERNAME
       password: $DOCKERHUB_PASSWORD
 
-  jobs:
+    jobs:
     steps:
     publishLatestToHub: 
     executor: docker-publisher
@@ -25,4 +25,4 @@ workflows:
   version: 2
   build-master:
     jobs:
-      publishLatestToHub
+    - publishLatestToHub
