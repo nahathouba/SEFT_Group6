@@ -2,17 +2,17 @@ orbs:
  docker: circleci/docker@1.5.0
 version: 2.1
 executors:
- docker-publisher: 
- environment:
- IMAGE_NAME: nahathouba/group6
- docker: 
- — image: circleci/node:latest
- auth:
- username: $DOCKERHUB_USERNAME
- password: $DOCKERHUB_PASSWORD
+  docker-publisher: 
+    environment:
+      IMAGE_NAME: nahathouba/group6
+    docker: 
+      — image: circleci/node:latest
+    auth:
+      username: $DOCKERHUB_USERNAME
+      password: $DOCKERHUB_PASSWORD
 jobs:
- publishLatestToHub: 
- executor: docker-publisher
+  publishLatestToHub: 
+    executor: docker-publisher
  
  steps: 
  — checkout
