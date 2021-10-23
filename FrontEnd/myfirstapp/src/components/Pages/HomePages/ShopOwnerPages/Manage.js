@@ -27,7 +27,7 @@ function Manage(props) {
             case 'ManageShop':
                 page = <ManageShop books={books} showBook={props.showBook} />; break;
             case 'PublicSearch':
-                page = <Default showBook={props.showBook} />; break;
+                page = <Default user={props.user} showBook={props.showBook} />; break;
             case 'EditShopInfo':
                 page = <BookStore refresh={refresh} shop={shop_info} />; break;
             case 'EditBookInfo':

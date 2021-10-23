@@ -44,8 +44,8 @@ function User(props) {
                 <span className='value'>{ props.user.about }</span>)}
             </div>
             <div className='functional-btns'>
-                <Button className='btn' variant='warning' onClick={()=>operateUser('update', {...props.user, blocked: true})}>Block this user</Button>
-                <Button className='btn' variant='success' onClick={()=>operateUser('update', {...props.user, blocked: false})}>Unblock this user</Button>
+                <Button className='btn' variant='warning' onClick={()=>operateUser('update', {...props.user, status: "BLOCKED"})}>Block this user</Button>
+                <Button className='btn' variant='success' onClick={()=>operateUser('update', {...props.user, status: "NORMAL"})}>Unblock this user</Button>
                 <Button className='btn' variant='danger' onClick={()=>operateUser('delete', null)}>Delete this user</Button>
                 {(editing ?
                 <Button className='btn' onClick={()=>{

@@ -55,7 +55,7 @@ function Home(props) {
             current_page: current_page
         }
         switch(current_page){
-            case "Home": page = <Default showBook={showBook} />; break;
+            case "Home": page = <Default user={user} showBook={showBook} />; break;
             case "Manage": page = <Manage { ...common_props } showBook={showBook} />; break;
             case "Account": page = <Account history={props.history} 
                 user={user} interval={interval} setUser={setUser} />; break;

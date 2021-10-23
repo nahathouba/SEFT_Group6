@@ -39,7 +39,7 @@ function Collections(props){
                         </div>
                         <Button className='FunctionBtn InfoBtn' onClick={()=>props.showBook(e)}>Further Information</Button>
                         <Button className='FunctionBtn BtnNotFrist'
-                            onClick={()=>removeCollection(e.id).then(
+                            onClick={()=>removeCollection(e).then(
                                 res=>{
                                     if(res){
                                     setCollection([]);

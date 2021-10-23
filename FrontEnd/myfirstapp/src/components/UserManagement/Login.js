@@ -44,7 +44,7 @@ class Login extends Component {
         login(email, password, dispatch => {
             if(dispatch.type === SET_CURRENT_USER) {
                 getPerson(dispatch.payload.username).then(res => {
-                    if(!res.blocked) {
+                    if(res.status === 'NORMAL') {
                         this.props.history.push({
                             pathname: 'home',
                             state: res

@@ -36,7 +36,8 @@ function ManageShop(props) {
         const searched_books = props.books.filter(e=>e[sort] === value);
         createBooks(searched_books)
     }
-
+    
+    // eslint-disable-next-line
     useEffect(()=>createBooks(props.books), [props.books]);
 
     return (

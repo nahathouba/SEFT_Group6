@@ -21,9 +21,9 @@ function ShoppingCart(props) {
         function compare(elem1, elem2) {
             switch(sort_by) {
                 case 'Date_nto':
-                    return (parseInt(elem1.adding_date) > parseInt(elem2.adding_date));
+                    return (parseInt(elem1.addingdate) > parseInt(elem2.addingdate));
                 case 'Date_otn':
-                    return (parseInt(elem1.adding_date) < parseInt(elem2.adding_date));
+                    return (parseInt(elem1.addingdate) < parseInt(elem2.addingdate));
                 case 'Price_lth':
                     return (elem1.price < elem2.price);
                 case 'Price_htl':
@@ -59,11 +59,11 @@ function ShoppingCart(props) {
                         <div className='ItemDetails'>
                             <span>Item name: {e.name}</span>
                             <span>Price: $ {e.price}</span>
-                            <span>Adding date: {new Date(e.adding_date).toUTCString()}</span>
+                            <span>Adding date: {new Date(e.addingdate).toUTCString()}</span>
                         </div>
                         <Button className='FunctionBtn'>Purchase</Button>
                         <Button className='FunctionBtn BtnNotFrist'
-                            onClick={()=>removeCart(e.id).then(
+                            onClick={()=>removeCart(e).then(
                                 res=>{
                                     if(res){
                                     setCart([]);

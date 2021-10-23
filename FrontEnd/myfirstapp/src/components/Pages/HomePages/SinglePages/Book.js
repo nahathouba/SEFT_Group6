@@ -37,6 +37,8 @@ function Book(props) {
 
     function toJSON() {
         return {
+            id: props.book.id,
+            owner: props.user.username,
             title: title,
             ISBN: ISBN,
             author: author,
@@ -50,11 +52,11 @@ function Book(props) {
     async function exec(action) {
         switch(action) {
             case 'add':
-                await addBook({...toJSON(), owner: props.user.username}); break;
+                await addBook(toJSON()); break;
             case 'update':
-                await updateBook({...toJSON(), id: props.book.id}); break;
+                await updateBook(toJSON()); break;
             case 'delete':
-                await deleteBook(props.book.id); break;
+                await deleteBook(toJSON()); break;
             default: return;
         }
         props.refresh();

@@ -1,40 +1,56 @@
 import axios from 'axios';
-import { CONN_BASE_URL, GET_ERRORS, GET_SHOPPING_CART } from './types';
+import { CART_CONN_BASE_URL, COLL_CONN_BASE_URL, GET_ERRORS, GET_SHOPPING_CART } from './types';
+import { search } from './bookActions';
 
 export const getShoppingCart = username => async dispatch => {
     try {
-        const res = await axios.get(`${CONN_BASE_URL}/collection/shoppingcart/get/${username}`);
+        const res = await axios.get(`${CART_CONN_BASE_URL}/${username}`);
+        const book_list = [];
+        for(var i = 0; i < res.data.length; i++) {
+            const res1 = await search({sort: 'id', value: res.data[i].bookid});
+            if(res1.type !== GET_ERRORS)
+                book_list.push({...res1.payload[0], ...res.data, id: res.data.id});
+        }
+        
         dispatch({
             type: GET_SHOPPING_CART,
-            payload: res.data
+            payload: book_list
         })
     } catch(err) {
         dispatch({
-            type: GET_ERRORS,
-            payload: GET_ERRORS
+            type: GET_ERRORS
         })
     }
 }
 
 export const getCollections = username => async dispatch => {
     try {
-        const res = await axios.get(`${CONN_BASE_URL}/collection/colls/get/${username}`);
+        const res = await axios.get(`${COLL_CONN_BASE_URL}/${username}`);
+        const item_list = [];
+        for(var i = 0; i < res.data.length; i++) {
+            if(res.data[i].type === 'book') {
+                const res1 = await search({sort: 'id', value: res.data[i].objectid});
+                if(res1.type !== GET_ERRORS)
+                    item_list.push({...res1.payload[0], ...res.data, id: res.data.id});
+            } else {
+
+            }
+            
+        }
         dispatch({
             type: GET_SHOPPING_CART,
-            payload: res.data
+            payload: item_list
         })
-        // data: {books: [...], bookstores: [...]}
     } catch(err) {
         dispatch({
-            type: GET_ERRORS,
-            payload: GET_ERRORS
+            type: GET_ERRORS
         })
     }
 }
 
 export const addToCart = async details => {
     try {
-        await axios.post(CONN_BASE_URL + '/collection/shoppingcart/', details);
+        await axios.post(CART_CONN_BASE_URL, details);
         return true;
     } catch(err) {
         return false;
@@ -43,25 +59,37 @@ export const addToCart = async details => {
 
 export const addToColl = async details => {
     try {
-        await axios.post(CONN_BASE_URL + '/collection/colls/', details);
+        await axios.post(COLL_CONN_BASE_URL, details);
         return true;
     } catch(err) {
         return false;
     }
 }
 
-export const removeCollection = async id => {
+export const removeCollection = async details => {
+    const body = {
+        id: details.id,
+        objectid: details.objectid,
+        username: details.username,
+        type: details.type
+    }
     try {
-        await axios.delete(CONN_BASE_URL + '/collection/colls/', {id: id});
+        await axios.delete(COLL_CONN_BASE_URL, body);
         return true;
     } catch(err) {
         return false;
     }
 }
 
-export const removeCart = async id => {
+export const removeCart = async details => {
+    const body = {
+        id: details.id,
+        bookid: details.bookid,
+        username: details.username,
+        addingdate: details.addingdate
+    }
     try {
-        await axios.delete(CONN_BASE_URL + '/collection/shoppingcart/', {id: id});
+        await axios.delete(CART_CONN_BASE_URL, body);
         return true;
     } catch(err) {
         return false;

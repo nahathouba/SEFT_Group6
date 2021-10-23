@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { CONN_BASE_URL, GET_ERRORS, GET_BOOK_DETAILS, GET_UNREAD, SEND_NOTIFICATION } from './types';
+import { GET_ERRORS, GET_BOOK_DETAILS, GET_UNREAD, SEND_NOTIFICATION, MSGS_CONN_BASE_URL } from './types';
 
 export const getUnread = (username) => async dispatch => {
     try {
-        const res = await axios.get(CONN_BASE_URL + `/notifications/unread/${username}`);
+        const res = await axios.get(`${MSGS_CONN_BASE_URL}/unread/${username}`);
         dispatch({
             type: GET_UNREAD,
             payload: (res.data.status === "UNREAD")
@@ -18,7 +18,7 @@ export const getUnread = (username) => async dispatch => {
 
 export const getNotifications = (username) => async dispatch => {
     try {
-        const res = await axios.get(CONN_BASE_URL + `/notifications/${username}`);
+        const res = await axios.get(`${MSGS_CONN_BASE_URL}/${username}`);
         dispatch({
             type: GET_BOOK_DETAILS,
             payload: res.data
@@ -32,13 +32,13 @@ export const getNotifications = (username) => async dispatch => {
 }
 
 export const readNotification = async (msgid) => {
-    await axios.post(CONN_BASE_URL + '/notifications/read', {id: msgid});
+    await axios.post(MSGS_CONN_BASE_URL +'/read', {id: msgid});
     return true;
 }
 
 export const sendNotification = async (body) => {
     try {
-        await axios.post(CONN_BASE_URL + `/notifications/send`, body);
+        await axios.post(MSGS_CONN_BASE_URL +'/send', body);
         return ({
             type: SEND_NOTIFICATION
         })

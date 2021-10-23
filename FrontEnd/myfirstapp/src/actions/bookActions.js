@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { CONN_BASE_URL, GET_ERRORS, GET_BOOK_DETAILS } from './types';
+import { GET_ERRORS, GET_BOOK_DETAILS, BOOK_CONN_BASE_URL, STORE_CONN_BASE_URL } from './types';
 
 export const search = async (search_form) => {
     try {
-        const res = await axios.post(CONN_BASE_URL + '/books/request', search_form);
+        const res = await axios.post(BOOK_CONN_BASE_URL + '/request', search_form);
         return ({
             type: GET_BOOK_DETAILS,
             payload: res.data
@@ -18,16 +18,20 @@ export const search = async (search_form) => {
 
 export const addBook = async book => {
     try {
-        await axios.post(CONN_BASE_URL + '/books/add', book);
+        const res = await axios.post(BOOK_CONN_BASE_URL + '/add', book);
+        if(res) {
+            await axios.post(STORE_CONN_BASE_URL + '/add', {id: res.data.id, owner: book.owner})
+        }
         return true;
     } catch(err) {
         return false;
     }
 }
 
-export const deleteBook = async id => {
+export const deleteBook = async details => {
     try {
-        await axios.delete(CONN_BASE_URL + '/books/', {id: id});
+        await axios.delete(STORE_CONN_BASE_URL, {id: details.id, owner: details.owner});
+        await axios.delete(BOOK_CONN_BASE_URL, details);
         return true;
     } catch(err) {
         return false;
@@ -36,7 +40,7 @@ export const deleteBook = async id => {
 
 export const updateBook = async book => {
     try {
-        await axios.post(CONN_BASE_URL + '/books/update', book);
+        await axios.post(BOOK_CONN_BASE_URL + '/update', book);
         return true;
     } catch(err) {
         return false;

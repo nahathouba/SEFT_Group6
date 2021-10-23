@@ -30,14 +30,15 @@ function Default(props) {
     async function addObj(type, details) {
         if(type === 'coll') {
             addToColl({
-                category: "Book",
-                name: (details.name ? details.name : details.title)
+                type: "Book",
+                objectid: details.id,
+                username: props.user.username,
             }).then(res=>{if(res){alert("Added to collection!")}})
         } else if(type === 'cart') {
             addToCart({
-                name: (details.name ? details.name : details.title),
-                price: details.price,
-                adding_date: new Date().getTime().toString()
+                bookid: details.id,
+                username: props.user.username,
+                addingdate: new Date().getTime().toString()
             }).then(res=>{if(res){alert("Added to cart!")}})
         }
     }
