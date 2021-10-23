@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/admin_manage_account.css';
 import User from "../SinglePages/User";
 import { getPerson } from "../../../../actions/personActions";
-import { GET_ERRORS } from "../../../../actions/types";
 
 function AdminManageAccount() {
 
@@ -18,9 +17,9 @@ function AdminManageAccount() {
             alert('Please input a username!')
         else {
             const user = await getPerson(username);
-            if(!user.status) {
+            if(user) {
                 setUser(user);
-            } else if(user.status === GET_ERRORS)
+            } else
                 alert('Cannot get user!')
         }
     }
