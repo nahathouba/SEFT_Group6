@@ -5,11 +5,13 @@ executors:
   docker-publisher: 
     environment:
       IMAGE_NAME: nahathouba/group6
+      DOCKERHUB_USERNAME: nahathouba
+      DOCKERHUB_PASSWORD: Thouba.12345
     docker: 
       - image: circleci/node:latest
     auth:
-      username: $DOCKERHUB_USERNAME
-      password: $DOCKERHUB_PASSWORD
+        username: $DOCKERHUB_USERNAME
+        password: $DOCKERHUB_PASSWORD
 
     jobs:
     steps:
