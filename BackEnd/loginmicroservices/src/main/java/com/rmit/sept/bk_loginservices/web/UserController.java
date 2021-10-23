@@ -45,6 +45,7 @@ public class UserController {
 
 
     // @valid cannot work
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> registerUser( @RequestBody User user, BindingResult result){
         // Validate passwords match
@@ -67,6 +68,7 @@ public class UserController {
 
 
 // @valid cannot work
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser( @RequestBody LoginRequest loginRequest, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);

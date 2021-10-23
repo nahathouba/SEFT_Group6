@@ -38,7 +38,8 @@ public class UserInfoService {
         }
         objUser.setGender(user.getGender());
         objUser.setAddress(user.getAddress());
-        // objUser.setStatus(user.getStatus());
+        objUser.setStatus(user.getStatus());
+        objUser.setRole(user.getRole());
         objUser.setAbout(user.getAbout());
 
         return userInfoRepository.save(objUser);

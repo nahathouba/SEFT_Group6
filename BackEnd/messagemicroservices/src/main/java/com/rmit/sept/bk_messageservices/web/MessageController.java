@@ -1,7 +1,7 @@
 package com.rmit.sept.bk_messageservices.web;
 
 import com.rmit.sept.bk_messageservices.model.Message;
-import com.rmit.sept.bk_messageservices.model.MsgIdRequest;
+// import com.rmit.sept.bk_messageservices.model.MsgIdRequest;
 import com.rmit.sept.bk_messageservices.model.Response;
 import com.rmit.sept.bk_messageservices.services.MessageService;
 
@@ -45,12 +45,31 @@ public class MessageController {
 
     @CrossOrigin
     @PostMapping("/read")
-    public ResponseEntity<Response> setMsgRead(@RequestBody MsgIdRequest request){
+    public ResponseEntity<Response> setMsgRead(@RequestBody Message msg){
         Response res = new Response();
-        if(requestService.setMsgRead(request.getId())){
+        if(requestService.setMsgRead(msg)){
             res.setStatus("SUCCESS");
         }else{
             res.setStatus("FAILED");
+        }
+        return new ResponseEntity<Response>(res, HttpStatus.ACCEPTED);
+    }
+
+    @CrossOrigin
+    @GetMapping("/all")
+    public ResponseEntity<List<Message>> getAll(){
+        return new ResponseEntity<List<Message>>(requestService.showAll(), HttpStatus.ACCEPTED);
+    }
+
+    @CrossOrigin
+    @PostMapping("/getmsg")
+    public ResponseEntity<Response> getMsg(@RequestBody Message ms){
+        Response res = new Response();
+        System.out.println("Hi " + ms.getId());
+        if(requestService.getMsg(ms.getId())){
+            res.setStatus("SUCCESS");
+        }else{
+            res.setStatus("No");
         }
         return new ResponseEntity<Response>(res, HttpStatus.ACCEPTED);
     }

@@ -4,14 +4,14 @@ import org.bson.types.ObjectId;
 
 public class MsgIdRequest {
 
-    private ObjectId Id;
+    private ObjectId id;
 
     public ObjectId getId() {
-        return Id;
+        return id;
     }
 
     public void setId(ObjectId id) {
-        Id = id;
+        this.id = id;
     }
     
 }

@@ -47,15 +47,25 @@ public class MessageService {
         return unread;
     }
 
-    public boolean setMsgRead(ObjectId messageId){
+    public boolean setMsgRead(Message msg){
         boolean success = true;
-        Message msg = requestRepository.getById(messageId);
-        if(msg != null){
-            msg.setStatus(false);
-            requestRepository.save(msg);
+        List<Message> mesg = requestRepository.findMessageByRequesterUsernameAndRecipientUsernameAndType(msg.getRequesterUsername(), msg.getRecipientUsername(), msg.getType());
+        if(mesg != null){
+            for(Message messa: mesg){
+                messa.setStatus(false);
+                requestRepository.save(messa);
+            }
         }else{
             success = false;
         }
         return success;
+    }
+
+    public List<Message> showAll(){
+        return requestRepository.findAll();
+    }
+
+    public boolean getMsg(ObjectId id){
+        return requestRepository.existsById(id);
     }
 }

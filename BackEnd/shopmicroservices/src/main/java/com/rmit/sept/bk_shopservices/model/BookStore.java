@@ -12,13 +12,15 @@ public class BookStore {
     private String bookIsbn;
     private String shopId;
     private String status;
+    private int price;
 
     public BookStore() {}
 
-    public BookStore(String bookIsbn, String shopId, String status) {
+    public BookStore(String bookIsbn, String shopId, String status, int price) {
         this.bookIsbn = bookIsbn;
         this.shopId = shopId;
         this.status = status;
+        this.price = price;
     }
 
     public ObjectId getId() {
@@ -59,6 +61,9 @@ public class BookStore {
                 "bookIsbn='" + bookIsbn + '\'' +
                 ", shopId='" + shopId + '\'' +
                 ", status='" + status + '\'' +
+                ", price="   + price + '\'' +
                 '}';
     }
+
+
 }

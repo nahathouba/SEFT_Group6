@@ -20,6 +20,7 @@ public class Message {
     public Message(String requesterUsername, String recipientUsername) {
         this.requesterUsername = requesterUsername;
         this.recipientUsername = recipientUsername;
+        unread = true;
     }
 
     public ObjectId getId() {

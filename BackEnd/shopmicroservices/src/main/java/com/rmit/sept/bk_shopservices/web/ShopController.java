@@ -23,6 +23,12 @@ public class ShopController {
     @CrossOrigin
     @GetMapping("/{ownerusername}")
     public ResponseEntity<Shop> getShopByOwnerUsername(@PathVariable("ownerusername") String ownerUsername){
+        if(shopService.getShopByShopId(ownerUsername) != null) {
+            System.out.println(shopService.getShopByShopId(ownerUsername).getShopId());
+        }else{
+            System.out.println("no working");
+        }
+        
         return new ResponseEntity<Shop>(shopService.getShopByShopId(ownerUsername), HttpStatus.ACCEPTED);
     }
 
