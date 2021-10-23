@@ -24,7 +24,7 @@ export function logout(history, interval) {
 
 export function register(firstname, lastname, email, password, repassword, gender) {
     createNewUser({
-        full_name: firstname + ' ' + lastname,
+        fullname: firstname + ' ' + lastname,
         username: email,
         password: password,
         confirm_password: repassword,

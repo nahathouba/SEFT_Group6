@@ -7,7 +7,7 @@ import { GET_ERRORS } from '../../../actions/types';
 import { Button } from 'react-bootstrap';
 import { addToCart, addToColl } from '../../../actions/collectionActions';
 
-function Default() {
+function Default(props) {
 
     const [books, setBooks] = useState([]);
     const [display_books, setBooksPage] = useState(<></>);
@@ -31,11 +31,11 @@ function Default() {
         if(type === 'coll') {
             addToColl({
                 category: "Book",
-                name: details.name
+                name: (details.name ? details.name : details.title)
             }).then(res=>{if(res){alert("Added to collection!")}})
         } else if(type === 'cart') {
             addToCart({
-                name: details.name,
+                name: (details.name ? details.name : details.title),
                 price: details.price,
                 adding_date: new Date().getTime().toString()
             }).then(res=>{if(res){alert("Added to cart!")}})
@@ -55,7 +55,7 @@ function Default() {
                         <span>Description: { e.description }</span>
                         <Button className='btn' onClick={()=>addObj('cart', e)}>Add to cart</Button>
                         <Button className='btn' onClick={()=>addObj('coll', e)}>Add to collection</Button>
-                        <Button className='btn'>View details</Button>
+                        <Button className='btn' onClick={()=>props.showBook(e)}>View details</Button>
                     </div>
                 </div>
             )

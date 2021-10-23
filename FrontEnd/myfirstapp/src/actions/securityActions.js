@@ -13,7 +13,7 @@ export const createNewUser = async (newUser) => {
 
     await axios.post("http://localhost:8080/api/userinfo", {
         username: newUser.username,
-        full_name: newUser.full_name,
+        fullname: newUser.fullname,
         gender: newUser.gender
     });
 };

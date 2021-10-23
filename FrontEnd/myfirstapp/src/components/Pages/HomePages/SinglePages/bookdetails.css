@@ -1,6 +1,74 @@
-.book-details-main {
+.book-details-cover {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.book-details-cover .close-btn {
+    position: absolute;
+    width: 5vh;
+    height: 5vh;
+    right: 5vw;
+    top: 5vh;
+    color: white;
+}
+
+.book-details-cover .close-btn:hover {
+    cursor: pointer;
+}
+
+.book-details-cover .book-details-main {
     width: 60vw;
-    height: 60vh;
-    border: 1px solid black;
+    height: 100vh;
     display: block;
+    position: absolute;
+    left: 20vw;
+    top: 0;
+    z-index: 5;
+    overflow-y: auto;
+    background-color: white;
+}
+
+.book-details-cover .book-details-main .details {
+    width: 30vw;
+    left: 1vw;
+    top: 2vh;
+    position: absolute;
+}
+
+.book-details-cover .book-details-main .details span {
+    display: block;
+    margin: 10px 0px;
+    font-size: large;
+}
+
+.book-details-cover .book-details-main .details .title {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.book-details-cover .book-details-main .details .author {
+    font-size: x-large;
+}
+
+
+.book-details-cover .book-details-main .book-img {
+    position: absolute;
+    max-width: 15vw;
+    max-height: 35vh;
+    top: 4vh;
+    left: 37.5vw;
+}
+
+.book-details-cover .book-details-main .comments {
+    font-size: xx-large;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 65vh;
 }

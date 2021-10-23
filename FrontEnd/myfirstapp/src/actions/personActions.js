@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PUBLIC_USER } from "../handlers/userTypes";
-import { CONN_BASE_URL, GET_ERRORS, SUCCESS } from "./types";
+import { CONN_BASE_URL, GET_ERRORS } from "./types";
 
 export const getPerson = async (username) => {
     const res = await axios.get(`${CONN_BASE_URL}/userinfo/get/${username}`);
@@ -13,17 +13,6 @@ export const submitUpdate = async (userinfo) => {
         return res.data;
     } catch(err) {
         return false;
-    }
-}
-
-export const adminGetUser = async (username) => {
-    try {
-        const res = await axios.post(CONN_BASE_URL + `/userinfo/admin_get/${username}`);
-        return res.data;
-    } catch(err) {
-        return {
-            status: GET_ERRORS
-        }
     }
 }
 

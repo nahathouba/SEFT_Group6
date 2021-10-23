@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/admin_manage_account.css';
 import User from "../SinglePages/User";
-import { adminGetUser } from "../../../../actions/personActions";
+import { getPerson } from "../../../../actions/personActions";
 import { GET_ERRORS } from "../../../../actions/types";
 
 function AdminManageAccount() {
@@ -17,7 +17,7 @@ function AdminManageAccount() {
         if(!username.length)
             alert('Please input a username!')
         else {
-            const user = await adminGetUser(username);
+            const user = await getPerson(username);
             if(!user.status) {
                 setUser(user);
             } else if(user.status === GET_ERRORS)

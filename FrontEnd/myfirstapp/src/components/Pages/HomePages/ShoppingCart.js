@@ -71,7 +71,7 @@ function ShoppingCart(props) {
                                     alert("Removed successfully!");}
                                 })}
                         >Remove</Button>
-                        <Button className='FunctionBtn BtnNotFrist InfoBtn'>Further Information</Button>
+                        <Button className='FunctionBtn BtnNotFrist InfoBtn' onClick={()=>props.showBook(e)}>Further Information</Button>
                     </div>
                 );
             });

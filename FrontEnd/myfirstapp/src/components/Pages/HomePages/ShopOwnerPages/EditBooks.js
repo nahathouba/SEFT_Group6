@@ -48,7 +48,7 @@ function EditBooks(props) {
         var page = <></>;
         if(book) {
             page = <Book book={book} 
-                add = {!searched} refresh={props.refresh}
+                add = {!searched} refresh={props.refresh} user={props.user}
                 back={()=>(searched ? createBooksPage() : setBook(null))} />;
         }
         render(page, display_ref.current);

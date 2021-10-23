@@ -37,7 +37,7 @@ function Collections(props){
                                 {e.category} name: {e.name}
                             </span>
                         </div>
-                        <Button className='FunctionBtn InfoBtn'>Further Information</Button>
+                        <Button className='FunctionBtn InfoBtn' onClick={()=>props.showBook(e)}>Further Information</Button>
                         <Button className='FunctionBtn BtnNotFrist'
                             onClick={()=>removeCollection(e.id).then(
                                 res=>{

@@ -10,7 +10,7 @@ function ManageShop(props) {
         if(books && books.length) {
             const page = books.map(e=>{
                 return (
-                <div className='single-book'>
+                <div className='single-book' onClick={()=>props.showBook(e)}>
                     <FileRichtext className='image' />
                     <div className='details'>
                         Title: {e.title}<br/>

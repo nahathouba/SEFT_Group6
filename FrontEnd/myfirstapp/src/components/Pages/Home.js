@@ -18,6 +18,7 @@ import AdminManageAccount from "./HomePages/AdminPages/AdminManageAccount";
 import AdminManageBook from "./HomePages/AdminPages/AdminManageBook";
 import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
 import { ADMIN, SHOP_OWNER } from "../../handlers/userTypes";
+import BookDetail from "./HomePages/SinglePages/BookDetails";
 
 function Home(props) {
 
@@ -32,6 +33,13 @@ function Home(props) {
     const [unread, setUnread] = useState(false);
     const [interval, updateIntervalID] = useState(null);
 
+    const [display_book, setDisplayBook] = useState(false);
+    const [book_details, setBookDetails] = useState({});
+
+    function showBook(details) {
+        setBookDetails(details);
+        setDisplayBook(true);
+    }
 
     function switchPage(event) {
         document.querySelector(".SelectedButton").classList.remove('SelectedButton');
@@ -47,12 +55,12 @@ function Home(props) {
             current_page: current_page
         }
         switch(current_page){
-            case "Home": page = <Default />; break;
-            case "Manage": page = <Manage { ...common_props } />; break;
+            case "Home": page = <Default showBook={showBook} />; break;
+            case "Manage": page = <Manage { ...common_props } showBook={showBook} />; break;
             case "Account": page = <Account history={props.history} 
                 user={user} interval={interval} setUser={setUser} />; break;
-            case "ShoppingCart": page = <ShoppingCart { ...common_props } />; break;
-            case "Collections": page = <Collections { ...common_props } />; break;
+            case "ShoppingCart": page = <ShoppingCart { ...common_props } showBook={showBook} />; break;
+            case "Collections": page = <Collections { ...common_props } showBook={showBook} />; break;
             case "Notifications": page = <Notifications { ...common_props } />; break;
             case "Settings": page = <Settings { ...common_props } />; break;
             case "About": page = <Help about={true} />; break;
@@ -83,7 +91,8 @@ function Home(props) {
 
     return (
     <>
-        <h5 className="LOGO_ad">Hello, { (user.role === ADMIN ? "Admin " : "Mr.") }{ user.full_name }</h5>
+        <BookDetail display={display_book} book={book_details} close={()=>setDisplayBook(false)} />
+        <h5 className="LOGO_ad">Hello, { (user.role === ADMIN ? "Admin " : "Mr.") }{ user.fullname }</h5>
         
             <div className="MenuPage">
                 {(user.role !== ADMIN ? 

@@ -14,7 +14,7 @@ function Account(props) {
     const [apply, setApply] = useState(false);
     const [confirm_remove, setConfirmRemove] = useState(false);
 
-    const [full_name, setName] = useState(props.user.full_name);
+    const [fullname, setName] = useState(props.user.fullname);
     const [about, setAbout] = useState(props.user.about);
     const [gender, setGender] = useState(props.user.gender);
     const [address, setAddress] = useState(props.user.address);
@@ -28,7 +28,7 @@ function Account(props) {
 
         const infos = {
             ...props.user,
-            full_name: full_name,
+            fullname: fullname,
             about: about,
             gender: gender,
             address: address
@@ -109,7 +109,7 @@ function Account(props) {
     const setValueHandler = (event) => {
         const v = event.target.value;
         switch(event.target.name) {
-            case 'full_name': setName(v); break;
+            case 'fullname': setName(v); break;
             case 'about': setAbout(v); break;
             case 'address': setAddress(v); break;
             case 'gender': setGender(v); break;
@@ -187,10 +187,10 @@ function Account(props) {
                     <form className="EditProfile" onSubmit={ submitEdit }>
                         <h1 className="AccountPageWelcome">Editing Profile</h1>
 
-                        <label to="full_name" >Name</label>
+                        <label to="fullname" >Name</label>
                         <input type="text" className="InfoInput"
-                            name="full_name" placeholder="Please input your name here"
-                            value={ full_name } onChange={ setValueHandler }/>
+                            name="fullname" placeholder="Please input your name here"
+                            value={ fullname } onChange={ setValueHandler }/>
 
                         <label to="Email" >Email<span className='Annotation'>* Cannot change</span></label>
                         <input type="text" className="InfoInput"
@@ -257,11 +257,11 @@ function Account(props) {
             default:
                 return (
                     <>
-                    <h1 className="AccountPageWelcome">Welcome, { full_name }</h1>
+                    <h1 className="AccountPageWelcome">Welcome, { fullname }</h1>
                     <div className="AccountDetails">
                         <PersonCircle className="Avatar" />
                         <h3>My Details</h3>
-                        My Name: { full_name }<br/>
+                        My Name: { fullname }<br/>
                         My Email: { props.user.username }<br/>
                         {(props.user.role === PUBLIC_USER ? <></> : 
                         <>(Shop Owner)<br/></>)}

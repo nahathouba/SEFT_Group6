@@ -6,7 +6,7 @@ import './user.css';
 
 function User(props) {
 
-    const [full_name, setFullName] = useState(props.user.full_name);
+    const [fullname, setFullName] = useState(props.user.fullname);
     const [about, setAbout] = useState(props.user.about);
     const [editing, setEditing] = useState(false);
 
@@ -23,7 +23,7 @@ function User(props) {
     function onChangeHandler(event) {
         const key = event.target.name;
         const value = event.target.value;
-        if(key === 'full_name')
+        if(key === 'fullname')
             setFullName(value);
         else if(key === 'about')
             setAbout(value);
@@ -36,8 +36,8 @@ function User(props) {
                 <span className='value'>{ props.user.username }</span>
                 <span className='key'>Full Name:</span>
                 {(editing ?
-                <input value={full_name} name='full_name' onChange={onChangeHandler} className='value-input'/>:
-                <span className='value'>{ props.user.full_name }</span>)}
+                <input value={fullname} name='fullname' onChange={onChangeHandler} className='value-input'/>:
+                <span className='value'>{ props.user.fullname }</span>)}
                 <span className='key'>About:</span>
                 {(editing ?
                 <input value={about} name='about' onChange={onChangeHandler} className='value-input'/>:
@@ -49,7 +49,7 @@ function User(props) {
                 <Button className='btn' variant='danger' onClick={()=>operateUser('delete', null)}>Delete this user</Button>
                 {(editing ?
                 <Button className='btn' onClick={()=>{
-                    operateUser('update', {...props.user, full_name: full_name, about: about});
+                    operateUser('update', {...props.user, fullname: fullname, about: about});
                     setEditing(false);
                 }}>Update</Button>:
                 <Button className='btn' onClick={()=>setEditing(true)}>Edit this user</Button>)}

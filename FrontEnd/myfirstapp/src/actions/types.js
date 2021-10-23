@@ -1,9 +1,9 @@
 export const CONN_BASE_URL = 'http://localhost:8080/api';
 // real routes, but using later after everyting done
 export const USER_CONN_BASE_URL = 'http://localhost:8080/api/users';
-export const INFO_CONN_BASE_URL = 'http://localhost:8081/api/users';
+export const INFO_CONN_BASE_URL = 'http://localhost:8081/api/userinfo';
 export const BOOK_CONN_BASE_URL = 'http://localhost:8082/api/books';
-export const SHOP_CONN_BASE_URL = 'http://localhost:8083/api/shop';
+export const SHOP_CONN_BASE_URL = 'http://localhost:8083/api/shops';
 export const MSGS_CONN_BASE_URL = 'http://localhost:8084/api/notifications';
 export const COLL_CONN_BASE_URL = 'http://localhost:8085/api/collection';
 

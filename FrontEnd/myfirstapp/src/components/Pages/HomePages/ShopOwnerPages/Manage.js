@@ -25,13 +25,13 @@ function Manage(props) {
         var page;
         switch(current) {
             case 'ManageShop':
-                page = <ManageShop books={books} />; break;
+                page = <ManageShop books={books} showBook={props.showBook} />; break;
             case 'PublicSearch':
-                page = <Default />; break;
+                page = <Default showBook={props.showBook} />; break;
             case 'EditShopInfo':
                 page = <BookStore refresh={refresh} shop={shop_info} />; break;
             case 'EditBookInfo':
-                page = <EditBooks refresh={refresh} books={books} />; break;
+                page = <EditBooks refresh={refresh} books={books} user={props.user} />; break;
             case 'EditShop':
                 setCurrent('EditShopInfo'); return;
 
