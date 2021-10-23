@@ -1,0 +1,37 @@
+.display-books {
+    position: absolute;
+    margin-top: 27vh;
+    margin-left: 3vw;
+    width: 50vw;
+    height: 50vh;
+    border: 1px solid black;
+    overflow-y: auto;
+}
+
+.display-books-single-book {
+    width: 35vw;
+}
+
+.display-books .book-list-book {
+    width: 47vw;
+    padding: 10px 20px;
+    border: 1px solid black;
+    margin-left: 1vw;
+    margin-top: 2vh;
+    display: block;
+}
+
+.display-books .book-list-book:hover {
+    cursor: pointer;
+}
+
+.display-books .book-list-book .info {
+    font-size: larger;
+    margin-left: 10px;
+    display: block;
+}
+
+.display-books .book-list-book .info span {
+    font-weight: 500;
+    font-style: italic;
+}

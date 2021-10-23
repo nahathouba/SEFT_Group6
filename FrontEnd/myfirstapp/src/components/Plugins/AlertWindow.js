@@ -16,8 +16,8 @@ class AlertWindow extends Component {
                 <div className="Content">
                     { this.props.content }
                 </div>
-                <Button variant="primary" onClick={ this.props.confrim } >Confirm</Button>
-                <Button variant="danger" onClick={ this.props.cancel ? this.props.cancel : this.props.confrim }>Cancel</Button>
+                <Button variant="primary" onClick={ this.props.confirm } >Confirm</Button>
+                <Button variant="danger" onClick={ this.props.cancel ? this.props.cancel : this.props.confirm }>Cancel</Button>
             </div>
         </div>
         );

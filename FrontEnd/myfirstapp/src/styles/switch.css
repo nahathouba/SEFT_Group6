@@ -1,0 +1,54 @@
+.switch-btn-main {
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    border-radius: 25px;
+}
+
+.switch-btn-main .showing,
+.switch-btn-main .showing-circle,
+.switch-btn-main .chkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.switch-btn-main .showing,
+.switch-btn-main .showing-circle {
+    transition-duration: 500ms;
+}
+
+.switch-btn-main .chkbox {
+    width: inherit;
+    height: inherit;
+    z-index: 2;
+    opacity: 0;
+}
+
+.switch-btn-main .chkbox:hover {
+    cursor: pointer;
+}
+
+.switch-btn-main .showing {
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background-color: lightgray;
+    border: 1px solid black;
+}
+
+.switch-btn-main .showing-circle {
+    width: 50%;
+    height: inherit;
+    border-radius: inherit;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.switch-btn-main .chkbox:checked ~ .showing {
+    background-color: greenyellow;
+}
+
+.switch-btn-main .chkbox:checked ~ .showing-circle {
+    left: 50%;
+}

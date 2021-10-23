@@ -1,0 +1,28 @@
+.settings {
+    margin-left: 5vw;
+    margin-top: 5vh;
+    font-size: large;
+}
+
+.settings h1,
+.settings h3 {
+    display: block;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.settings .switch {
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    margin-top: 3px;
+}
+
+.settings .after-switch {
+    margin-left: 50px;
+}
+
+.settings .shipping-address input[type='radio'] {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

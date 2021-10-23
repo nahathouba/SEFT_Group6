@@ -1,0 +1,52 @@
+.bookstore-main {
+    display: block;
+    margin-top: 3vh;
+    margin-left: 1vw;
+    width: 35vw;
+    height: 40vh;
+    border: 1px solid black;
+    padding-left: 20px;
+}
+
+.bookstore-main .key {
+    display: block;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.bookstore-main input {
+    display: block;
+    width: 15vw;
+    height: 5vh;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.bookstore-main .update-btn {
+    position: absolute;
+    width: 10vw;
+    height: 5vh;
+    margin-left: 18vw;
+    margin-top: 5.5vh;
+}
+
+.bookstore-main .back {
+    margin-top: 13.5vh;
+}
+
+.bookstore-main .err {
+    position: absolute;
+    margin-left: 18vw;
+    margin-top: 11vh;
+    font-size: small;
+    color: red;
+}
+
+.bookstore-main .shop-img {
+    max-width: 15vw;
+    max-height: 15vh;
+    position: absolute;
+    margin-left: 18vw;
+    margin-top: 22vh;
+}

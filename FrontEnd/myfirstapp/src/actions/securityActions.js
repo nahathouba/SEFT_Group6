@@ -1,16 +1,26 @@
 import axios from "axios";
-import {GET_ERRORS, SET_CURRENT_USER} from "./types";
+import {GET_ERRORS, INFO_CONN_BASE_URL, SET_CURRENT_USER, USER_CONN_BASE_URL} from "./types";
 import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 
 
 export const createNewUser = async (newUser) => {
-    await axios.post("http://localhost:8080/api/users/register", newUser);
+    await axios.post(USER_CONN_BASE_URL + "/register", {
+        username: newUser.username,
+        password: newUser.password,
+        confirmPassword: newUser.confirmPassword
+    });
+
+    await axios.post(INFO_CONN_BASE_URL + "/profile/create", {
+        username: newUser.username,
+        fullname: newUser.fullname,
+        gender: newUser.gender
+    });
 };
 
 export const login = LoginRequest => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/api/users/login", LoginRequest);
+        const res = await axios.post(USER_CONN_BASE_URL + "/login", LoginRequest);
         const token = res.data.token;
         if(token) {
             localStorage.setItem('JWTToken', token);

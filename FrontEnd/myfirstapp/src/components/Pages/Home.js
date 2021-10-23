@@ -1,172 +1,173 @@
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
-import { PersonCircle, Cart3, Star, Bell, Gear, ChatDots, InfoCircle, BoxArrowLeft, HouseDoor } from "react-bootstrap-icons";
-import { getUserNotifications, logout } from "../../handlers/userHandler";
+import React, { useEffect, useRef, useState } from "react";
+import { PersonCircle, Cart3, Star, Bell, Gear, InfoCircle, BoxArrowLeft, HouseDoor, Book, Shop } from "react-bootstrap-icons";
+import { logout } from "../../handlers/userHandler";
+import { getUnread } from "../../actions/notificationActions";
+import { GET_ERRORS } from "../../actions/types";
+import { render } from "react-dom";
 import '../../styles/home.css';
+
 import Account from "./HomePages/Account";
 import Collections from "./HomePages/Collections";
-import CustomerService from "./HomePages/CustomerService";
 import Default from "./HomePages/Default";
+import Manage from "./HomePages/ShopOwnerPages/Manage";
 import Notifications from "./HomePages/Notifications";
 import Settings from "./HomePages/Settings";
 import ShoppingCart from "./HomePages/ShoppingCart";
-import About from "./HomePages/About";
-import AlertWindow from "../Plugins/AlertWindow";
+import Help from "./Help";
+import AdminManageAccount from "./HomePages/AdminPages/AdminManageAccount";
+import AdminManageBook from "./HomePages/AdminPages/AdminManageBook";
+import AdminManageShop from "./HomePages/AdminPages/AdminManageShop";
+import { ADMIN, SHOP_OWNER } from "../../handlers/userTypes";
+import BookDetail from "./HomePages/SinglePages/BookDetails";
 
-class Home extends Component {
+function Home(props) {
 
-    constructor(props) {
-        super(props);
+    if(!props.location.state)
+        props.history.push("/");
 
-        if(!this.props.location.state)
-            this.props.history.push("/");
+    const [user, setUser] = useState(props.location.state);
 
-        const user = this.props.location.state;
-            
-        this.state = {
-            user: user ? user : {},
-            infos: {
-                unread_msg: false,
-                current_page: "Home"
-            },
-            popup: {
-                display: "none",
-                title: "",
-                content: "",
-                cancel: null, 
-                confirm: null
-            }
-        };
+    const ref = useRef(null);
+    const [current_page, setCurrentPage] = 
+        useState((user.role === ADMIN ? 'ManageShop' : user.role === SHOP_OWNER ? 'Manage' : 'Home'));
+    const [unread, setUnread] = useState(false);
+    const [interval, updateIntervalID] = useState(null);
+
+    const [display_book, setDisplayBook] = useState(false);
+    const [book_details, setBookDetails] = useState({});
+
+    function showBook(details) {
+        setBookDetails(details);
+        setDisplayBook(true);
     }
 
-    loadInfos() {
-        // get state and infos
-        var state = this.state;
-        var infos = state.infos;
+    function switchPage(event) {
+        document.querySelector(".SelectedButton").classList.remove('SelectedButton');
+        event.target.classList.add('SelectedButton');
 
-        // get all infos
-        // may have more infos in the future
-        infos.unread_msg = getUserNotifications(
-            this.state.user.username)[1];
-
-        // set state
-        state.infos = infos;
-        this.setState(state);
+        setCurrentPage(event.target.name);
     }
 
-    // setinterval for load infos
-    componentDidMount() {
-        this.loadInfos();
-        this.backInterval = setInterval(()=>{
-            this.loadInfos();
-        }, 60000);
-
-        this.switchButtonColor(this.state.infos.current_page);
+    function renderPage() {
+        var page;
+        const common_props = {
+            user: user,
+            current_page: current_page
+        }
+        switch(current_page){
+            case "Home": page = <Default user={user} showBook={showBook} />; break;
+            case "Manage": page = <Manage { ...common_props } showBook={showBook} />; break;
+            case "Account": page = <Account history={props.history} 
+                user={user} interval={interval} setUser={setUser} />; break;
+            case "ShoppingCart": page = <ShoppingCart { ...common_props } showBook={showBook} />; break;
+            case "Collections": page = <Collections { ...common_props } showBook={showBook} />; break;
+            case "Notifications": page = <Notifications { ...common_props } />; break;
+            case "Settings": page = <Settings { ...common_props } />; break;
+            case "About": page = <Help about={true} />; break;
+            case "ManageShop": page = <AdminManageShop />; break;
+            case "ManageAccount": page = <AdminManageAccount />; break;
+            case "ManageBook": page = <AdminManageBook />; break;
+            default: page = <></>;
+        }
+        render(page, ref.current);
     }
 
-    componentWillMount() {
-        clearInterval(this.backInterval);
-    }
+    useEffect(renderPage, [current_page]);
 
-    switchPage = (event) => {
-        var page = null;
-        switch(event.target.id) {
-            case "Account": page = <Account user={ this.state.user }
-                history={this.props.history}
-                setUser={(user) => {this.setState({...this.state, user: user})}} />; break;
+    // fire when compontent loaded
+    useEffect(()=>{
+        function getMsg() {
+            getUnread(user.username)(res=>{
+                if(res.type !== GET_ERRORS) {
+                    setUnread(res.payload);
+                }
+            })
+        }
+        getMsg();
+        const id = setInterval(getMsg, 60000);
+        updateIntervalID(id);
+    // eslint-disable-next-line
+    }, [])
+
+    return (
+    <>
+        <BookDetail display={display_book} book={book_details} close={()=>setDisplayBook(false)} />
+        <h5 className="LOGO_ad">Hello, { (user.role === ADMIN ? "Admin " : "Mr.") }{ user.fullname }</h5>
+        
+            <div className="MenuPage">
+                {(user.role !== ADMIN ? 
                 
-            case "ShoppingCart": page = <ShoppingCart />; break;
-            case "Collections": page = <Collections />; break;
-            case "Notifications": page = <Notifications />; break;
-            case "Settings": page = <Settings />; break;
-            case "CustomerServices": page = <CustomerService />; break;
-            case "About": page = <About />; break;
-            default: page = <Default />;
-        }
+                <>
+                {(user.role === SHOP_OWNER ? 
+                // for shop owner
+                <button onClick={ switchPage } name='Manage' className='SelectedButton'>
+                    <HouseDoor className="BtnIcon" />
+                    Home
+                </button>
+                 : 
+                 <button onClick={ switchPage } name='Home' className='SelectedButton'>
+                    <HouseDoor className="BtnIcon" />
+                    Home
+                </button>)}
 
-        ReactDOM.render(page, document.getElementById("content_page"));
-        this.switchButtonColor(event.target.id);
-    }
+                <button onClick={ switchPage } name='Account'>
+                    <PersonCircle className="BtnIcon" />
+                    Account
+                </button>
 
-    switchButtonColor = (elem) => {
-        const btn = document.getElementById(elem);
-        if(this.state.infos.current_page === elem) {
-            if(!btn.classList.contains("SelectedButton"))
-                btn.classList.add("SelectedButton");
-        } else {
-            document.getElementById(this.state.infos.current_page)
-                .classList.remove("SelectedButton");
-            
-            btn.classList.add("SelectedButton");
+                <button onClick={ switchPage } name='ShoppingCart'>
+                    <Cart3 className="BtnIcon" />
+                    Shopping Cart
+                </button>
+                
+                <button onClick={ switchPage } name='Collections'>
+                    <Star className="BtnIcon" />
+                    Collections
+                </button>
+                
+                <button onClick={ switchPage } name='About'>
+                    <InfoCircle className="BtnIcon" />
+                    About
+                </button> </>:
 
-            var tmp_state = this.state;
-            tmp_state.infos.current_page = elem;
-            this.setState(tmp_state);
-        }
-    }
+                // for admin
+                <>
+                <button onClick={ switchPage } name='ManageShop' className='SelectedButton'>
+                    <Shop className="BtnIcon" />
+                    Manage Shop
+                </button>
+                
+                <button onClick={ switchPage } name='ManageAccount'>
+                    <PersonCircle className="BtnIcon" />
+                    Manage Account
+                </button>
+                <button onClick={ switchPage } name='ManageBook'>
+                    <Book className="BtnIcon" />
+                    Manage Book
+                </button> </>)}
+                
+                <div className={ unread ? "UnreadMsg" : null}></div>
+                <button onClick={ switchPage } name='Notifications'>
+                    <Bell className="BtnIcon" />
+                    Notifications
+                </button>
+                
+                <button onClick={ switchPage } name='Settings'>
+                    <Gear className="BtnIcon" />
+                    Settings
+                </button>
+                
+                <button onClick={ () => {
+                    logout(props.history, interval);
+                } }>
+                    <BoxArrowLeft className="BtnIcon" />
+                    Log out
+                </button>
+            </div>
 
-    render() {
-        return (
-            <>
-                <AlertWindow {... this.state.popup } />
-                <h5 className="LOGO_ad">Hello, Mr.{ this.state.user.full_name }</h5>
-                <div className="MenuPage">
-                    <button onClick={ this.switchPage } id='Home'>
-                        <HouseDoor className="BtnIcon" />
-                        Home
-                    </button>
-
-                    <button onClick={ this.switchPage } id='Account'>
-                        <PersonCircle className="BtnIcon" />
-                        Account
-                    </button>
-
-                    <button onClick={ this.switchPage } id='ShoppingCart'>
-                        <Cart3 className="BtnIcon" />
-                        Shopping Cart
-                    </button>
-                    
-                    <button onClick={ this.switchPage } id='Collections'>
-                        <Star className="BtnIcon" />
-                        Collections
-                    </button>
-                    
-                    <div className={ this.state.infos.unread_msg ? "UnreadMsg" : null}></div>
-                    <button onClick={ this.switchPage } id='Notifications'>
-                        <Bell className="BtnIcon" />
-                        Notifications
-                    </button>
-                    
-                    <button onClick={ this.switchPage } id='Settings'>
-                        <Gear className="BtnIcon" />
-                        Settings
-                    </button>
-                    
-                    <button onClick={ this.switchPage } id='CustomerServices'>
-                        <ChatDots className="BtnIcon" />
-                        Customer Services
-                    </button>
-                    
-                    <button onClick={ this.switchPage } id='About'>
-                        <InfoCircle className="BtnIcon" />
-                        About
-                    </button>
-                    
-                    <button onClick={ () => {
-                        logout();
-                        this.props.history.push("/");
-                    } }>
-                        <BoxArrowLeft className="BtnIcon" />
-                        Log out
-                    </button>
-                </div>
-
-                <div className="ContentPage" id="content_page">
-                    <Default />
-                </div>
-            </>
-        );
-    }
+        <div className="ContentPage" ref={ref}></div>
+    </>
+    )
 }
 
 export default Home;

@@ -31,6 +31,26 @@
     margin-left: 1vw;
 }
 
+.AccountDetails .confirm-delete-account {
+    margin-left: 1vw;
+}
+
+.AccountDetails .confirm-delete-account .yes,
+.AccountDetails .confirm-delete-account .no {
+    margin-left: 10px;
+    color: red;
+}
+
+.AccountDetails .confirm-delete-account .yes:hover,
+.AccountDetails .confirm-delete-account .no:hover {
+    cursor: pointer;
+}
+
+.AccountDetails .confirm-delete-account .no {
+    color: deepskyblue;
+}
+
+
 .AccountDetails hr {
     margin-top: 3vh;
 }
@@ -75,6 +95,17 @@
     height: 5vh;
 }
 
+.EditProfile .Alert {
+    border-color: red;
+    color: red;
+}
+
+.EditProfile .AlertSpan {
+    display: block;
+    font-size: small;
+    margin-top: 5px;
+}
+
 .SwitchEdit {
     position: absolute;
     right: 0;
@@ -100,4 +131,35 @@
 .SwitchEdit .Selected {
     border-left: 3px solid black;
     font-size: larger;
+}
+
+.apply-shop-owner {
+    position: absolute;
+    width: 25vw;
+    height: 20vh;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-top: 45vh;
+    margin-left: 1vw;
+    padding: 20px;
+}
+
+.apply-shop-owner span {
+    font-size: x-large;
+    font-weight: bold;
+    display: block;
+}
+
+.apply-shop-owner .btn {
+    width: 10vw;
+    height: 4vh;
+    margin-top: 3vh;
+}
+
+.apply-shop-owner-bookstore .bookstore-main {
+    position: absolute;
+    margin: unset;
+    margin-top: 45vh;
+    margin-left: 1vw;
+    border-radius: 15px;
 }

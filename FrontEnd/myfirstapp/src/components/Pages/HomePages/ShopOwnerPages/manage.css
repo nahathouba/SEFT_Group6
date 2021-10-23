@@ -1,0 +1,135 @@
+.manage-select-page {
+    position: absolute;
+    width: 20vw;
+    height: 80vh;
+    bottom: 0;
+    right: 0;
+}
+
+.manage-select-page span {
+    display: block;
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.manage-select-page .special {
+    margin-left: 3vw;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.manage-select-page span:hover {
+    cursor: pointer;
+}
+
+
+.manage-select-page .selected {
+    border-left: 3px solid black;
+    background-color: rgba(211, 211, 211, 0.3);
+}
+
+
+.manage-show-page {
+    width: 60vw;
+    height: 100vh;
+    display: block;
+}
+
+.manage-shop-display-books {
+    position: absolute;
+    margin-top: 20vh;
+    margin-left: 3vw;
+    display: block;
+    width: 50vw;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.manage-shop-display-books .single-book {
+    display: inline-block;
+    width: 350px;
+    height: 550px;
+    border: 1px solid black;
+    margin: 0px 50px 30px 20px;
+}
+
+.manage-shop-display-books .single-book:hover {
+    cursor: pointer;
+}
+.manage-shop-display-books .single-book .image {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    z-index: 0;
+}
+
+.manage-shop-display-books .single-book .details {
+    z-index: 1;
+    position: absolute;
+    height: 200px;
+    /* 1px for border */
+    width: 349px;
+    margin-top: 350px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: x-large;
+    display: block;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* hide the scroll bar */
+.manage-shop-display-books .single-book .details::-webkit-scrollbar {
+    width: 0;
+}
+
+.manage-show-page .bookstore-main {
+    /* width: inherit;
+    height: inherit; */
+    margin: unset;
+    margin-top: 20vh;
+    margin-left: 15vw;
+    position: absolute;
+}
+
+.add-book-btn {
+    width: 20vw;
+    height: 5vh;
+    margin-top: 15vh;
+    margin-left: 3vw;
+    margin-bottom: 4vh;
+}
+
+.edit-books-display {
+    margin-left: 3vw;
+    width: 35vw;
+    height: 60vh;
+    border: 1px solid black;
+    display: block;
+    overflow-y: auto;
+}
+
+.edit-books-display .book {
+    width: calc(35vw - 2px);
+    height: calc(60vh - 2px);
+    border: none;
+    margin: unset;
+    overflow-y: auto;
+}
+
+.edit-books-display .display-book {
+    width: 30vw;
+    height: 15vh;
+    margin-left: 1vw;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    display: block;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.edit-books-display .display-book:hover {
+    cursor: pointer;
+}

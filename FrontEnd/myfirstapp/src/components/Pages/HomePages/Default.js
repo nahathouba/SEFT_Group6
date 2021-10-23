@@ -1,51 +1,86 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Search } from 'react-bootstrap-icons';
-import { search } from '../../../actions/functionActions';
-import functionReducer from '../../../reducers/functionReducer';
+import { Search, Image } from 'react-bootstrap-icons';
+import { search } from '../../../actions/bookActions';
+import { GET_ERRORS } from '../../../actions/types';
+import { Button } from 'react-bootstrap';
+import { addToCart, addToColl } from '../../../actions/collectionActions';
 
-function Default() {
+function Default(props) {
 
-    const [books, dispatch] = useReducer(functionReducer, {products: []})
+    const [books, setBooks] = useState([]);
+    const [display_books, setBooksPage] = useState(<></>);
 
-    const onSubmitHandler = (event) => {
+    async function onSubmitHandler(event) {
         event.preventDefault();
 
         const sort = event.target.sort.value;
-        const kwds = event.target.search.value;
+        const value = event.target.search.value;
 
-        search({
+        const books = await search({
             sort: sort,
-            kwds: kwds
-        })(dispatch);
+            value: value
+        });
+
+        if(books.type !== GET_ERRORS)
+            setBooks(books.payload);
+    }
+
+    async function addObj(type, details) {
+        if(type === 'coll') {
+            addToColl({
+                type: "Book",
+                objectid: details.id,
+                username: props.user.username,
+            }).then(res=>{if(res){alert("Added to collection!")}})
+        } else if(type === 'cart') {
+            addToCart({
+                bookid: details.id,
+                username: props.user.username,
+                addingdate: new Date().getTime().toString()
+            }).then(res=>{if(res){alert("Added to cart!")}})
+        }
     }
 
     const generateBooks = () => {
-        return books.products.map(v => {
+        const page = books.map(e => {
             return (
-                // TODO: desgin the block
                 <div className='BookDIV'>
+                    <Image className='book-img' />
+                    <div className='book-details'>
+                        <span>Title: { e.title }</span>
+                        <span>Author: { e.author }</span>
+                        <span>ISBN: { e.ISBN }</span>
+                        <span>Price: $ { e.price }</span>
+                        <span>Description: { e.description }</span>
+                        <Button className='btn' onClick={()=>addObj('cart', e)}>Add to cart</Button>
+                        <Button className='btn' onClick={()=>addObj('coll', e)}>Add to collection</Button>
+                        <Button className='btn' onClick={()=>props.showBook(e)}>View details</Button>
+                    </div>
                 </div>
             )
         })
+        setBooksPage(page);
     }
+
+    useEffect(generateBooks, [books]);
 
     return (
         <>
         <h3 className="AskSearch">Search a book you want...</h3>
         <form className="SearchBar" onSubmit={ onSubmitHandler }>
             <select className="form-select" name="sort">
-                <option selected value="BookName">Book Name</option>
+                <option selected value="title">Title</option>
                 <option value="ISBN">ISBN</option>
-                <option value="Author">Author</option>
-                <option value="Category">Category</option>
+                <option value="author">Author</option>
+                <option value="category">Category</option>
             </select>
             <button type="submit"><Search /></button>
             <input name="search" type="text" placeholder="Search for books you want..."/>
         </form>
         <div className="DisplayBook">
-            { generateBooks() }
+            { display_books }
         </div>
         </>
     );

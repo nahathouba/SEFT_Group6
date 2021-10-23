@@ -1,0 +1,16 @@
+.SearchShop {
+    margin-left: 1vw;
+    margin-top: 15vh;
+}
+
+.SearchShop input {
+    width: 35vw;
+    height: 5vh;
+    padding-left: 1vw;
+}
+
+.SearchShop button {
+    margin-left: 1vw;
+    height: 5vh;
+    width: 6vw;
+}
