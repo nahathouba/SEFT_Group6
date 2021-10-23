@@ -4,20 +4,20 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("BookAllocations")
-public class BookAllocations {
+@Document(collection = "Collections")
+public class Collection {
     @Id
     private ObjectId id;
 
+    private ObjectId objId;
     private String ownerUsername;
-    private String bookIsbn;
     private String type;
 
-    public BookAllocations() {}
+    public Collection () {}
 
-    public BookAllocations(String ownerUsername, String bookIsbn, String type) {
+    public Collection(ObjectId objId, String ownerUsername, String type) {
+        this.objId = objId;
         this.ownerUsername = ownerUsername;
-        this.bookIsbn = bookIsbn;
         this.type = type;
     }
 
@@ -29,20 +29,20 @@ public class BookAllocations {
         this.id = id;
     }
 
+    public ObjectId getObjId() {
+        return objId;
+    }
+
+    public void setObjId(ObjectId objId) {
+        this.objId = objId;
+    }
+
     public String getOwnerUsername() {
         return ownerUsername;
     }
 
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
-    }
-
-    public String getBookIsbn() {
-        return bookIsbn;
-    }
-
-    public void setBookIsbn(String bookIsbn) {
-        this.bookIsbn = bookIsbn;
     }
 
     public String getType() {
@@ -55,9 +55,10 @@ public class BookAllocations {
 
     @Override
     public String toString() {
-        return "BookAllocations{" +
-                "ownerUsername='" + ownerUsername + '\'' +
-                ", bookIsbn='" + bookIsbn + '\'' +
+        return "Collection{" +
+                "id=" + id +
+                ", objId=" + objId +
+                ", ownerUsername='" + ownerUsername + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }

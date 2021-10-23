@@ -1,7 +1,9 @@
 package com.rmit.sept.bk_allocationservices.services;
 
-import com.rmit.sept.bk_allocationservices.model.BookAllocations;
-import com.rmit.sept.bk_allocationservices.Repositories.BookAllocationsRepository;
+import com.rmit.sept.bk_allocationservices.Repositories.CartRepository;
+import com.rmit.sept.bk_allocationservices.Repositories.CollectionRepository;
+import com.rmit.sept.bk_allocationservices.model.Cart;
+import com.rmit.sept.bk_allocationservices.model.Collection;
 import com.rmit.sept.bk_allocationservices.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,38 +14,38 @@ import java.util.List;
 @Service
 public class BookAllocationsService {
     @Autowired
-    private BookAllocationsRepository bookAllocationsRepository;
+    private CartRepository cartRepository;
 
-    public BookAllocations collectBookTo(BookAllocations bookAllocations){
-        return bookAllocationsRepository.save(bookAllocations);
+    @Autowired
+    private CollectionRepository collectionRepository;
+
+    public Collection addBookToCollection(Collection collection){
+        return collectionRepository.save(collection);
     }
 
-    public Response removeBookFrom(BookAllocations bookAllocations){
+    public Response removeBookFromCollection(Collection colls){
         Response res = new Response();
-        bookAllocationsRepository.delete(bookAllocations);
+        collectionRepository.delete(colls);
         res.setStatus("SUCCESS");
         return res;
     }
 
-    public List<BookAllocations> getCollectionsByUsername(String username){
-        List<BookAllocations> bookAllocations = bookAllocationsRepository.findAllByOwnerUsername(username);
-        List<BookAllocations> collections = new ArrayList<BookAllocations>();
-        for(BookAllocations alloc: bookAllocations){
-            if(alloc.getType().equals("Collection")){
-                collections.add(alloc);
-            }
-        }
-        return collections;
+    public Cart addBookToCart(Cart cart){
+        return cartRepository.save(cart);
     }
 
-    public List<BookAllocations> getCartByUsername(String username){
-        List<BookAllocations> bookAllocations = bookAllocationsRepository.findAllByOwnerUsername(username);
-        List<BookAllocations> cart = new ArrayList<BookAllocations>();
-        for(BookAllocations alloc: bookAllocations){
-            if(alloc.getType().equals("Cart")){
-                cart.add(alloc);
-            }
-        }
-        return cart;
+    public Response removeBookFromCart(Cart cart){
+        Response res = new Response();
+        cartRepository.delete(cart);
+        res.setStatus("SUCCESS");
+        return res;
+    }
+
+    public List<Collection> getCollectionsByUsername(String username){
+        return collectionRepository.getAllByOwnerUsername(username);
+    }
+
+    public List<Cart> getCartByUsername(String username){
+        return cartRepository.findAllByOwnerUsername(username);
     }
 }

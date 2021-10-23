@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_allocationservices.web;
 
-import com.rmit.sept.bk_allocationservices.model.BookAllocations;
+import com.rmit.sept.bk_allocationservices.model.Cart;
+import com.rmit.sept.bk_allocationservices.model.Collection;
 import com.rmit.sept.bk_allocationservices.services.BookAllocationsService;
 import com.rmit.sept.bk_allocationservices.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +18,38 @@ public class BookAllocationController {
     private BookAllocationsService bookAllocationsService;
 
     @CrossOrigin
-    @PostMapping("/allocate")
-    public ResponseEntity<?> allocateBookTo(@RequestBody BookAllocations bookAllocations){
-        return new ResponseEntity<BookAllocations>(bookAllocationsService.collectBookTo(bookAllocations), HttpStatus.ACCEPTED);
+    @PostMapping("/carts")
+    public ResponseEntity<?> allocateBookToCart(@RequestBody Cart bookAllocations){
+        return new ResponseEntity<Cart>(bookAllocationsService.addBookToCart(bookAllocations), HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
-    @PostMapping("/deallocate")
-    public ResponseEntity<?> deallocateBookFrom(@RequestBody BookAllocations bookAllocations){
-        return new ResponseEntity<Response>(bookAllocationsService.removeBookFrom(bookAllocations), HttpStatus.ACCEPTED);
+    @PostMapping("/colls")
+    public ResponseEntity<?> allocateBookToCollection(@RequestBody Collection bookAllocations){
+        return new ResponseEntity<Collection>(bookAllocationsService.addBookToCollection(bookAllocations), HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
-    @GetMapping("/collections/{username}")
-    public ResponseEntity<List<BookAllocations>> getCollectionsByUsername(@PathVariable("username") String username){
-        return new ResponseEntity<List<BookAllocations>>(bookAllocationsService.getCollectionsByUsername(username), HttpStatus.ACCEPTED);
+    @DeleteMapping("/carts")
+    public ResponseEntity<?> deallocateBookFromCart(@RequestBody Cart bookAllocations){
+        return new ResponseEntity<Response>(bookAllocationsService.removeBookFromCart(bookAllocations), HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
-    @GetMapping("/cart/{username}")
-    public ResponseEntity<List<BookAllocations>> getCartByUsername(@PathVariable("username") String username){
-        return new ResponseEntity<List<BookAllocations>>(bookAllocationsService.getCartByUsername(username), HttpStatus.ACCEPTED);
+    @DeleteMapping("/colls")
+    public ResponseEntity<?> deallocateBookFromCollection(@RequestBody Collection bookAllocations){
+        return new ResponseEntity<Response>(bookAllocationsService.removeBookFromCollection(bookAllocations), HttpStatus.ACCEPTED);
+    }
+
+    @CrossOrigin
+    @GetMapping("/colls/{username}")
+    public ResponseEntity<List<Collection>> getCollectionsByUsername(@PathVariable("username") String username){
+        return new ResponseEntity<List<Collection>>(bookAllocationsService.getCollectionsByUsername(username), HttpStatus.ACCEPTED);
+    }
+
+    @CrossOrigin
+    @GetMapping("/carts/{username}")
+    public ResponseEntity<List<Cart>> getCartByUsername(@PathVariable("username") String username){
+        return new ResponseEntity<List<Cart>>(bookAllocationsService.getCartByUsername(username), HttpStatus.ACCEPTED);
     }
 }
